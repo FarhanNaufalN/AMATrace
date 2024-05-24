@@ -6,7 +6,6 @@
     android:padding="16dp"
     android:background="@color/white_70">
 
-    <!-- Image at the top -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -26,7 +25,6 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <!-- Custom View for Email -->
     <com.example.amatrace.customview.EmailEditText
         android:id="@+id/emailInput"
         android:layout_width="match_parent"
@@ -34,9 +32,6 @@
         android:inputType="textEmailAddress"
         android:layout_marginTop="16dp" />
 
-
-
-    <!-- Custom View for Kata Sandi -->
     <com.example.amatrace.customview.PasswordEditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
@@ -44,8 +39,6 @@
         android:inputType="textPassword"
         android:layout_marginTop="20dp" />
 
-
-    <!-- Lupa Kata Sandi Text -->
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
@@ -57,7 +50,6 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <!-- Custom View for Masuk Button -->
     <com.example.amatrace.customview.LoginButton
         android:id="@+id/loginButton"
         android:layout_width="match_parent"

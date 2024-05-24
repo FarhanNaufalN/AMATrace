@@ -15,13 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        // Inisialisasi tombol login
         val loginButton: Button = findViewById(R.id.loginButton)
 
-        // Set onClickListener untuk tombol login
         loginButton.setOnClickListener {
-            // Buat intent untuk memulai ActivityLogin
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

@@ -9,6 +9,5 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Tambahkan logika lain yang Anda butuhkan di sini
     }
 }
