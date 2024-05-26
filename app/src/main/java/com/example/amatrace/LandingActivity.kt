@@ -9,6 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.amatrace.databinding.ActivityLandingBinding
@@ -17,7 +18,8 @@ import com.example.amatrace.ui.customview.LoginButton
 class LandingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLandingBinding
-
+    private lateinit var loginButtonAnimator: ObjectAnimator
+    private lateinit var customerButtonAnimator: ObjectAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +30,12 @@ class LandingActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            loginButtonAnimator.cancel()
         }
 
         binding.customerButton.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
+            customerButtonAnimator.cancel()
         }
     }
 
@@ -60,10 +64,12 @@ class LandingActivity : AppCompatActivity() {
             interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
 
-        // Start all animations together
         AnimatorSet().apply {
             playTogether(logoAnimator, cardViewAnimator, loginButtonAnimator, customerButtonAnimator, orTextAnimator)
             start()
+            doOnEnd {
+                cancel()
+            }
         }
     }
 }
