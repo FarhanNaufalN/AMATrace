@@ -38,7 +38,6 @@ class LandingActivity : AppCompatActivity() {
     private fun playAnimation() {
         val logoAnimator = ObjectAnimator.ofFloat(binding.logo, View.ALPHA, 0f, 1f).apply {
             duration = 4000
-            startDelay = 2000 // Delay the start of the animation
         }
 
         val cardViewAnimator = ObjectAnimator.ofFloat(binding.cardView, View.TRANSLATION_Y, 100f, 0f).apply {
