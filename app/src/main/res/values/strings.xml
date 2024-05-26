@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AMATrace</string>
+    <string name="applogo">AppLogo</string>
+    <string name="backgroundlandingpage">BackgroundLandingPage</string>
+    <string name="scan_sebagai_pelanggan">Scan Sebagai Pelanggan</string>
+    <string name="atau">atau</string>
+    <string name="masuk">Masuk</string>
 </resources>
