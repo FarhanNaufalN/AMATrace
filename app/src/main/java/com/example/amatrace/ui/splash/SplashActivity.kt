@@ -19,11 +19,18 @@ class SplashActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         val image = binding.ivSplashIcon
+        val imageBg = binding.backgroundImage
         image.alpha = 0f
+        imageBg.alpha = 0f
 
         image.animate().setDuration(2000).alpha(1f).withEndAction {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        }
+
+        imageBg.animate().setDuration(2000).alpha(1f).withEndAction {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }

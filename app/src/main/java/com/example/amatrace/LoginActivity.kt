@@ -1,4 +1,4 @@
-package com.example.amatrace.ui.login
+package com.example.amatrace
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
