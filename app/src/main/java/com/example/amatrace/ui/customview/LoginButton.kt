@@ -1,4 +1,4 @@
-package com.example.amatrace.customview
+package com.example.amatrace.ui.customview
 
 import android.content.Context
 import android.graphics.Canvas

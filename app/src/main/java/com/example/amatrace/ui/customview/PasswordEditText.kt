@@ -1,4 +1,4 @@
-package com.example.amatrace.customview
+package com.example.amatrace.ui.customview
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,13 +8,15 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.example.amatrace.R
 
-class EmailEditText : AppCompatEditText, View.OnTouchListener {
+class PasswordEditText : AppCompatEditText, View.OnTouchListener {
 
     private lateinit var clearButtonImage: Drawable
+    private lateinit var errorPassword: TextView
 
     constructor(context: Context) : super(context) {
         init()
@@ -34,10 +36,9 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        hint = "Email"
+        hint = "********"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
-
 
     private fun init() {
         clearButtonImage =
@@ -46,15 +47,29 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // Do nothing.
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                if (s != null && s.length < 8) showError() else hideError()
             }
 
             override fun afterTextChanged(s: Editable) {
             }
         })
+    }
+
+    fun bindTextView(errorPassword: TextView) {
+        this.errorPassword = errorPassword
+    }
+
+    private fun showError() {
+        errorPassword.visibility = View.VISIBLE
+    }
+
+    private fun hideError() {
+        errorPassword.visibility = View.GONE
     }
 
     private fun showClearButton() {
