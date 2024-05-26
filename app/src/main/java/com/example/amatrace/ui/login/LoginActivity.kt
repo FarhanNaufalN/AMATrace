@@ -1,4 +1,4 @@
-package com.example.amatrace.ui.Login
+package com.example.amatrace.ui.login
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

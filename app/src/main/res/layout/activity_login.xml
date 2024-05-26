@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_card">
+    android:background="@color/white_70">
 
     <ImageView
         android:id="@+id/imageView"
@@ -31,7 +31,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/dark_card"
+            android:background="@color/white_70"
             android:orientation="vertical"
             android:padding="40dp">
 

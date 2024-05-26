@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amatrace.ui.Login.LoginActivity
+import com.example.amatrace.ui.login.LoginActivity
 
 
 class MainActivity : AppCompatActivity() {
