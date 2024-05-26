@@ -1,5 +1,6 @@
 package com.example.amatrace.ui.login
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
@@ -8,11 +9,11 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityLoginBinding
 import com.example.amatrace.ui.customview.EmailEditText
 import com.example.amatrace.ui.customview.LoginButton
 import com.example.amatrace.ui.customview.PasswordEditText
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = binding.passwordInput
         errorPassword = binding.errorPassword
 
+        playAnimation()
+        setMyButtonEnable()
         emailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
@@ -59,6 +62,8 @@ class LoginActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
             }
         })
+
+
     }
 
     private fun setMyButtonEnable() {
@@ -68,4 +73,19 @@ class LoginActivity : AppCompatActivity() {
             .isNotEmpty()) && (password != null && password.toString().isNotEmpty())
     }
 
+    private fun playAnimation() {
+
+        val email = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 1f).setDuration(500)
+        val password = ObjectAnimator.ofFloat(binding.passwordInput, View.ALPHA, 1f).setDuration(500)
+        val loginButton = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(
+                email,
+                password,
+                loginButton,
+            )
+            start()
+        }
+    }
 }
