@@ -37,7 +37,7 @@ class LoginButton : AppCompatButton {
         setTextColor(txtColor)
         textSize = 12f
         gravity = Gravity.CENTER
-        text = if (isEnabled) "Login" else "Fill Email and Password"
+        text = if (isEnabled) "Login" else "Isi Email and Password"
     }
 
 

@@ -5,4 +5,5 @@
     <string name="scan_sebagai_pelanggan">Scan Sebagai Pelanggan</string>
     <string name="atau">atau</string>
     <string name="masuk">Masuk</string>
+    <string name="password_kurang">Password Kurang dari 8 Karakter</string>
 </resources>
