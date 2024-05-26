@@ -33,10 +33,25 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.logo, View.TRANSLATION_X, -30f, 30f).apply {
+
+        ObjectAnimator.ofFloat(binding.logo, View.ALPHA, -30f, 30f).apply {
+            duration = 5000
+            start()
+        }
+        ObjectAnimator.ofFloat(binding.cardView, View.TRANSLATION_Y, 100f, 0f).apply {
+            duration = 5000
+            start()
+        }
+        ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, -30f, 30f).apply {
             duration = 6000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
+            start()
+        }
+        ObjectAnimator.ofFloat(binding.customerButton, View.ALPHA, -30f, 30f).apply {
+            duration = 6000
+            start()
+        }
+        ObjectAnimator.ofFloat(binding.orText, View.ALPHA, -30f, 30f).apply {
+            duration = 6000
             start()
         }
     }
