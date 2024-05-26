@@ -1,9 +1,12 @@
 package com.example.amatrace
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,25 +36,34 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
+        val logoAnimator = ObjectAnimator.ofFloat(binding.logo, View.ALPHA, 0f, 1f).apply {
+            duration = 4000
+            startDelay = 500 // Delay the start of the animation
+        }
 
-        ObjectAnimator.ofFloat(binding.logo, View.ALPHA, -30f, 30f).apply {
+        val cardViewAnimator = ObjectAnimator.ofFloat(binding.cardView, View.TRANSLATION_Y, 100f, 0f).apply {
             duration = 5000
-            start()
+            interpolator = OvershootInterpolator() // Apply overshoot interpolator for a bouncy effect
         }
-        ObjectAnimator.ofFloat(binding.cardView, View.TRANSLATION_Y, 100f, 0f).apply {
+
+        val loginButtonAnimator = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 0f, 1f).apply {
             duration = 5000
-            start()
+            interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
-        ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, -30f, 30f).apply {
-            duration = 6000
-            start()
+
+        val customerButtonAnimator = ObjectAnimator.ofFloat(binding.customerButton, View.ALPHA, 0f, 1f).apply {
+            duration = 5000
+            interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
-        ObjectAnimator.ofFloat(binding.customerButton, View.ALPHA, -30f, 30f).apply {
-            duration = 6000
-            start()
+
+        val orTextAnimator = ObjectAnimator.ofFloat(binding.orText, View.ALPHA, 0f, 1f).apply {
+            duration = 5000
+            interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
-        ObjectAnimator.ofFloat(binding.orText, View.ALPHA, -30f, 30f).apply {
-            duration = 6000
+
+        // Start all animations together
+        AnimatorSet().apply {
+            playTogether(logoAnimator, cardViewAnimator, loginButtonAnimator, customerButtonAnimator, orTextAnimator)
             start()
         }
     }
