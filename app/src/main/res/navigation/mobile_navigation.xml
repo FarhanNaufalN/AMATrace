@@ -23,9 +23,4 @@
         android:label="@string/menu_kirim"
         tools:layout="@layout/fragment_pengiriman" />
 
-    <fragment
-        android:id="@+id/nav_logout"
-        android:name="com.example.amatrace.ui.supplier.ui.logout.LogoutFragment"
-        android:label="@string/menu_keluar"
-        tools:layout="@layout/fragment_logout" />
 </navigation>

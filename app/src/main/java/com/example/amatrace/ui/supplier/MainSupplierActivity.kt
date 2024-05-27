@@ -2,7 +2,6 @@ package com.example.amatrace.ui.supplier
 
 import android.os.Bundle
 import android.view.Menu
-import android.widget.ImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,8 +11,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityMainSupplierBinding
 
@@ -35,7 +32,6 @@ class MainSupplierActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
-
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
@@ -48,13 +44,6 @@ class MainSupplierActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val headerView = navView.getHeaderView(0)
-        val profileImageView = headerView.findViewById<ImageView>(R.id.imageView)
-        Glide.with(this)
-            .load(R.drawable.profil_farhan)
-            .apply(RequestOptions.circleCropTransform())
-            .into(profileImageView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -67,5 +56,4 @@ class MainSupplierActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
 }

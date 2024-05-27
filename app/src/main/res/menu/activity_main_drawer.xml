@@ -15,11 +15,12 @@
         <item
             android:id="@+id/nav_pengiriman"
             android:icon="@drawable/ic_pengiriman"
-            android:title="@string/menu_kirim" />
+            android:title="@string/menu_kirim" />"
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
-            android:title="@string/menu_keluar" />
+            android:title="@string/menu_keluar" />"
 
     </group>
 </menu>
