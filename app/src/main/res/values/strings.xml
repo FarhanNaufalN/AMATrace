@@ -13,4 +13,17 @@
     <string name="lupa_kata_sandi">Lupa kata sandi</string>
     <string name="masukLogin">MASUK</string>
     <string name="buttonback">buttonBack</string>
+    <string name="title_activity_navigation_supplier">NavigationSupplier</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="name_user">Farhan Naufal</string>
+    <string name="email_user">farhannaufaln@gmail.com</string>
+    <string name="supplier_user">Kebun Jatinangor</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_utama">Menu Utama</string>
+    <string name="menu_profil">Ubah Profil</string>
+    <string name="menu_kirim">Pengiriman</string>
+    <string name="menu_keluar">Keluar</string>
 </resources>

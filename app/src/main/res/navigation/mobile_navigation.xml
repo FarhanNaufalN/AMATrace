@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.amatrace.ui.supplier.ui.menuutama.MenuUtamaFragment"
+        android:label="@string/menu_utama"
+        tools:layout="@layout/fragment_menu_utama" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.amatrace.ui.supplier.ui.editprofil.EditProfilFragment"
+        android:label="@string/menu_profil"
+        tools:layout="@layout/fragment_edit_profil" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.amatrace.ui.supplier.ui.pengiriman.PengirimanFragment"
+        android:label="@string/menu_kirim"
+        tools:layout="@layout/fragment_pengiriman" />
+</navigation>
