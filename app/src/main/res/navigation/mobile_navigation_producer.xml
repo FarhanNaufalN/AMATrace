@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.amatrace.ui.producer.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home_supplier" />
+
+    <fragment
+        android:id="@+id/nav_ubahprofileProducer"
+        android:name="com.example.amatrace.ui.producer.ui.ubahProfileProducer.UbahProfileProducerFragment"
+        android:label="@string/menu_ganti_profile"
+        tools:layout="@layout/fragment_ubahprofileproducer" />
+
+    <fragment
+        android:id="@+id/nav_stockpasokan"
+        android:name="com.example.amatrace.ui.producer.ui.stockpasokan.stockpasokanFragment"
+        android:label="@string/menu_stockpasokan"
+        tools:layout="@layout/fragment_stockpasokan" />
+
+    <fragment
+        android:id="@+id/nav_daftarbatch"
+        android:name="com.example.amatrace.ui.producer.ui.daftarbatch.daftarbatchFragment"
+        android:label="@string/menu_daftar_batch"
+        tools:layout="@layout/fragment_daftarbacth" />
+
+    <fragment
+        android:id="@+id/nav_analisis"
+        android:name="com.example.amatrace.ui.producer.ui.analisis.analisisFragment"
+        android:label="@string/menu_analisis"
+        tools:layout="@layout/fragment_analisis" />
+</navigation>

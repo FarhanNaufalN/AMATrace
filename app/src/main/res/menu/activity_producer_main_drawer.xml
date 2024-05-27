@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/menu_utama"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_ubahprofileProducer"
+            android:icon="@drawable/edit_profil"
+            android:title="@string/menu_ganti_profile" />
+        <item
+            android:id="@+id/nav_stockpasokan"
+            android:icon="@drawable/ic_pengiriman"
+            android:title="@string/menu_stockpasokan" />
+        <item
+            android:id="@+id/nav_daftarbatch"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_daftar_batch" />
+        <item
+            android:id="@+id/nav_analisis"
+            android:icon="@drawable/baseline_analytics_24"
+            android:title="@string/menu_analisis" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:onClick="logout"
+            android:title="@string/menu_keluar" />
+    </group>
+</menu>

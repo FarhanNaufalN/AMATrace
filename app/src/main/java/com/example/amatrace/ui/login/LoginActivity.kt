@@ -18,6 +18,7 @@ import com.example.amatrace.ui.customview.EmailEditText
 import com.example.amatrace.ui.customview.LoginButton
 import com.example.amatrace.ui.customview.PasswordEditText
 import com.example.amatrace.ui.lupaPassword.lupaPasswordActivity
+import com.example.amatrace.ui.producer.ProducerMainActivity
 import com.example.amatrace.ui.supplier.MainSupplierActivity
 
 import com.example.core.data.remote.network.Config
@@ -102,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
                 val intent = when (it.role) {
                     "supplier" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
                     "warehouse" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
-                    "producer" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                    "producer" -> Intent(this@LoginActivity, ProducerMainActivity::class.java)
                     else -> Intent(this@LoginActivity, MainActivity::class.java)
                 }
                 startActivity(intent)
@@ -156,7 +157,7 @@ class LoginActivity : AppCompatActivity() {
                             val intent = when (loginData.account.role) {
                                 "supplier" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
                                 "warehouse" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
-                                "producer" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                                "producer" -> Intent(this@LoginActivity, ProducerMainActivity::class.java)
                                 else -> Intent(this@LoginActivity, MainActivity::class.java)
                             }
                             startActivity(intent)

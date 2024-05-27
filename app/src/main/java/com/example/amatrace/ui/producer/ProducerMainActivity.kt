@@ -1,5 +1,4 @@
-package com.example.amatrace.ui.supplier
-
+package com.example.amatrace.ui.producer
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -18,66 +17,60 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
-import com.example.amatrace.databinding.ActivityMainSupplierBinding
+import com.example.amatrace.databinding.ActivityProducerMainBinding
 import com.example.amatrace.ui.login.LoginActivity
 import com.example.core.data.remote.preferences.Preference
 
-
-
-class MainSupplierActivity : AppCompatActivity() {
+class ProducerMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainSupplierBinding
+    private lateinit var binding: ActivityProducerMainBinding
     private lateinit var myPreference: Preference
-    private lateinit var Ownername : TextView
-    private lateinit var Email : TextView
-    private lateinit var Bisnis : TextView
+    private lateinit var OwnernameProducer : TextView
+    private lateinit var EmailProducer : TextView
+    private lateinit var BisnisProducer : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         myPreference = Preference(this)
 
+     binding = ActivityProducerMainBinding.inflate(layoutInflater)
+     setContentView(binding.root)
 
-        binding = ActivityMainSupplierBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setSupportActionBar(binding.appBarProducerMain.toolbar)
 
-        setSupportActionBar(binding.appBarMainSupplier.toolbar)
-
-
-        binding.appBarMainSupplier.fab.setOnClickListener { view ->
+        binding.appBarProducerMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+                    .setAction("Action", null)
+                    .setAnchorView(R.id.fab).show()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
+        val navController = findNavController(R.id.nav_host_fragment_content_producer_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_ubahprofile, R.id.nav_pengiriman, R.id.nav_logout
-            ), drawerLayout
-        )
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.nav_home, R.id.nav_ubahprofileProducer, R.id.nav_stockpasokan, R.id.nav_daftarbatch, R.id.nav_analisis   ), drawerLayout)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         val headerView = navView.getHeaderView(0)
-        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageView)
+        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageViewProducer)
         val account = myPreference.getAccountInfo() //Mengambil dari Account Class
         val avatarUrl = account?.avatar
         val name = account?.ownerName
         val email = account?.email
         val bisnis = account?.businessName
 
-        Ownername = headerView.findViewById(R.id.Ownername)
-        Email = headerView.findViewById(R.id.EmailSupplier)
-        Bisnis = headerView.findViewById(R.id.bisnis)
+        OwnernameProducer= headerView.findViewById(R.id.OwnernameProducer)
+        EmailProducer = headerView.findViewById(R.id.EmailProducer)
+        BisnisProducer = headerView.findViewById(R.id.bisnisProducer)
 
-        Ownername.text = name
-        Email.text = email
-        Bisnis.text = bisnis
+        OwnernameProducer.text = name
+        EmailProducer.text = email
+        BisnisProducer.text = bisnis
 
         // Muat gambar menggunakan Glide
         Glide.with(this)
@@ -94,17 +87,6 @@ class MainSupplierActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_supplier, menu)
-        return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
     private fun redirectToLogin() {
         // Redirect ke halaman login
         val intent = Intent(this, LoginActivity::class.java)
@@ -119,5 +101,16 @@ class MainSupplierActivity : AppCompatActivity() {
 
         // Redirect ke halaman login
         redirectToLogin()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.producer_main, menu)
+        return true
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_producer_main)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
