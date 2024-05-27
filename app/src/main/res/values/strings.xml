@@ -9,7 +9,7 @@
     <string name="image_desc">logoApp\n</string>
     <string name="info">Hubungi nomor Admin dibawah ini untuk mendapatkan <b>Password</b> Anda</string>
     <string name="contact_info"> 081395538770</string>
-    <string name="adminAmatrace">-Admin Amatrace-\n Best Regards</string>
+    <string name="adminAmatrace">-Admin AMATrace-\n Best Regards</string>
     <string name="lupa_kata_sandi">Lupa kata sandi</string>
     <string name="masukLogin">MASUK</string>
 </resources>
