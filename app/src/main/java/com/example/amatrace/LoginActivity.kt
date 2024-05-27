@@ -2,6 +2,7 @@ package com.example.amatrace
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +14,7 @@ import com.example.amatrace.databinding.ActivityLoginBinding
 import com.example.amatrace.ui.customview.EmailEditText
 import com.example.amatrace.ui.customview.LoginButton
 import com.example.amatrace.ui.customview.PasswordEditText
+import com.example.amatrace.ui.lupaPassword.lupaPasswordActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -22,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EmailEditText
     private lateinit var passwordEditText: PasswordEditText
     private lateinit var errorPassword: TextView
+    private lateinit var forgotPassword: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = binding.emailInput
         passwordEditText = binding.passwordInput
         errorPassword = binding.errorPassword
+        forgotPassword = binding.forgotPassword
 
         playAnimation()
         setMyButtonEnable()
@@ -63,6 +67,11 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        forgotPassword.setOnClickListener{
+            val intent = Intent(this, lupaPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
@@ -75,9 +84,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun playAnimation() {
 
-        val email = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 1f).setDuration(500)
-        val password = ObjectAnimator.ofFloat(binding.passwordInput, View.ALPHA, 1f).setDuration(500)
-        val loginButton = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(500)
+        val email = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 1f).setDuration(5000)
+        val password = ObjectAnimator.ofFloat(binding.passwordInput, View.ALPHA, 1f).setDuration(5000)
+        val loginButton = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(5000)
 
         AnimatorSet().apply {
             playSequentially(

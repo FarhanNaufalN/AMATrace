@@ -104,7 +104,7 @@
                 android:layout_gravity="end"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Lupa kata sandi"
+                android:text="@string/lupa_kata_sandi"
                 android:textColor="@color/green_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
