@@ -9,7 +9,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amatrace.MainActivity
 import com.example.amatrace.databinding.ActivityLandingBinding
 import com.example.amatrace.ui.login.LoginActivity
 import com.example.amatrace.ui.supplier.MainSupplierActivity

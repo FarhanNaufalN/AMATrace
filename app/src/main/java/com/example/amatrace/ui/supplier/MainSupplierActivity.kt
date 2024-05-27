@@ -55,7 +55,7 @@ class MainSupplierActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         val headerView = navView.getHeaderView(0)
-        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.imageView)
+        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageView)
         Glide.with(this)
             .load(R.drawable.profil_farhan)
             .apply(RequestOptions.circleCropTransform())// Replace with the URL or drawable resource

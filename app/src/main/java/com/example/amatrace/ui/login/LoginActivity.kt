@@ -155,8 +155,8 @@ class LoginActivity : AppCompatActivity() {
                             // Pindah ke halaman sesuai dengan peran pengguna (role)
                             val intent = when (loginData.account.role) {
                                 "supplier" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
-                                "warehouse" -> Intent(this@LoginActivity, MainActivity::class.java)
-                                "producer" -> Intent(this@LoginActivity, MainActivity::class.java)
+                                "warehouse" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                                "producer" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
                                 else -> Intent(this@LoginActivity, MainActivity::class.java)
                             }
                             startActivity(intent)
