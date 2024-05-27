@@ -1,13 +1,13 @@
-package com.example.amatrace.ui.supplier.ui.gallery
+package com.example.amatrace.ui.supplier.ui.ubahProfile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class UbahProfileViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "Ini Fragment Untuk Ubah Profile"
     }
     val text: LiveData<String> = _text
 }
