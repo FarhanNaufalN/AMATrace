@@ -12,4 +12,5 @@
     <string name="adminAmatrace">-Admin AMATrace-\n Best Regards</string>
     <string name="lupa_kata_sandi">Lupa kata sandi</string>
     <string name="masukLogin">MASUK</string>
+    <string name="buttonback">buttonBack</string>
 </resources>

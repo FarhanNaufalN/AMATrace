@@ -82,6 +82,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun onBackButtonClicked(view: View) {
+        onBackPressed()
+    }
+
     private fun setMyButtonEnable() {
         val email = emailEditText.text
         val password = passwordEditText.text
