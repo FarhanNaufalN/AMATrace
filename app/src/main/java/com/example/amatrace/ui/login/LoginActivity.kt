@@ -19,7 +19,7 @@ import com.example.amatrace.ui.customview.LoginButton
 import com.example.amatrace.ui.customview.PasswordEditText
 import com.example.amatrace.ui.lupaPassword.lupaPasswordActivity
 import com.example.amatrace.ui.supplier.MainSupplierActivity
-import com.example.core.data.remote.response.Account
+
 import com.example.core.data.remote.network.Config
 import com.example.core.data.remote.preferences.Preference
 import com.example.core.data.remote.response.LoginResponse
@@ -55,12 +55,6 @@ class LoginActivity : AppCompatActivity() {
         forgotPassword = binding.forgotPassword
         myPreference = Preference(this)
 
-        if (myPreference.getStatusLogin()) {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
         showLoading(false)
 
         playAnimation()
@@ -77,7 +71,6 @@ class LoginActivity : AppCompatActivity() {
         })
 
         passwordEditText.bindTextView(errorPassword)
-
 
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -100,6 +93,21 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             login(emailEditText.text.toString(), passwordEditText.text.toString())
             showLoading(true)
+        }
+
+        // Cek status login berdasarkan peran pengguna (role)
+        if (myPreference.getStatusLogin()) {
+            val account = myPreference.getAccountInfo()
+            account?.let {
+                val intent = when (it.role) {
+                    "supplier" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                    "warehouse" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                    "producer" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                    else -> Intent(this@LoginActivity, MainActivity::class.java)
+                }
+                startActivity(intent)
+                finish()
+            }
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.amatrace.ui.supplier
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -13,14 +15,19 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityMainSupplierBinding
+import com.example.amatrace.ui.login.LoginActivity
+import com.example.core.data.remote.preferences.Preference
 
 class MainSupplierActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainSupplierBinding
+    private lateinit var myPreference: Preference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        myPreference = Preference(this)
 
         binding = ActivityMainSupplierBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,6 +51,12 @@ class MainSupplierActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Cek apakah pengguna sebelumnya sudah login atau tidak
+        if (!myPreference.getStatusLogin()) {
+            // Jika tidak, arahkan ke halaman login
+            redirectToLogin()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,5 +68,21 @@ class MainSupplierActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun redirectToLogin() {
+        // Redirect ke halaman login
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finishAffinity() // Tutup semua aktivitas yang terkait dengan aplikasi ini
+    }
+
+    fun logout(item: MenuItem) {
+        // Clear token dan status login dari SharedPreferences
+        myPreference.clearUserToken()
+        myPreference.clearUserLogin()
+
+        // Redirect ke halaman login
+        redirectToLogin()
     }
 }

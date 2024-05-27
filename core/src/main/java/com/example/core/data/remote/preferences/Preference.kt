@@ -40,7 +40,16 @@ class Preference(context: Context) {
         return Gson().fromJson(accountJson, Account::class.java)
     }
 
+    fun clearUserToken() {
+        sharedPreferences.edit().remove(KEY_ACCESS_TOKEN).apply()
+    }
+
+    fun clearUserLogin() {
+        sharedPreferences.edit().remove(KEY_ACCESS_TOKEN).remove(KEY_LOGIN_STATUS).remove(KEY_ACCOUNT_INFO).apply()
+    }
+
     fun clearPreferences() {
         sharedPreferences.edit().clear().apply()
     }
 }
+
