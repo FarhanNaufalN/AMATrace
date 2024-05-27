@@ -1,4 +1,4 @@
-package com.example.amatrace
+package com.example.amatrace.ui.landing
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -9,7 +9,9 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.amatrace.MainActivity
 import com.example.amatrace.databinding.ActivityLandingBinding
+import com.example.amatrace.ui.login.LoginActivity
 
 
 class LandingActivity : AppCompatActivity() {

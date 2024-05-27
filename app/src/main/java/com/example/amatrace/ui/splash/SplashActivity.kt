@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amatrace.LandingActivity
+import com.example.amatrace.ui.landing.LandingActivity
 import com.example.amatrace.databinding.ActivitySplashBinding
 
 
