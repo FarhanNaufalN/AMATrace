@@ -7,8 +7,9 @@
     <string name="masuk">Masuk</string>
     <string name="password_kurang">Password Kurang dari 8 Karakter</string>
     <string name="image_desc">logoApp\n</string>
-    <string name="info">Hubungi Nomer Admin dibawah ini untuk mendapatkan Password Anda</string>
+    <string name="info">Hubungi nomor Admin dibawah ini untuk mendapatkan <b>Password</b> Anda</string>
     <string name="contact_info"> 081395538770</string>
     <string name="adminAmatrace">-Admin Amatrace-\n Best Regards</string>
     <string name="lupa_kata_sandi">Lupa kata sandi</string>
+    <string name="masukLogin">MASUK</string>
 </resources>

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: PasswordEditText
     private lateinit var errorPassword: TextView
     private lateinit var forgotPassword: TextView
+    private lateinit var animatorSet: AnimatorSet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +73,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, lupaPasswordActivity::class.java)
             startActivity(intent)
         }
+    }
 
-
+    override fun onStop() {
+        super.onStop()
+        if (::animatorSet.isInitialized && animatorSet.isRunning) {
+            animatorSet.cancel()
+        }
     }
 
     private fun setMyButtonEnable() {
@@ -83,17 +90,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
+        val titleAnimator = ObjectAnimator.ofFloat(binding.loginTitle, View.ALPHA, 0f, 1f).apply {
+            duration = 1000
+        }
+        val emailInputAnimator = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 0f, 1f).apply {
+            duration = 2000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+        val passwordInputAnimator = ObjectAnimator.ofFloat(binding.passwordInput, View.ALPHA, 0f, 1f).apply {
+            duration = 2000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+        val loginButtonAnimator = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 0f, 1f).apply {
+            duration = 2000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+        val forgotPasswordAnimator = ObjectAnimator.ofFloat(binding.forgotPassword, View.ALPHA, 0f, 1f).apply {
+            duration = 2000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
 
-        val email = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 1f).setDuration(5000)
-        val password = ObjectAnimator.ofFloat(binding.passwordInput, View.ALPHA, 1f).setDuration(5000)
-        val loginButton = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(5000)
-
-        AnimatorSet().apply {
-            playSequentially(
-                email,
-                password,
-                loginButton,
-            )
+        animatorSet = AnimatorSet().apply {
+            playTogether(titleAnimator, emailInputAnimator, loginButtonAnimator, passwordInputAnimator, forgotPasswordAnimator)
             start()
         }
     }
