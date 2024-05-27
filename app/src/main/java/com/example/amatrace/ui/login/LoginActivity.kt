@@ -145,10 +145,11 @@ class LoginActivity : AppCompatActivity() {
                             myPreference.saveAccountInfo(loginData.account)
 
                             // Pindah ke halaman sesuai dengan peran pengguna (role)
-                            val intent = if (loginData.account.role == "supplier") {
-                                Intent(this@LoginActivity, MainSupplierActivity::class.java)
-                            } else {
-                                Intent(this@LoginActivity, MainActivity::class.java)
+                            val intent = when (loginData.account.role) {
+                                "supplier" -> Intent(this@LoginActivity, MainSupplierActivity::class.java)
+                                "warehouse" -> Intent(this@LoginActivity, MainActivity::class.java)
+                                "producer" -> Intent(this@LoginActivity, MainActivity::class.java)
+                                else -> Intent(this@LoginActivity, MainActivity::class.java)
                             }
                             startActivity(intent)
                             finish()
