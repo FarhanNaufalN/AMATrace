@@ -12,29 +12,29 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.R
-import com.example.amatrace.databinding.ActivityNavigationSupplierBinding
+import com.example.amatrace.databinding.ActivityMainSupplierBinding
 
-class NavigationSupplier : AppCompatActivity() {
+class MainSupplierActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityNavigationSupplierBinding
+    private lateinit var binding: ActivityMainSupplierBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityNavigationSupplierBinding.inflate(layoutInflater)
+        binding = ActivityMainSupplierBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarNavigationSupplier.toolbar)
+        setSupportActionBar(binding.appBarMainSupplier.toolbar)
 
-        binding.appBarNavigationSupplier.fab.setOnClickListener { view ->
+        binding.appBarMainSupplier.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_navigation_supplier)
+        val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -48,12 +48,12 @@ class NavigationSupplier : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.navigation_supplier, menu)
+        menuInflater.inflate(R.menu.main_supplier, menu)
         return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_navigation_supplier)
+        val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

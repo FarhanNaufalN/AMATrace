@@ -1,4 +1,4 @@
-package com.example.amatrace.ui.supplier.ui.menuutama
+package com.example.amatrace.ui.supplier.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.amatrace.databinding.FragmentMenuUtamaBinding
+import com.example.amatrace.databinding.FragmentHomeBinding
 
-class MenuUtamaFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private var _binding: FragmentMenuUtamaBinding? = null
+    private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,12 +23,12 @@ class MenuUtamaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val homeViewModel =
-            ViewModelProvider(this).get(MenuUtamaViewModel::class.java)
+            ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        _binding = FragmentMenuUtamaBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMenuUtama
+        val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

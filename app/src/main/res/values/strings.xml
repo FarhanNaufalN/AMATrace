@@ -26,4 +26,11 @@
     <string name="menu_profil">Ubah Profil</string>
     <string name="menu_kirim">Pengiriman</string>
     <string name="menu_keluar">Keluar</string>
+    <string name="title_activity_main_supplier">MainSupplierActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>

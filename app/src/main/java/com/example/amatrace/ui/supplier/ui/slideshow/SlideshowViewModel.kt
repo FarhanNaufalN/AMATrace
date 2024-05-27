@@ -1,10 +1,10 @@
-package com.example.amatrace.ui.supplier.ui.pengiriman
+package com.example.amatrace.ui.supplier.ui.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class PengirimanViewModel : ViewModel() {
+class SlideshowViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is slideshow Fragment"

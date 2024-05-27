@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,9 +15,9 @@
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
         <activity
-            android:name=".ui.supplier.NavigationSupplier"
+            android:name=".ui.supplier.MainSupplierActivity"
             android:exported="false"
-            android:label="@string/title_activity_navigation_supplier"
+            android:label="@string/title_activity_main_supplier"
             android:theme="@style/Theme.AMATrace.NoActionBar" />
         <activity
             android:name=".ui.lupaPassword.lupaPasswordActivity"
@@ -43,4 +45,5 @@
             android:name=".ui.login.LoginActivity"
             android:exported="true" />
     </application>
+
 </manifest>
