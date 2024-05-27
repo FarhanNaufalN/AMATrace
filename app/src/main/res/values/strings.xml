@@ -26,4 +26,22 @@
     <string name="nav_header_subtitle2">Kebun Jatinangor</string>
     <string name="menu_home">Menu Utama</string>
     <string name="menu_ganti_profile">Profil\n</string>
+
+
+        <string name="back">Back</string>
+        <string name="profile">PROFIL</string>
+        <string name="upload_photo">Unggah Foto +</string>
+        <string name="name">Nama</string>
+        <string name="name_example">Farhan Naufal Nurdiansyah</string>
+        <string name="company_name">Nama Perusahaan</string>
+        <string name="company_name_example">Kebun Jatinangor</string>
+        <string name="phone_number">No Hp</string>
+        <string name="phone_number_example">+62 81395538770</string>
+        <string name="address">Alamat</string>
+        <string name="address_example">Sumedang, Jatinangor</string>
+        <string name="company_description">Deskripsi Perusahaan</string>
+        <string name="company_description_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+        <string name="save_data">Simpan data</string>
+
+
 </resources>

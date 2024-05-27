@@ -17,11 +17,11 @@
         android:id="@+id/imageView"
         android:layout_width="54dp"
         android:layout_height="54dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/profil_farhan" />
+        android:paddingTop="@dimen/nav_header_vertical_spacing" />
 
     <TextView
         android:layout_width="match_parent"
