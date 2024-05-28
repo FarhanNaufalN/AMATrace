@@ -42,6 +42,7 @@
         <string name="company_description">Deskripsi Perusahaan</string>
         <string name="company_description_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
         <string name="save_data">Simpan data</string>
+
     <string name="title_activity_producer_main">ProducerMainActivity</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

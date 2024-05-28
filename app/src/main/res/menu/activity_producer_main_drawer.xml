@@ -14,11 +14,11 @@
             android:title="@string/menu_ganti_profile" />
         <item
             android:id="@+id/nav_stockpasokan"
-            android:icon="@drawable/ic_pengiriman"
+            android:icon="@drawable/ic_stok"
             android:title="@string/menu_stockpasokan" />
         <item
             android:id="@+id/nav_daftarbatch"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_batch"
             android:title="@string/menu_daftar_batch" />
         <item
             android:id="@+id/nav_analisis"
