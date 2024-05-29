@@ -12,9 +12,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentUbahprofileBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.preferences.Preference
-import com.example.core.data.remote.response.ProfileResponse
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.ProfileResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject

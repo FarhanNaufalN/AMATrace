@@ -1,9 +1,9 @@
-package com.example.core.data.remote.network
+package com.example.core.data.source.remote.network
 
-import com.example.core.data.remote.response.AddProductSupplierResponse
-import com.example.core.data.remote.response.LoginResponse
-import com.example.core.data.remote.response.ProductListResponse
-import com.example.core.data.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.AddProductSupplierResponse
+import com.example.core.data.source.remote.response.LoginResponse
+import com.example.core.data.source.remote.response.ProductListResponse
+import com.example.core.data.source.remote.response.ProfileResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body

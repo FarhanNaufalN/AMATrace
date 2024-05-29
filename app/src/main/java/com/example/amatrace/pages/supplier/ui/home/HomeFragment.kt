@@ -1,5 +1,6 @@
 package com.example.amatrace.pages.supplier.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,37 +10,42 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.amatrace.R
 import com.example.amatrace.adapter.ProductPagingAdapter
-import com.example.core.data.remote.network.API
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.preferences.Preference
+import com.example.amatrace.databinding.FragmentHomeSupplierBinding
+import com.example.amatrace.pages.supplier.ui.tambahproduk.TambahProdukActivity
+import com.example.core.data.source.remote.network.API
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private lateinit var productAdapter: ProductPagingAdapter
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: ProductViewModel
+    private var _binding: FragmentHomeSupplierBinding? = null
+    private val binding get() = _binding!!
 
+    private lateinit var productAdapter: ProductPagingAdapter
+    private lateinit var viewModel: ProductViewModel
     private lateinit var accessToken: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home_supplier, container, false)
+    ): View {
+        _binding = FragmentHomeSupplierBinding.inflate(inflater, container, false)
+
+        binding.buttonTambahProduk.setOnClickListener {
+            startActivity(Intent(requireContext(), TambahProdukActivity::class.java))
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.rv_supplier)
         productAdapter = ProductPagingAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = productAdapter
+        binding.rvSupplier.layoutManager = LinearLayoutManager(context)
+        binding.rvSupplier.adapter = productAdapter
 
         accessToken = Preference(requireContext()).getAccessToken() ?: ""
 
@@ -58,6 +64,11 @@ class HomeFragment : Fragment() {
                 productAdapter.submitData(pagingData)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
 

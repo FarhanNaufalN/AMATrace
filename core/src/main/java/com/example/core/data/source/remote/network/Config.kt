@@ -1,8 +1,8 @@
-package com.example.core.data.remote.network
+package com.example.core.data.source.remote.network
 
 import com.example.core.BuildConfig
 import com.example.core.BuildConfig.BASE_URL
-import com.example.core.data.remote.response.LoginResponse
+import com.example.core.data.source.remote.response.LoginResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

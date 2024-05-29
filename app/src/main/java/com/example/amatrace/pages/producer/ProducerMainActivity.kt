@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityProducerMainBinding
 import com.example.amatrace.pages.login.LoginActivity
-import com.example.core.data.remote.preferences.Preference
+import com.example.core.data.source.remote.preferences.Preference
 
 class ProducerMainActivity : AppCompatActivity() {
 

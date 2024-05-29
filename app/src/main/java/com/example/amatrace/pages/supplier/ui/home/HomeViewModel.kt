@@ -9,10 +9,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.core.data.Paging.ProductPagingSource
-import com.example.core.data.remote.network.API
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.response.Product
+import com.example.core.data.source.Paging.ProductPagingSource
+import com.example.core.data.source.remote.network.API
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.response.Product
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 

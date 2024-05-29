@@ -19,10 +19,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityMainSupplierBinding
 import com.example.amatrace.pages.login.LoginActivity
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.preferences.Preference
-import com.example.core.data.remote.response.ProfileData
-import com.example.core.data.remote.response.ProfileResponse
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.ProfileData
+import com.example.core.data.source.remote.response.ProfileResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,21 +1,21 @@
-package com.example.core.data.Paging
+package com.example.core.data.source.Paging
 
 import android.content.Context
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.core.data.remote.network.API
-import com.example.core.data.remote.preferences.Preference
-import com.example.core.data.remote.response.Product
+import com.example.core.data.source.remote.network.API
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.Product
 import retrofit2.HttpException
 import java.io.IOException
 
 class ProductPagingSource(
     private val api: API,
     private val token: String
-) : PagingSource<Int, com.example.core.data.remote.response.Product>() {
+) : PagingSource<Int, Product>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, com.example.core.data.remote.response.Product> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         val page = params.key ?: 1
         return try {
             val response = api.getProductList(token, page, params.loadSize).execute()

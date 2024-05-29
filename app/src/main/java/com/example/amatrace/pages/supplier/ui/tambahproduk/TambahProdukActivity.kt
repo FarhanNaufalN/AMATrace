@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityTambahProdukBinding
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.preferences.Preference
-import com.example.core.data.remote.response.AddProductSupplierResponse
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -119,19 +119,18 @@ class TambahProdukActivity : AppCompatActivity() {
         val name = binding.editTextName.text.toString()
         val description = binding.editTextDescription.text.toString()
 
-        // Check if imageUri is null
         if (imageUri == null) {
             Toast.makeText(this@TambahProdukActivity, "Please select an image", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Get the URL of the image
+
         val imageUrl = getImageUrlFromUri(imageUri!!)
         println("Image URL: $imageUrl")
         println("SKU: $sku")
 
 
-        // Make sure imageUrl is not null before adding it to requestBodyMap
+
         if (imageUrl != null) {
             val requestBodyMap = HashMap<String, String>()
             requestBodyMap["sku"] = sku
@@ -139,7 +138,6 @@ class TambahProdukActivity : AppCompatActivity() {
             requestBodyMap["description"] = description
             requestBodyMap["image"] = imageUrl
 
-            // Make the API call
             val call = Config.getApiService().addProductSupplier(token, requestBodyMap)
 
             call.enqueue(object : Callback<AddProductSupplierResponse> {
@@ -163,7 +161,6 @@ class TambahProdukActivity : AppCompatActivity() {
                 }
             })
         } else {
-            // Handle case when imageUrl is null
             Toast.makeText(this@TambahProdukActivity, "Failed to get image URL", Toast.LENGTH_SHORT).show()
         }
     }

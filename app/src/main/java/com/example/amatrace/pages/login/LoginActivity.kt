@@ -21,9 +21,9 @@ import com.example.amatrace.pages.lupaPassword.lupaPasswordActivity
 import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 
-import com.example.core.data.remote.network.Config
-import com.example.core.data.remote.preferences.Preference
-import com.example.core.data.remote.response.LoginResponse
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.LoginResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject

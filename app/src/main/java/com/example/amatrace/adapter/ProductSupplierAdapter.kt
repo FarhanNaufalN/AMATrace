@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amatrace.R
-import com.example.core.data.remote.response.Product
+import com.example.core.data.source.remote.response.Product
 
 
 class ProductPagingAdapter : PagingDataAdapter<Product, ProductPagingAdapter.ProductViewHolder>(DIFF_CALLBACK) {

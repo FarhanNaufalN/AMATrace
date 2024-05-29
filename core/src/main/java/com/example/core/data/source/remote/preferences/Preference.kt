@@ -1,7 +1,7 @@
-package com.example.core.data.remote.preferences
+package com.example.core.data.source.remote.preferences
 
 import android.content.Context
-import com.example.core.data.remote.response.Account
+import com.example.core.data.source.remote.response.Account
 import com.google.gson.Gson
 
 class Preference(context: Context) {
@@ -45,7 +45,9 @@ class Preference(context: Context) {
     }
 
     fun clearUserLogin() {
-        sharedPreferences.edit().remove(KEY_ACCESS_TOKEN).remove(KEY_LOGIN_STATUS).remove(KEY_ACCOUNT_INFO).apply()
+        sharedPreferences.edit().remove(KEY_ACCESS_TOKEN).remove(KEY_LOGIN_STATUS).remove(
+            KEY_ACCOUNT_INFO
+        ).apply()
     }
 
 }
