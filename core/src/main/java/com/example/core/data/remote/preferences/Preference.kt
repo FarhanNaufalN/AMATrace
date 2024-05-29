@@ -19,7 +19,7 @@ class Preference(context: Context) {
     }
 
     fun getAccessToken(): String? {
-        return sharedPreferences.getString(KEY_ACCESS_TOKEN, null)
+        return sharedPreferences.getString(KEY_ACCESS_TOKEN, " ")
     }
 
     fun setStatusLogin(status: Boolean) {

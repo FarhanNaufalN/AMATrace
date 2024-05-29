@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.amatrace.ui.supplier.ui.home.HomeFragment"
+        android:name="com.example.amatrace.pages.supplier.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home_supplier" />
 
     <fragment
         android:id="@+id/nav_ubahprofile"
-        android:name="com.example.amatrace.ui.supplier.ui.ubahProfile.UbahProfileFragment"
+        android:name="com.example.amatrace.pages.supplier.ui.ubahProfile.UbahProfileFragment"
         android:label="@string/menu_ganti_profile"
         tools:layout="@layout/fragment_ubahprofile" />
 
     <fragment
         android:id="@+id/nav_pengiriman"
-        android:name="com.example.amatrace.ui.supplier.ui.pengiriman.PengirimanFragment"
+        android:name="com.example.amatrace.pages.supplier.ui.pengiriman.PengirimanFragment"
         android:label="@string/menu_kirim"
         tools:layout="@layout/fragment_pengiriman" />
 
