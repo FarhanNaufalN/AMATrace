@@ -2,6 +2,8 @@ package com.example.core.data.source.remote.network
 
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.LoginResponse
+import com.example.core.data.source.remote.response.Product
+import com.example.core.data.source.remote.response.ProductData
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileResponse
 import okhttp3.RequestBody
@@ -34,15 +36,20 @@ interface API {
 
     @POST("supplier/product")
     fun addProductSupplier(
-        @Header("X-API-AUTH-SUPPLIER") token: String,
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Body requestBody: HashMap<String, String>
     ): Call<AddProductSupplierResponse>
 
-    @GET("supplier/products")
-    fun getProductList(
-        @Header("X-API-AUTH-SUPPLIER") token: String,
-        @Query("page") page: Int,
-        @Query("size") size: Int
+    @GET("supplier/product")
+    fun getSupplierProduct(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<ProductListResponse>
+
+    @GET("supplier/product")
+    suspend fun getSupplierProductList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("totalPage") totalPage: Int,
+        @Query("totalData") totalData: Int
+    ): ProductListResponse
 
 }

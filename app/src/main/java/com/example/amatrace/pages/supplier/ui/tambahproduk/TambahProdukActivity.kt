@@ -9,6 +9,7 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityTambahProdukBinding
+import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
@@ -29,6 +31,9 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TambahProdukActivity : AppCompatActivity() {
 
@@ -85,10 +90,6 @@ class TambahProdukActivity : AppCompatActivity() {
                     imageUri = data?.data
                     imageUri?.let { uri ->
                         Glide.with(this).load(uri).into(binding.imageViewProduct)
-                        val realPath = getRealPathFromURI(this, uri)
-                        realPath?.let { path ->
-                            imageFile = File(path)
-                        }
                     }
                 }
                 CAPTURE_IMAGE_REQUEST -> {
@@ -96,15 +97,12 @@ class TambahProdukActivity : AppCompatActivity() {
                     imageUri = getImageUri(bitmap)
                     imageUri?.let { uri ->
                         Glide.with(this).load(uri).into(binding.imageViewProduct)
-                        val realPath = getRealPathFromURI(this, uri)
-                        realPath?.let { path ->
-                            imageFile = File(path)
-                        }
                     }
                 }
             }
         }
     }
+
 
     private fun getImageUri(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
@@ -125,45 +123,42 @@ class TambahProdukActivity : AppCompatActivity() {
         }
 
 
-        val imageUrl = getImageUrlFromUri(imageUri!!)
+        val imageUrl = imageUri.toString()
         println("Image URL: $imageUrl")
         println("SKU: $sku")
 
 
+        val requestBodyMap = HashMap<String, String>()
+        requestBodyMap["sku"] = sku
+        requestBodyMap["name"] = name
+        requestBodyMap["description"] = description
+        requestBodyMap["image"] = imageUrl
 
-        if (imageUrl != null) {
-            val requestBodyMap = HashMap<String, String>()
-            requestBodyMap["sku"] = sku
-            requestBodyMap["name"] = name
-            requestBodyMap["description"] = description
-            requestBodyMap["image"] = imageUrl
+        val call = Config.getApiService().addProductSupplier(token, requestBodyMap)
 
-            val call = Config.getApiService().addProductSupplier(token, requestBodyMap)
-
-            call.enqueue(object : Callback<AddProductSupplierResponse> {
-                override fun onResponse(call: Call<AddProductSupplierResponse>, response: Response<AddProductSupplierResponse>) {
-                    if (response.isSuccessful && response.body() != null) {
-                        val product = response.body()
-                        if (product != null) {
-                            Toast.makeText(this@TambahProdukActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        // Handle unsuccessful response
-                        val errorMessage = response.message() ?: "Unknown error"
-                        Toast.makeText(this@TambahProdukActivity, "Failed to add product: $errorMessage", Toast.LENGTH_SHORT).show()
+        call.enqueue(object : Callback<AddProductSupplierResponse> {
+            override fun onResponse(call: Call<AddProductSupplierResponse>, response: Response<AddProductSupplierResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val product = response.body()
+                    if (product != null) {
+                        Toast.makeText(this@TambahProdukActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@TambahProdukActivity, MainSupplierActivity::class.java))
                     }
+                } else {
+                    // Handle unsuccessful response
+                    val errorMessage = response.message() ?: "Unknown error"
+                    Toast.makeText(this@TambahProdukActivity, "Failed to add product: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
+            }
 
-                override fun onFailure(call: Call<AddProductSupplierResponse>, t: Throwable) {
-                    // Handle network failure
-                    Toast.makeText(this@TambahProdukActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                    t.printStackTrace() // Print the stack trace for debugging
-                }
-            })
-        } else {
-            Toast.makeText(this@TambahProdukActivity, "Failed to get image URL", Toast.LENGTH_SHORT).show()
-        }
+            override fun onFailure(call: Call<AddProductSupplierResponse>, t: Throwable) {
+                // Handle network failure
+                Toast.makeText(this@TambahProdukActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                t.printStackTrace() // Print the stack trace for debugging
+            }
+        })
     }
+
 
 
     private fun createMultipartRequestBody(dataMap: Map<String, RequestBody>): RequestBody {
@@ -210,16 +205,20 @@ class TambahProdukActivity : AppCompatActivity() {
         return path
     }
 
-    private fun getImageUrlFromUri(uri: Uri): String? {
+    private fun getImageFileFromUri(uri: Uri): File? {
         val inputStream = contentResolver.openInputStream(uri)
-        val outputFile = File(cacheDir, "temp_image.jpg")
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "JPEG_${timeStamp}_"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File.createTempFile(imageFileName, ".jpg", storageDir)
         inputStream?.use { input ->
-            val outputStream = FileOutputStream(outputFile)
+            val outputStream = FileOutputStream(imageFile)
             outputStream.use { output ->
                 input.copyTo(output)
             }
         }
-        return outputFile.toUri().toString()
+        return imageFile
     }
+
 
 }

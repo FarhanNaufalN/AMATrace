@@ -35,7 +35,7 @@
             android:textSize="16sp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/productImage"
-            tools:text="@string/name" />
+           />
 
         <TextView
             android:id="@+id/productSku"
@@ -44,7 +44,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"
+            card_view:layout_constraintStart_toStartOf="@+id/productName"
             card_view:layout_constraintTop_toBottomOf="@+id/productName"
              />
 

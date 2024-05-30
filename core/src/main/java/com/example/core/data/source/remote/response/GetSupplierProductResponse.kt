@@ -10,8 +10,6 @@ data class ProductListResponse(
 
 data class ProductData(
     val products: List<Product>,
-    val totalData: Int,
-    val totalPage: Int
 )
 
 data class Product(
