@@ -14,17 +14,20 @@
     <Spinner
         android:id="@+id/spinnerProduct"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_margin="16dp"
+
         android:background="@drawable/edit_text_background"
-        app:layout_constraintBottom_toTopOf="@+id/etDeliveryDate"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.101" />
 
     <EditText
         android:id="@+id/etProductId"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -37,28 +40,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.048" />
 
-    <EditText
+    <!-- Expired Date Input -->
+    <TextView
         android:id="@+id/etDeliveryDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Delivery Date"
+        android:layout_margin="16dp"
+        android:layout_marginTop="128dp"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
+        android:onClick="onBackButtonClickedDeliveryDate"
+        android:hint="Delivery Date"
         android:padding="10dp"
         android:textAlignment="textStart"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/etProductId"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerProduct" />
 
-    <!-- Expired Date Input -->
-    <EditText
+    <TextView
         android:id="@+id/etExpiredDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="onBackButtonClickedExpiredDate"
         android:hint="Expired Date"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
@@ -87,9 +92,23 @@
         android:layout_margin="16dp"/>
 
     <!-- Producer ID Destination Input -->
+
+    <Spinner
+        android:id="@+id/spinnerProducer"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etMass"
+        app:layout_constraintVertical_bias="0.0" />
+
     <EditText
         android:id="@+id/etProducerIdDestination"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:hint="Producer ID Destination"
         android:background="@drawable/edit_text_background"
@@ -113,7 +132,7 @@
         android:padding="10dp"
         android:textAlignment="textStart"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/etProducerIdDestination"
+        app:layout_constraintTop_toBottomOf="@id/spinnerProducer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>

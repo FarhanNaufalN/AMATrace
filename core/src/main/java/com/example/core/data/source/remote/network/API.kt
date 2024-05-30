@@ -1,6 +1,8 @@
 package com.example.core.data.source.remote.network
 
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
+import com.example.core.data.source.remote.response.GetProducerListResponse
+import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.LoginResponse
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
@@ -62,5 +64,22 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Body requestBody: RequestBody
     ): Call<ShippingResponse>
+
+    @GET("supplier/producer-all")
+    fun getProducerList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+    ): Call<GetProducerListResponse>
+
+    @GET("supplier/shipping")
+    fun getListShipping(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+    ): Call<GetShippingListResponse>
+
+    @GET("supplier/shipping")
+    suspend fun getSupplierShippingList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("totalPage") totalPage: Int,
+        @Query("totalData") totalData: Int
+    ): GetShippingListResponse
 
 }

@@ -1,6 +1,7 @@
 package com.example.amatrace.pages.supplier.ui.tambahpengiriman
 
 import android.R
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.example.core.data.source.remote.response.ShippingRequest
 import com.example.core.data.source.remote.response.ShippingResponse
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
+import com.example.core.data.source.remote.response.GetProducerListResponse
+import com.example.core.data.source.remote.response.Producers
 import com.example.core.data.source.remote.response.Product
 import com.example.core.data.source.remote.response.ProductListResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -26,17 +29,29 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TambahPengirimanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTambahPengirimanBinding
     private lateinit var myPreference: Preference
     private var productList: List<Product>? = null
+    private var producerList: List<Producers>? = null
+    private var selectedDeliveryDate: Calendar = Calendar.getInstance()
+    private var selectedExpiredDate: Calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         myPreference = Preference(this)
+        binding = ActivityTambahPengirimanBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        updateDeliveryDateText()
+        updateExpiredDateText()
+
 
         binding = ActivityTambahPengirimanBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,9 +60,10 @@ class TambahPengirimanActivity : AppCompatActivity() {
             Config.getApiService().getSupplierProduct(token).enqueue(object : Callback<ProductListResponse> {
                 override fun onResponse(call: Call<ProductListResponse>, response: Response<ProductListResponse>) {
                     if (response.isSuccessful && response.body()?.success == true) {
-                        val productList = response.body()?.data?.products
+                        productList = response.body()?.data?.products // Perbaiki di sini
                         if (!productList.isNullOrEmpty()) {
-                            val productNames = productList.map { it.name }
+                            val productNames = mutableListOf(" Pilih Produk")
+                            productNames.addAll(productList!!.map { it.name })
                             val adapter = ArrayAdapter(this@TambahPengirimanActivity, R.layout.simple_spinner_item, productNames)
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.spinnerProduct.adapter = adapter
@@ -63,16 +79,63 @@ class TambahPengirimanActivity : AppCompatActivity() {
             })
         }
 
+        if (token != null) {
+            Config.getApiService().getProducerList(token).enqueue(object : Callback<GetProducerListResponse> {
+                override fun onResponse(call: Call<GetProducerListResponse>, response: Response<GetProducerListResponse>) {
+                    if (response.isSuccessful && response.body()?.success == true) {
+                        producerList = response.body()?.data?.producers // Perbaiki di sini
+                        if (!producerList.isNullOrEmpty()) {
+                            val productNames = mutableListOf(" Pilih Tujuan")
+                            productNames.addAll(producerList!!.map { it.ownerName })
+                            val adapter = ArrayAdapter(this@TambahPengirimanActivity, R.layout.simple_spinner_item, productNames)
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            binding.spinnerProducer.adapter = adapter
+                        }
+                    } else {
+                        Toast.makeText(this@TambahPengirimanActivity, "Failed to fetch product list", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<GetProducerListResponse>, t: Throwable) {
+                    Toast.makeText(this@TambahPengirimanActivity, t.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
 // Mendapatkan ID produk yang dipilih saat pengguna mengubah item di Spinner
         binding.spinnerProduct.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedProduct = productList?.get(position)
-                val productId = selectedProduct?.id ?: ""
-                binding.etProductId.setText(productId)
+                if (position >= 0 && position < (productList?.size ?: 0)) {
+                    val selectedProduct = productList?.get(position)
+                    val productId = selectedProduct?.id ?: ""
+                    binding.etProductId.setText(productId)
+                    binding.etProductId.visibility = View.GONE
+                } else {
+                    // Handle the case where the position is out of bounds
+                    Log.e("TambahPengirimanActivity", "Invalid position: $position")
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Tidak melakukan apa-apa saat tidak ada item yang dipilih
+                // No action needed
+            }
+        }
+
+        binding.spinnerProducer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position >= 0 && position < (producerList?.size ?: 0)) {
+                    val selectedProducer = producerList?.get(position)
+                    val producerId = selectedProducer?.id ?: ""
+                    binding.etProducerIdDestination.setText(producerId)
+                    binding.etProducerIdDestination.visibility = View.GONE
+                } else {
+                    // Handle the case where the position is out of bounds
+                    Log.e("TambahPengirimanActivity", "Invalid position: $position")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No action needed
             }
         }
 
@@ -121,6 +184,30 @@ class TambahPengirimanActivity : AppCompatActivity() {
         }
     }
 
+    private fun showDatePicker(calendar: Calendar, onDateSetListener: (Calendar) -> Unit) {
+        val datePicker = DatePickerDialog(
+            this,
+            { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(year, monthOfYear, dayOfMonth)
+                onDateSetListener(calendar)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.show()
+    }
+
+    private fun updateDeliveryDateText() {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        binding.etDeliveryDate.setText(dateFormat.format(selectedDeliveryDate.time))
+    }
+
+    private fun updateExpiredDateText() {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        binding.etExpiredDate.setText(dateFormat.format(selectedExpiredDate.time))
+    }
+
     private fun createRequestBody(shippingRequest: ShippingRequest): RequestBody {
         val json = """
             {
@@ -134,6 +221,19 @@ class TambahPengirimanActivity : AppCompatActivity() {
             }
         """.trimIndent()
         return json.toRequestBody("application/json".toMediaTypeOrNull())
+    }
+
+    fun onBackButtonClickedDeliveryDate(view: View) {
+        showDatePicker(selectedDeliveryDate) { calendar ->
+            selectedDeliveryDate = calendar
+            updateDeliveryDateText()
+        }
+    }
+    fun onBackButtonClickedExpiredDate(view: View) {
+        showDatePicker(selectedExpiredDate) { calendar ->
+            selectedExpiredDate = calendar
+            updateExpiredDateText()
+        }
     }
 
 }
