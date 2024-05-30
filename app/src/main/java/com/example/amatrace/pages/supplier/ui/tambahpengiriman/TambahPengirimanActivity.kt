@@ -1,5 +1,6 @@
 package com.example.amatrace.pages.supplier.ui.tambahpengiriman
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -60,7 +61,9 @@ class TambahPengirimanActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<ShippingResponse>, response: Response<ShippingResponse>) {
                         if (response.isSuccessful && response.body()?.success == true) {
                             val qrCodeData = response.body()?.data?.id ?: ""
-                            generateQRCode(qrCodeData)
+                            val intent = Intent(this@TambahPengirimanActivity, QRCodeActivity::class.java)
+                            intent.putExtra("QR_CODE_DATA", qrCodeData)
+                            startActivity(intent)
                         } else {
                             Toast.makeText(this@TambahPengirimanActivity, "Failed to create shipping", Toast.LENGTH_SHORT).show()
                         }
@@ -91,20 +94,4 @@ class TambahPengirimanActivity : AppCompatActivity() {
         return json.toRequestBody("application/json".toMediaTypeOrNull())
     }
 
-    private fun generateQRCode(data: String) {
-        val width = resources.displayMetrics.widthPixels
-        val height = resources.displayMetrics.heightPixels
-        val smallerDimension = if (width < height) width else height
-
-        val qrgEncoder = QRGEncoder(data, null, QRGContents.Type.TEXT, smallerDimension)
-        qrgEncoder.colorBlack = Color.BLACK
-        qrgEncoder.colorWhite = Color.WHITE
-
-        try {
-            val bitmap = qrgEncoder.bitmap
-            binding.qrImageView.setImageBitmap(bitmap)
-        } catch (e: Exception) {
-            Log.v("GenerateQRCode", e.toString())
-        }
-    }
 }

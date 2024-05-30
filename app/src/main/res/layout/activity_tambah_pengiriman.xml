@@ -8,22 +8,25 @@
     tools:context=".pages.supplier.ui.tambahpengiriman.TambahPengirimanActivity">
 
     <!-- Product ID Input -->
+
+    <!-- Delivery Date Input -->
+
     <EditText
         android:id="@+id/etProductId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Product ID"
+        android:layout_margin="16dp"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
+        android:hint="Product ID"
         android:padding="10dp"
         android:textAlignment="textStart"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131" />
 
-    <!-- Delivery Date Input -->
     <EditText
         android:id="@+id/etDeliveryDate"
         android:layout_width="0dp"
@@ -124,21 +127,14 @@
         android:id="@+id/btnSubmit"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSerialNumber"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintVertical_bias="0.167" />
 
-    <!-- QR Code ImageView -->
-    <ImageView
-        android:id="@+id/qrImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/btnSubmit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

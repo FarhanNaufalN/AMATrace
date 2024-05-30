@@ -35,6 +35,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -70,6 +73,8 @@ dependencies {
     implementation (libs.androidx.camera.view)
     implementation libs.play.services.ads
     implementation libs.qrgenerator
+    implementation libs.curvedbottomnavigation
+    implementation libs.androidx.databinding.runtime
 
 
 

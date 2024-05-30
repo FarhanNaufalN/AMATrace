@@ -13,17 +13,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityProducerMainBinding
 import com.example.amatrace.pages.login.LoginActivity
+import com.example.amatrace.pages.supplier.MainSupplierActivity.Companion.HOME_ITEM
+import com.example.amatrace.pages.supplier.MainSupplierActivity.Companion.OFFERS_ITEM
+import com.example.amatrace.pages.supplier.MainSupplierActivity.Companion.SECTION_ITEM
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ProfileData
 import com.example.core.data.source.remote.response.ProfileProducerData
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,10 +59,12 @@ class ProducerMainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_ubahprofileProducer, R.id.nav_stockpasokan, R.id.nav_daftarbatch, R.id.nav_analisis   ), drawerLayout)
+            R.id.nav_home, R.id.nav_ubahprofileProducer, R.id.nav_stockpasokan, R.id.nav_daftarbatch, R.id.nav_analisis,
+            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications ), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        setUpBottomNavigation(navController)
 
         val headerView = navView.getHeaderView(0)
         val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageViewProducer)
@@ -134,6 +141,32 @@ class ProducerMainActivity : AppCompatActivity() {
 
         ownerNameView.text = profile.ownerName
         businessNameView.text = profile.businessName
+    }
+
+    private fun setUpBottomNavigation(navController: NavController) {
+        val bottomNavigationItems = mutableListOf(
+            CurvedBottomNavigation.Model(HOME_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+            CurvedBottomNavigation.Model(OFFERS_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+        )
+        val bottomNavView = binding.bottomNavView
+        bottomNavView.apply {
+            bottomNavigationItems.forEach { add(it) }
+            setOnClickMenuListener { model ->
+                when (model.id) {
+                    HOME_ITEM -> navController.navigate(R.id.nav_home)
+                    OFFERS_ITEM -> navController.navigate(R.id.navigation_dashboard)
+                    SECTION_ITEM -> navController.navigate(R.id.navigation_notifications)
+                }
+            }
+            show(OFFERS_ITEM)
+        }
+    }
+
+    companion object {
+        val HOME_ITEM = R.id.nav_home
+        val OFFERS_ITEM = R.id.navigation_dashboard
+        val SECTION_ITEM = R.id.navigation_notifications
     }
 
     fun logout(item: MenuItem) {

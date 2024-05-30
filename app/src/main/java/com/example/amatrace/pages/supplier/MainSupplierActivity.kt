@@ -14,6 +14,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
@@ -23,26 +25,24 @@ import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ProfileData
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class MainSupplierActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainSupplierBinding
     private lateinit var myPreference: Preference
-    private lateinit var Ownername : TextView
-    private lateinit var Email : TextView
-    private lateinit var Bisnis : TextView
-
+    private lateinit var Ownername: TextView
+    private lateinit var Email: TextView
+    private lateinit var Bisnis: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         myPreference = Preference(this)
-
 
         binding = ActivityMainSupplierBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -52,16 +52,18 @@ class MainSupplierActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
+        val bottomNavView: CurvedBottomNavigation = binding.bottomNavView
         val navController = findNavController(R.id.nav_host_fragment_content_main_supplier)
-
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_ubahprofile, R.id.nav_pengiriman, R.id.nav_logout
+                R.id.nav_home, R.id.nav_ubahprofile, R.id.nav_pengiriman, R.id.nav_logout,
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        setUpBottomNavigation(navController)
 
         val headerView = navView.getHeaderView(0)
         val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageView)
@@ -92,7 +94,6 @@ class MainSupplierActivity : AppCompatActivity() {
             // Jika tidak, arahkan ke halaman login
             redirectToLogin()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -152,6 +153,26 @@ class MainSupplierActivity : AppCompatActivity() {
         businessNameView.text = profile.businessName
     }
 
+    private fun setUpBottomNavigation(navController: NavController) {
+        val bottomNavigationItems = mutableListOf(
+            CurvedBottomNavigation.Model(HOME_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+            CurvedBottomNavigation.Model(OFFERS_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+        )
+        val bottomNavView = binding.bottomNavView
+        bottomNavView.apply {
+            bottomNavigationItems.forEach { add(it) }
+            setOnClickMenuListener { model ->
+                when (model.id) {
+                    HOME_ITEM -> navController.navigate(R.id.nav_home)
+                    OFFERS_ITEM -> navController.navigate(R.id.navigation_dashboard)
+                    SECTION_ITEM -> navController.navigate(R.id.navigation_notifications)
+
+                }
+            }
+            show(OFFERS_ITEM)
+        }
+    }
 
 
     fun logout(item: MenuItem) {
@@ -161,5 +182,11 @@ class MainSupplierActivity : AppCompatActivity() {
 
         // Redirect ke halaman login
         redirectToLogin()
+    }
+
+    companion object {
+         val HOME_ITEM = R.id.nav_home
+         val OFFERS_ITEM = R.id.navigation_dashboard
+        val SECTION_ITEM = R.id.navigation_notifications
     }
 }
