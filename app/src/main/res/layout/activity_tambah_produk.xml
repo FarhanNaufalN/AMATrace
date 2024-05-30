@@ -13,46 +13,113 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambah Produk"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/green_dark" />
+
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_image"
+            android:layout_marginBottom="10dp"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="fill_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <Button
+                android:id="@+id/buttonSelectFromGallery"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Pilih dari Galeri"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/buttonCaptureFromCamera"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ambil dari Kamera"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No. SKU"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
         <EditText
             android:id="@+id/editTextSku"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="SKU" />
+            android:hint="SKU"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="Nama Produk"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
 
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description" />
+            android:hint="Deskripsi"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/buttonAddProduct"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="Add Product" />
-
-        <Button
-            android:id="@+id/buttonSelectFromGallery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select from Gallery" />
-
-        <Button
-            android:id="@+id/buttonCaptureFromCamera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Capture from Camera" />
-
-        <ImageView
-            android:id="@+id/imageViewProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_gravity="center"
+            android:text="+ Tambahkan Produk" />
 
     </LinearLayout>
 
