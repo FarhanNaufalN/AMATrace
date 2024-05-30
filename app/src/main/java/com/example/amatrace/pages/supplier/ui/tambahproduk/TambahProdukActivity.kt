@@ -31,6 +31,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -61,7 +62,6 @@ class TambahProdukActivity : AppCompatActivity() {
                 addProduct()
             }
         }
-
 
         binding.buttonSelectFromGallery.setOnClickListener {
             selectImageFromGallery()
@@ -102,7 +102,6 @@ class TambahProdukActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun getImageUri(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
@@ -159,17 +158,6 @@ class TambahProdukActivity : AppCompatActivity() {
         })
     }
 
-
-
-    private fun createMultipartRequestBody(dataMap: Map<String, RequestBody>): RequestBody {
-        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        for ((key, value) in dataMap) {
-            builder.addFormDataPart(key, value.toString())
-        }
-        return builder.build()
-    }
-
-
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
             ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
@@ -190,34 +178,6 @@ class TambahProdukActivity : AppCompatActivity() {
                 Toast.makeText(this, "Permissions required to access camera and storage", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun getRealPathFromURI(context: Context, uri: Uri): String? {
-        var path: String? = null
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor? = context.contentResolver.query(uri, projection, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                path = it.getString(columnIndex)
-            }
-        }
-        return path
-    }
-
-    private fun getImageFileFromUri(uri: Uri): File? {
-        val inputStream = contentResolver.openInputStream(uri)
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "JPEG_${timeStamp}_"
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val imageFile = File.createTempFile(imageFileName, ".jpg", storageDir)
-        inputStream?.use { input ->
-            val outputStream = FileOutputStream(imageFile)
-            outputStream.use { output ->
-                input.copyTo(output)
-            }
-        }
-        return imageFile
     }
 
 
