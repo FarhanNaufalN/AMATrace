@@ -146,8 +146,8 @@ class ProducerMainActivity : AppCompatActivity() {
     private fun setUpBottomNavigation(navController: NavController) {
         val bottomNavigationItems = mutableListOf(
             CurvedBottomNavigation.Model(HOME_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
-            CurvedBottomNavigation.Model(OFFERS_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
-            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
+            CurvedBottomNavigation.Model(OFFERS_ITEM, getString(R.string.scan), R.drawable.ic_scan),
+            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.stok), R.drawable.ic_stok),
         )
         val bottomNavView = binding.bottomNavView
         bottomNavView.apply {
@@ -164,8 +164,8 @@ class ProducerMainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val HOME_ITEM = R.id.nav_home
-        val OFFERS_ITEM = R.id.navigation_dashboard
+        val HOME_ITEM = R.id.navigation_dashboard
+        val OFFERS_ITEM = R.id.nav_home
         val SECTION_ITEM = R.id.navigation_notifications
     }
 

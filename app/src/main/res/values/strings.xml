@@ -25,7 +25,7 @@
     <string name="nav_header_subtitle">farhannaufaln@gmail.com</string>
     <string name="nav_header_subtitle2">Kebun Jatinangor</string>
     <string name="menu_home">Menu Utama</string>
-    <string name="menu_ganti_profile">Profil\n</string>
+    <string name="menu_ganti_profile">Profil</string>
 
 
     <string name="back">Back</string>
@@ -54,6 +54,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="home">Home\n</string>
+
+    <string name="profil">Profil</string>
+    <string name="scan">Scan</string>
+    <string name="stok">Stok</string>
 
 
 </resources>
