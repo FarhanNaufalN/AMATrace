@@ -164,8 +164,8 @@ class MainSupplierActivity : AppCompatActivity() {
             bottomNavigationItems.forEach { add(it) }
             setOnClickMenuListener { model ->
                 when (model.id) {
-                    HOME_ITEM -> navController.navigate(R.id.nav_home)
-                    OFFERS_ITEM -> navController.navigate(R.id.navigation_dashboard)
+                    HOME_ITEM -> navController.navigate(R.id.navigation_dashboard)
+                    OFFERS_ITEM -> navController.navigate(R.id.nav_home)
                     SECTION_ITEM -> navController.navigate(R.id.navigation_notifications)
 
                 }

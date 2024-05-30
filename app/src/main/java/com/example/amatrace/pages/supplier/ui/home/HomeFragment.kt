@@ -12,10 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentHomeSupplierBinding
 import com.example.amatrace.pages.adapter.ProductSupplierAdapter
 import com.example.amatrace.pages.supplier.ui.tambahproduk.TambahProdukActivity
 import com.example.core.data.source.remote.preferences.Preference
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -44,6 +48,20 @@ class HomeFragment : Fragment() {
         myPreference = Preference(requireContext())
 
         productAdapter = ProductSupplierAdapter()
+        val profileImageView: CircleImageView = view.findViewById(R.id.profileImage)
+
+        // Load the profile image using Glide
+        val account = myPreference.getAccountInfo()
+        val profile = account?.avatar
+        val name = account?.ownerName
+        binding.nameOwner.text = name
+
+        Glide.with(requireContext())
+            .load(profile)
+            .apply(RequestOptions.circleCropTransform())
+            .placeholder(R.drawable.profil_farhan)
+            .error(R.drawable.profil_farhan)
+            .into(profileImageView)
 
         binding.rvSupplier.apply {
             layoutManager = LinearLayoutManager(requireContext())
