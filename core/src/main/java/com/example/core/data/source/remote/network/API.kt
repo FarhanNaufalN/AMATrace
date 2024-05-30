@@ -2,10 +2,10 @@ package com.example.core.data.source.remote.network
 
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.LoginResponse
-import com.example.core.data.source.remote.response.Product
-import com.example.core.data.source.remote.response.ProductData
 import com.example.core.data.source.remote.response.ProductListResponse
+import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.ShippingResponse
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -28,6 +28,11 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String
     ): Call<ProfileResponse>
 
+    @GET("producer/profile")
+    fun getProfileProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String
+    ): Call<ProfileProducerResponse>
+
     @PUT("supplier/profile")
     fun updateProfileSupplier(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
@@ -37,7 +42,7 @@ interface API {
     @POST("supplier/product")
     fun addProductSupplier(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Body requestBody: HashMap<String, String>
+        @Body requestBody: Map<String, String>
     ): Call<AddProductSupplierResponse>
 
     @GET("supplier/product")
@@ -51,5 +56,11 @@ interface API {
         @Query("totalPage") totalPage: Int,
         @Query("totalData") totalData: Int
     ): ProductListResponse
+
+    @POST("supplier/shipping")
+    fun getQRShipping(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Body requestBody: RequestBody
+    ): Call<ShippingResponse>
 
 }

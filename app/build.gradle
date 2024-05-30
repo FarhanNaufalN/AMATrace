@@ -69,6 +69,7 @@ dependencies {
     implementation (libs.androidx.camera.lifecycle)
     implementation (libs.androidx.camera.view)
     implementation libs.play.services.ads
+    implementation libs.qrgenerator
 
 
 

@@ -18,7 +18,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityProducerMainBinding
 import com.example.amatrace.pages.login.LoginActivity
+import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.ProfileData
+import com.example.core.data.source.remote.response.ProfileProducerData
+import com.example.core.data.source.remote.response.ProfileProducerResponse
+import com.example.core.data.source.remote.response.ProfileResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProducerMainActivity : AppCompatActivity() {
 
@@ -38,6 +46,7 @@ class ProducerMainActivity : AppCompatActivity() {
      setContentView(binding.root)
 
         setSupportActionBar(binding.appBarProducerMain.toolbar)
+        fetchProfileData()
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -86,6 +95,45 @@ class ProducerMainActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finishAffinity() // Tutup semua aktivitas yang terkait dengan aplikasi ini
+    }
+
+    private fun fetchProfileData() {
+        val token = myPreference.getAccessToken() ?: return // Get token from shared preferences
+        val call = Config.getApiService().getProfileProducer(token)
+        call.enqueue(object : Callback<ProfileProducerResponse> {
+            override fun onResponse(call: Call<ProfileProducerResponse>, response: Response<ProfileProducerResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val profile = response.body()?.data
+                    if (profile != null) {
+                        updateUI(profile)
+                    }
+                } else {
+                    // Handle unsuccessful response
+                }
+            }
+
+            override fun onFailure(call: Call<ProfileProducerResponse>, t: Throwable) {
+                // Handle failure
+            }
+        })
+    }
+
+    private fun updateUI(profile: ProfileProducerData) {
+        val headerView = binding.navView.getHeaderView(0)
+        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageViewProducer)
+        val ownerNameView = headerView.findViewById<TextView>(R.id.OwnernameProducer)
+        val emailView = headerView.findViewById<TextView>(R.id.EmailProducer)
+        val businessNameView = headerView.findViewById<TextView>(R.id.bisnisProducer)
+
+        Glide.with(this)
+            .load(profile.avatar)
+            .apply(RequestOptions.circleCropTransform())
+            .placeholder(R.drawable.profil_farhan)
+            .error(R.drawable.profil_farhan)
+            .into(profileImageView)
+
+        ownerNameView.text = profile.ownerName
+        businessNameView.text = profile.businessName
     }
 
     fun logout(item: MenuItem) {
