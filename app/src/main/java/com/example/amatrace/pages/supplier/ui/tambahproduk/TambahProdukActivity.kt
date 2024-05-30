@@ -1,40 +1,32 @@
 package com.example.amatrace.pages.supplier.ui.tambahproduk
-
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityTambahProdukBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
 
 class TambahProdukActivity : AppCompatActivity() {
 
@@ -121,8 +113,9 @@ class TambahProdukActivity : AppCompatActivity() {
             return
         }
 
+        val imageUrlTemplate = "https://api-test.amatrace.com/supplier/product/%s"
+        val imageUrl = String.format(imageUrlTemplate, generateImageFileName())
 
-        val imageUrl = imageUri.toString()
         println("Image URL: $imageUrl")
         println("SKU: $sku")
 
@@ -180,5 +173,14 @@ class TambahProdukActivity : AppCompatActivity() {
         }
     }
 
+    private fun generateImageFileName(): String {
+        // Mendapatkan timestamp saat ini
+        val currentTimeMillis = System.currentTimeMillis()
+        // Mengonversi timestamp menjadi format tanggal yang lebih mudah dibaca
+        val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+        val formattedDate = dateFormat.format(Date(currentTimeMillis))
+        // Menggabungkan format nama file dengan timestamp yang telah diformat
+        return "photos-$formattedDate.jpg"
+    }
 
 }
