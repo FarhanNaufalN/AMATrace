@@ -6,23 +6,30 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityTambahProdukBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
+import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,6 +44,7 @@ class TambahProdukActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 1
     private val CAPTURE_IMAGE_REQUEST = 2
     private val PERMISSIONS_REQUEST_CODE = 123
+    private var uploadedImageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +56,10 @@ class TambahProdukActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonAddProduct.setOnClickListener {
-            if (imageUri == null) {
+            if (uploadedImageUrl == null) {
                 Toast.makeText(this@TambahProdukActivity, "Please select an image", Toast.LENGTH_SHORT).show()
             } else {
-                addProduct()
+                addProduct(uploadedImageUrl)
             }
         }
 
@@ -72,7 +80,31 @@ class TambahProdukActivity : AppCompatActivity() {
     private fun captureImageFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAPTURE_IMAGE_REQUEST)
+        if (intent.resolveActivity(packageManager) != null) {
+            val imageFile = createImageFile()
+            imageUri = FileProvider.getUriForFile(
+                this,
+                "com.example.amatrace.fileprovider",
+                imageFile
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+
+        } else {
+
+        }
     }
+
+
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -82,6 +114,8 @@ class TambahProdukActivity : AppCompatActivity() {
                     imageUri = data?.data
                     imageUri?.let { uri ->
                         Glide.with(this).load(uri).into(binding.imageViewProduct)
+                        // Kita panggil uploadImageToServer setelah pengguna memilih gambar
+                        uploadImageToServer(imageUri!!)
                     }
                 }
                 CAPTURE_IMAGE_REQUEST -> {
@@ -89,12 +123,13 @@ class TambahProdukActivity : AppCompatActivity() {
                     imageUri = getImageUri(bitmap)
                     imageUri?.let { uri ->
                         Glide.with(this).load(uri).into(binding.imageViewProduct)
+                        // Kita panggil uploadImageToServer setelah pengguna mengambil foto
+                        uploadImageToServer(imageUri!!)
                     }
                 }
             }
         }
     }
-
     private fun getImageUri(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -102,54 +137,97 @@ class TambahProdukActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-    private fun addProduct() {
+    private fun uploadImageToServer(uri: Uri) {
         val token = myPreference.getAccessToken() ?: return
-        val sku = binding.editTextSku.text.toString()
-        val name = binding.editTextName.text.toString()
-        val description = binding.editTextDescription.text.toString()
+        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        val file = bitmapToFile(bitmap)
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        if (imageUri == null) {
-            Toast.makeText(this@TambahProdukActivity, "Please select an image", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val imageUrlTemplate = "https://api-test.amatrace.com/supplier/product/%s"
-        val imageUrl = String.format(imageUrlTemplate, generateImageFileName())
-
-        println("Image URL: $imageUrl")
-        println("SKU: $sku")
-
-
-        val requestBodyMap = HashMap<String, String>()
-        requestBodyMap["sku"] = sku
-        requestBodyMap["name"] = name
-        requestBodyMap["description"] = description
-        requestBodyMap["image"] = imageUrl
-
-        val call = Config.getApiService().addProductSupplier(token, requestBodyMap)
-
-        call.enqueue(object : Callback<AddProductSupplierResponse> {
-            override fun onResponse(call: Call<AddProductSupplierResponse>, response: Response<AddProductSupplierResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val product = response.body()
-                    if (product != null) {
-                        Toast.makeText(this@TambahProdukActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@TambahProdukActivity, MainSupplierActivity::class.java))
+        val client = Config.getApiService().uploadImage(token, body)
+        client.enqueue(object : Callback<UploadImageProductSupplierResponse> {
+            override fun onResponse(
+                call: Call<UploadImageProductSupplierResponse>,
+                response: Response<UploadImageProductSupplierResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null && responseBody.success) {
+                        uploadedImageUrl = responseBody.data.image
+                    } else {
+                        // Gagal mengunggah gambar
+                        Toast.makeText(
+                            this@TambahProdukActivity,
+                            "Failed to upload image",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    // Handle unsuccessful response
-                    val errorMessage = response.message() ?: "Unknown error"
-                    Toast.makeText(this@TambahProdukActivity, "Failed to add product: $errorMessage", Toast.LENGTH_SHORT).show()
+                    // Gagal terhubung ke server
+                    Toast.makeText(
+                        this@TambahProdukActivity,
+                        "Failed to connect to server",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
-            override fun onFailure(call: Call<AddProductSupplierResponse>, t: Throwable) {
-                // Handle network failure
-                Toast.makeText(this@TambahProdukActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                t.printStackTrace() // Print the stack trace for debugging
+            override fun onFailure(call: Call<UploadImageProductSupplierResponse>, t: Throwable) {
+                // Gagal terhubung ke server
+                Toast.makeText(
+                    this@TambahProdukActivity,
+                    "Failed to connect to server: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
+
+
+    private fun addProduct(uploadedImageUrl: String?) {
+        // Pastikan uploadedImageUrl sudah diisi sebelumnya
+        this.uploadedImageUrl?.let { imageUrl ->
+            val token = myPreference.getAccessToken() ?: return
+            val sku = binding.editTextSku.text.toString()
+            val name = binding.editTextName.text.toString()
+            val description = binding.editTextDescription.text.toString()
+
+            val requestBodyMap = HashMap<String, String>()
+            requestBodyMap["sku"] = sku
+            requestBodyMap["name"] = name
+            requestBodyMap["description"] = description
+            requestBodyMap["image"] = imageUrl
+
+            val call = Config.getApiService().addProductSupplier(token, requestBodyMap)
+
+            call.enqueue(object : Callback<AddProductSupplierResponse> {
+                override fun onResponse(call: Call<AddProductSupplierResponse>, response: Response<AddProductSupplierResponse>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val product = response.body()
+                        if (product != null) {
+                            Toast.makeText(this@TambahProdukActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@TambahProdukActivity, MainSupplierActivity::class.java))
+                        }
+                    } else {
+                        // Handle unsuccessful response
+                        val errorMessage = response.message() ?: "Unknown error"
+                        Toast.makeText(this@TambahProdukActivity, "Failed to add product: $errorMessage", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<AddProductSupplierResponse>, t: Throwable) {
+                    // Handle network failure
+                    Toast.makeText(this@TambahProdukActivity, "Failed to connect to server: ${t.message}", Toast.LENGTH_SHORT).show()
+                    t.printStackTrace() // Print the stack trace for debugging
+                }
+            })
+        } ?: run {
+            // Jika uploadedImageUrl masih null
+            Toast.makeText(this@TambahProdukActivity, "Please upload an image first", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
@@ -172,6 +250,17 @@ class TambahProdukActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun bitmapToFile(bitmap: Bitmap): File {
+        val filesDir = applicationContext.filesDir
+        val file = File(filesDir, "temp_image.jpg") // Ubah ekstensi file menjadi .jpg
+        val outputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream) // Simpan dalam format JPEG
+        outputStream.flush()
+        outputStream.close()
+        return file
+    }
+
 
     private fun generateImageFileName(): String {
         // Mendapatkan timestamp saat ini

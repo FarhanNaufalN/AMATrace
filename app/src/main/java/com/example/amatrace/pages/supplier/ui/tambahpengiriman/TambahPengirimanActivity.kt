@@ -86,7 +86,7 @@ class TambahPengirimanActivity : AppCompatActivity() {
                         producerList = response.body()?.data?.producers // Perbaiki di sini
                         if (!producerList.isNullOrEmpty()) {
                             val productNames = mutableListOf(" Pilih Tujuan")
-                            productNames.addAll(producerList!!.map { it.ownerName })
+                            productNames.addAll(producerList!!.map { it.businessName })
                             val adapter = ArrayAdapter(this@TambahPengirimanActivity, R.layout.simple_spinner_item, productNames)
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.spinnerProducer.adapter = adapter

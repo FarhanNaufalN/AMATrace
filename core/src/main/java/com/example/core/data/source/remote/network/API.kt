@@ -8,13 +8,18 @@ import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
 import com.example.core.data.source.remote.response.ShippingResponse
+import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
+import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 
@@ -40,6 +45,20 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Body requestBody: RequestBody
     ): Call<ProfileResponse>
+
+    @Multipart
+    @POST("supplier/image/profile")
+    fun uploadImageProfileSupplier(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<UploadImageProfileSupplierResponse>
+
+    @Multipart
+    @POST("supplier/image/product")
+    fun uploadImage(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<UploadImageProductSupplierResponse>
 
     @POST("supplier/product")
     fun addProductSupplier(
@@ -81,5 +100,7 @@ interface API {
         @Query("totalPage") totalPage: Int,
         @Query("totalData") totalData: Int
     ): GetShippingListResponse
+
+
 
 }

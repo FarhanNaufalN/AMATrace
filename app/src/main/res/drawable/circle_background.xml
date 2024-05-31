@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Lingkaran kosong dengan border -->
+    <item android:state_enabled="true">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/green_dark" />
+        </shape>
+    </item>
+
+    <!-- Lingkaran dengan border saat tidak dalam keadaan aktif -->
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/black" />
+        </shape>
+    </item>
+
+</selector>
