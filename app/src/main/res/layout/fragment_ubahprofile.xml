@@ -3,22 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    android:padding="40dp">
-
+ >
     <LinearLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PROFIL"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/green_dark"
-            android:layout_marginBottom="20dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImageView"
@@ -26,109 +16,126 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/profil_farhan"
-            android:layout_marginBottom="10dp"/>
+            />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nama"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
 
-        <EditText
-            android:id="@+id/editTextOwnerName"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="Nama"
-            android:gravity="start"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nama Perusahaan"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/editTextOwnerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:gravity="start"
+                android:hint="Nama"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/editTextBusinessName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nama Perusahaan"
-            android:gravity="start"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Perusahaan"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No. Telp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/editTextBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:gravity="start"
+                android:hint="Nama Perusahaan"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/editTextPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="No. Telp"
-            android:gravity="start"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No. Telp"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Alamat"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:gravity="start"
+                android:hint="No. Telp"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/editTextAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Alamat"
-            android:gravity="start"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Deskripsi Perusahaan"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/editTextAddress"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_background"
+                android:gravity="start"
+                android:hint="Alamat"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/editTextDescription"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Deskripsi"
-            android:gravity="start"
-            android:padding="10dp"
-            android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="30dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi Perusahaan"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Simpan" />
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/edit_text_background"
+                android:gravity="start"
+                android:hint="Deskripsi"
+                android:padding="10dp"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Simpan" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

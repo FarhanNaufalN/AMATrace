@@ -22,7 +22,7 @@
 
         <com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
             android:id="@+id/bottom_nav_view"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/gray"
             app:cbn_background="@color/white_70"
