@@ -5,25 +5,67 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="30dp"
     tools:context=".pages.supplier.ui.tambahpengiriman.TambahPengirimanActivity">
 
     <!-- Product ID Input -->
 
     <!-- Delivery Date Input -->
 
+
+    <TextView
+        android:id="@+id/txt_kirim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Buat Pengiriman"
+        android:textColor="@color/green_dark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="37dp" />
+
+    <TextView
+        android:id="@+id/txt_prdk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Produk"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/green_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_kirim"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13"/>
+
     <Spinner
         android:id="@+id/spinnerProduct"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
-
         android:background="@drawable/edit_text_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_prdk"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18" />
 
+
+    <TextView
+        android:id="@+id/txt_dlv_dt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Pengiriman"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/green_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.28"/>
 
     <EditText
         android:id="@+id/etProductId"
@@ -43,55 +85,85 @@
         app:layout_constraintVertical_bias="0.048" />
 
     <!-- Expired Date Input -->
+
     <TextView
         android:id="@+id/etDeliveryDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
+        android:hint="2024-01-01"
         android:onClick="onBackButtonClickedDeliveryDate"
-        android:hint="Delivery Date"
         android:padding="10dp"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerProduct" />
+        app:layout_constraintTop_toBottomOf="@id/txt_dlv_dt" />
+
+    <TextView
+        android:id="@+id/txt_exp_dt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Kadaluarsa"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/green_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43"/>
 
     <TextView
         android:id="@+id/etExpiredDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="onBackButtonClickedExpiredDate"
-        android:hint="Expired Date"
+        android:hint="2025-01-01"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
         android:padding="10dp"
         android:textAlignment="textStart"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/etDeliveryDate"
+        app:layout_constraintTop_toBottomOf="@id/txt_exp_dt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>
 
+    <TextView
+        android:id="@+id/txt_jml_kg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Banyak Produk"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/green_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57"/>
+
     <!-- Mass Input -->
+
+    <!-- Producer ID Destination Input -->
+
     <EditText
         android:id="@+id/etMass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Mass"
+        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edit_text_background"
         android:gravity="start"
+        android:hint="Banyak Produk"
         android:padding="10dp"
         android:textAlignment="textStart"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/etExpiredDate"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
-
-    <!-- Producer ID Destination Input -->
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_jml_kg" />
 
     <Spinner
         android:id="@+id/spinnerProducer"
