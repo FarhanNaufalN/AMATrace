@@ -43,20 +43,20 @@
 
             <Button
                 android:id="@+id/buttonSelectFromGallery"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Galeri"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"/>
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="Galeri" />
 
             <Button
                 android:id="@+id/buttonCaptureFromCamera"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
                 android:text="Kamera" />
         </LinearLayout>
 
