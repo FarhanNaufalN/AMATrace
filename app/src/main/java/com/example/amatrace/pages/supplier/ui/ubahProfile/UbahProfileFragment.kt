@@ -33,6 +33,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -75,6 +76,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
         binding.profileImageView.setOnClickListener {
             selectImage()
         }
+
     }
 
     private fun selectImage() {
@@ -97,6 +99,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
         builder.show()
     }
 
+
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -112,9 +115,14 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PICK_IMAGE_REQUEST -> {
-                    if (data != null) {
-                        val imageUri: Uri = data.data!!
+                    data?.data?.let { imageUri ->
                         uploadImageToServer(imageUri)
+                    } ?: run {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to load image from gallery",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
                 CAPTURE_IMAGE_REQUEST -> {
@@ -122,11 +130,18 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                     imageBitmap?.let {
                         val imageUri = saveImageToGallery(it)
                         uploadImageToServer(imageUri)
+                    } ?: run {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to capture image",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
     }
+
 
     private fun saveImageToGallery(bitmap: Bitmap): Uri {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -204,6 +219,11 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                                 .placeholder(R.drawable.profil_farhan)
                                 .error(R.drawable.profil_farhan)
                                 .into(binding.profileImageView)
+
+                            with(binding) {
+                                etAvatar.setText(responseBody.data.image)
+                            }
+
                         } else {
                             Toast.makeText(
                                 requireContext(),
@@ -296,7 +316,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
         val phoneNumber = binding.editTextPhoneNumber.text.toString()
         val address = binding.editTextAddress.text.toString()
         val description = binding.editTextDescription.text.toString()
-        val avatar = uploadedImageUrl
+        val avatar = binding.etAvatar.text.toString()
 
         val jsonObject = JSONObject().apply {
             put("ownerName", ownerName)

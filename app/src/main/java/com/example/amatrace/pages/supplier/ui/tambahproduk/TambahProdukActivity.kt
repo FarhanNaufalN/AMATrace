@@ -130,6 +130,7 @@ class TambahProdukActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun getImageUri(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)

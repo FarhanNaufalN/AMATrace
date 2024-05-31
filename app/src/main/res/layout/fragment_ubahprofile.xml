@@ -54,7 +54,7 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/editTextOwnerName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="start"
@@ -75,7 +75,7 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/editTextBusinessName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="start"
@@ -96,7 +96,7 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/editTextPhoneNumber"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="start"
@@ -104,6 +104,20 @@
                 android:padding="10dp"
                 android:textAlignment="textStart"
                 android:textSize="14sp" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/etAvatar"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="No. Telp"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -150,6 +164,7 @@
             <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="250dp"
+                android:layout_marginBottom="70dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Simpan" />
