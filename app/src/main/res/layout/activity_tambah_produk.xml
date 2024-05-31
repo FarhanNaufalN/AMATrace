@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.supplier.ui.tambahproduk.TambahProdukActivity">
+    tools:context=".pages.supplier.ui.tambahproduk.TambahProdukActivity"
+    android:padding="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,21 +43,21 @@
 
             <Button
                 android:id="@+id/buttonSelectFromGallery"
-                android:layout_width="170dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Pilih dari Galeri"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:text="Galeri"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"/>
 
             <Button
                 android:id="@+id/buttonCaptureFromCamera"
-                android:layout_width="170dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ambil dari Kamera"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="Kamera" />
         </LinearLayout>
 
         <TextView
