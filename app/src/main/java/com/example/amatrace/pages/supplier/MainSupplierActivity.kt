@@ -164,9 +164,9 @@ class MainSupplierActivity : AppCompatActivity() {
             bottomNavigationItems.forEach { add(it) }
             setOnClickMenuListener { model ->
                 when (model.id) {
-                    HOME_ITEM -> navController.navigate(R.id.navigation_dashboard)
+                    HOME_ITEM -> navController.navigate(R.id.nav_ubahprofile)
                     OFFERS_ITEM -> navController.navigate(R.id.nav_home)
-                    SECTION_ITEM -> navController.navigate(R.id.navigation_notifications)
+                    SECTION_ITEM -> navController.navigate(R.id.nav_pengiriman)
 
                 }
             }
@@ -185,8 +185,8 @@ class MainSupplierActivity : AppCompatActivity() {
     }
 
     companion object {
-         val HOME_ITEM = R.id.navigation_dashboard
+         val HOME_ITEM = R.id.nav_ubahprofile
          val OFFERS_ITEM = R.id.nav_home
-        val SECTION_ITEM = R.id.navigation_notifications
+        val SECTION_ITEM = R.id.nav_pengiriman
     }
 }
