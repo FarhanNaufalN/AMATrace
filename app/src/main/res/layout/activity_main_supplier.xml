@@ -13,11 +13,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <include
-        android:id="@+id/app_bar_main_supplier"
-        layout="@layout/app_bar_main_supplier"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <include
+            android:id="@+id/app_bar_main_supplier"
+            layout="@layout/app_bar_main_supplier"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
             android:id="@+id/bottom_nav_view"
