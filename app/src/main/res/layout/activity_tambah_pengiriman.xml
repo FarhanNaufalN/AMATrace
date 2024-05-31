@@ -94,6 +94,30 @@
             android:textColor="@color/green_dark" />
 
         <EditText
+            android:id="@+id/etProductId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyak Produk"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
+
+        <EditText
+            android:id="@+id/etProductDestination"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyak Produk"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
+
+        <EditText
             android:id="@+id/etMass"
             android:layout_width="match_parent"
             android:layout_height="45dp"
