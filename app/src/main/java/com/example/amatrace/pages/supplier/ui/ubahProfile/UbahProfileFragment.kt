@@ -369,6 +369,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
     companion object {
         private const val PICK_IMAGE_REQUEST = 1
         private const val CAPTURE_IMAGE_REQUEST = 2
+        private const val PERMISSIONS_REQUEST_CODE = 123
     }
 
 }
