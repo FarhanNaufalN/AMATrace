@@ -46,20 +46,11 @@ class PengirimanFragment : Fragment() {
         myPreference = Preference(requireContext())
 
         shippingAdapter = ShippingAdapter()
-        val profileImageView: CircleImageView = binding.profileImage
 
         // Load the profile image using Glide
         val account = myPreference.getAccountInfo()
         val profile = account?.avatar
         val name = account?.ownerName
-        binding.nameOwner.text = name
-
-        Glide.with(requireContext())
-            .load(profile)
-            .apply(RequestOptions.circleCropTransform())
-            .placeholder(R.drawable.profil_farhan)
-            .error(R.drawable.profil_farhan)
-            .into(profileImageView)
 
         binding.rvShipping.apply {
             layoutManager = LinearLayoutManager(requireContext())
