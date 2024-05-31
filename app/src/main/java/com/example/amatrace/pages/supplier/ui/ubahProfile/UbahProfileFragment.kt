@@ -342,7 +342,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                             "Profile updated successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-
+                        startActivity(Intent(requireContext(), MainSupplierActivity::class.java))
                     } else {
                         Toast.makeText(
                             requireContext(),
