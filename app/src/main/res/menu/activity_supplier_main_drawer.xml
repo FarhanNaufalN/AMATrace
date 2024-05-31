@@ -5,19 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/menu_utama"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_ubahprofile"
-            android:icon="@drawable/edit_profil"
-            android:title="@string/menu_ganti_profile" />
-        <item
-            android:id="@+id/nav_pengiriman"
-            android:icon="@drawable/ic_pengiriman"
-            android:title="@string/menu_kirim" />
-
-        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:onClick="logout"
