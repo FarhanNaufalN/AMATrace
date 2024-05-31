@@ -281,6 +281,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                                 editTextPhoneNumber.setText(profile.noHp)
                                 editTextAddress.setText(profile.address)
                                 editTextDescription.setText(profile.description)
+                                etAvatar.setText(profile.avatar)
 
                                 Glide.with(this@UbahProfileFragment)
                                     .load(profile.avatar)
