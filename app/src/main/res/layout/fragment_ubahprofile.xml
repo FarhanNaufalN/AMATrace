@@ -2,13 +2,13 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="55dp"
     android:background="@color/gray">
 
     <LinearLayout
-        android:padding="50dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -116,7 +116,7 @@
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="start"
                 android:hint="Deskripsi"
@@ -124,11 +124,12 @@
                 android:textAlignment="textStart"
                 android:textSize="14sp" />
 
-            <Button
-                android:id="@+id/buttonSave"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Simpan" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:layout_gravity="center"
+            android:text="Simpan" />
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
