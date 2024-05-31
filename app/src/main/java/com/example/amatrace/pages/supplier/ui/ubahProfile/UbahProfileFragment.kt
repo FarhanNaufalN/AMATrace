@@ -2,6 +2,8 @@ package com.example.amatrace.pages.supplier.ui.ubahProfile
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -32,6 +34,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -74,17 +78,86 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
     }
 
     private fun selectImage() {
+        val options = arrayOf("Ambil dari Galeri", "Ambil dari Kamera")
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Pilih Sumber Gambar")
+        builder.setItems(options) { dialog: DialogInterface, which: Int ->
+            when (which) {
+                0 -> {
+                    // Ambil dari galeri
+                    openGallery()
+                }
+                1 -> {
+                    // Ambil dari kamera
+                    openCamera()
+                }
+            }
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAPTURE_IMAGE_REQUEST)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            val imageUri: Uri = data.data!!
-            uploadImageToServer(imageUri)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PICK_IMAGE_REQUEST -> {
+                    if (data != null) {
+                        val imageUri: Uri = data.data!!
+                        uploadImageToServer(imageUri)
+                    }
+                }
+                CAPTURE_IMAGE_REQUEST -> {
+                    val imageBitmap = data?.extras?.get("data") as Bitmap?
+                    imageBitmap?.let {
+                        val imageUri = saveImageToGallery(it)
+                        uploadImageToServer(imageUri)
+                    }
+                }
+            }
         }
     }
+
+    private fun saveImageToGallery(bitmap: Bitmap): Uri {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "JPEG_${timeStamp}_"
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File.createTempFile(
+            imageFileName,  /* prefix */
+            ".jpg",  /* suffix */
+            storageDir /* directory */
+        )
+
+        try {
+            val outputStream = FileOutputStream(imageFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            // Add image to gallery
+            MediaStore.Images.Media.insertImage(
+                requireContext().contentResolver,
+                imageFile.absolutePath,
+                imageFile.name,
+                null
+            )
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return Uri.fromFile(imageFile)
+    }
+
 
     private fun checkPermissions() {
         val permissions = arrayOf(
@@ -121,7 +194,9 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null && responseBody.success) {
-                            uploadedImageUrl = responseBody.data.image
+                            // Hapus karakter escape backslash dari URL
+                            uploadedImageUrl = responseBody.data.image.replace("\\", "")
+                            println(uploadedImageUrl)
                             // Update image view with uploaded image
                             Glide.with(this@UbahProfileFragment)
                                 .load(uploadedImageUrl)
@@ -157,6 +232,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                 }
             })
     }
+
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -220,6 +296,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
         val phoneNumber = binding.editTextPhoneNumber.text.toString()
         val address = binding.editTextAddress.text.toString()
         val description = binding.editTextDescription.text.toString()
+        val avatar = uploadedImageUrl
 
         val jsonObject = JSONObject().apply {
             put("ownerName", ownerName)
@@ -227,6 +304,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
             put("noHp", phoneNumber)
             put("address", address)
             put("description", description)
+            put("avatar", avatar)
         }
 
         val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
@@ -243,7 +321,7 @@ class UbahProfileFragment : Fragment(R.layout.fragment_ubahprofile) {
                             "Profile updated successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        startActivity(Intent(requireContext(), MainSupplierActivity::class.java))
+
                     } else {
                         Toast.makeText(
                             requireContext(),
