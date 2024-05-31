@@ -20,9 +20,9 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:alpha="0.4"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="192dp"
+        android:alpha="0.3"
         android:background="@drawable/app_logo_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
