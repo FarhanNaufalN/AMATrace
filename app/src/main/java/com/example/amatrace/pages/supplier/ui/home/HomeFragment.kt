@@ -48,20 +48,11 @@ class HomeFragment : Fragment() {
         myPreference = Preference(requireContext())
 
         productAdapter = ProductSupplierAdapter()
-        val profileImageView: CircleImageView = view.findViewById(R.id.profileImage)
 
         // Load the profile image using Glide
         val account = myPreference.getAccountInfo()
-        val profile = account?.avatar
-        val name = account?.ownerName
-        binding.nameOwner.text = name
 
-        Glide.with(requireContext())
-            .load(profile)
-            .apply(RequestOptions.circleCropTransform())
-            .placeholder(R.drawable.profil_farhan)
-            .error(R.drawable.profil_farhan)
-            .into(profileImageView)
+        val name = account?.ownerName
 
         binding.rvSupplier.apply {
             layoutManager = LinearLayoutManager(requireContext())
