@@ -9,6 +9,7 @@ import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
 import com.example.core.data.source.remote.response.ShippingResponse
+import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
 import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
 import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
 import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
@@ -116,6 +117,18 @@ interface API {
         @Query("totalData") totalData: Int
     ): GetShippingListResponse
 
+    @GET("supplier/product/{productId}/product-claim")
+    fun getProductClaimSupplier(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productId") productId: String
+    ): Call<SupplierProductClaimListResponse>
 
+    @GET("supplier/product/{productId}/product-claim")
+    suspend fun getProductClaimSupplierList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productId") productId: String,
+        @Query("totalPage") totalPage: Int,
+        @Query("totalData") totalData: Int
+    ): SupplierProductClaimListResponse
 
 }

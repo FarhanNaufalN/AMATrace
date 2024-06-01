@@ -1,12 +1,15 @@
 package com.example.amatrace.pages.supplier.ui.detail.product
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityDetailProductBinding
 import com.example.amatrace.pages.adapter.ClaimProductSupplierAdapter
+import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.TambahClaimActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.Claim
@@ -21,6 +24,7 @@ class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
     private lateinit var myPreference: Preference
     private lateinit var claimsAdapter: ClaimProductSupplierAdapter
+    private var productId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,14 +79,24 @@ class DetailProductActivity : AppCompatActivity() {
     }
 
     private fun displayClaims(claims: List<Claim>) {
-        claimsAdapter = ClaimProductSupplierAdapter(claims)
-        binding.rvClaim.apply {
-            layoutManager = LinearLayoutManager(this@DetailProductActivity)
-            adapter = claimsAdapter
+        // Pastikan claimsAdapter sudah diinisialisasi sebelum digunakan
+        if (!::claimsAdapter.isInitialized) {
+            // Jika belum diinisialisasi, inisialisasikan claimsAdapter
+            claimsAdapter = ClaimProductSupplierAdapter()
+            // Set RecyclerView adapter
+            binding.rvClaim.apply {
+                layoutManager = LinearLayoutManager(this@DetailProductActivity)
+                adapter = claimsAdapter
+            }
         }
+
+        // Kemudian, update daftar klaim di adapter
+        claimsAdapter.updateClaims(claims)
     }
 
-    fun onClaimClicked(claim: Claim) {
-
+    fun onClaimClicked(view: View) {
+        val intent = Intent(this, TambahClaimActivity::class.java)
+        productId?.let { intent.putExtra("product_id", it) }
+        startActivity(intent)
     }
 }
