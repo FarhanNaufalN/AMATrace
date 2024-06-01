@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amatrace.MainActivity
+import com.example.amatrace.pages.supplier.ui.detail.shipping.DetailShippingActivity
 import com.example.core.data.source.remote.response.Shipping
 import com.example.core.databinding.ItemRowBinding
 
@@ -36,9 +37,10 @@ class ShippingAdapter : PagingDataAdapter<Shipping, ShippingAdapter.MyViewHolder
                 Glide.with(itemView.context).load(item.product.image).into(productImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, MainActivity::class.java)
+                    val intent = Intent(itemView.context, DetailShippingActivity::class.java)
                     val bundle = Bundle()
 
+                    bundle.putString("shipping_id", item.id)
                     bundle.putString("list_name", item.product.name)
                     bundle.putString("list_image", item.product.image)
                     bundle.putString("list_sku", item.product.sku)

@@ -21,6 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
+        <activity
+            android:name=".pages.supplier.ui.detail.product.DetailProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.supplier.ui.detail.shipping.DetailShippingActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

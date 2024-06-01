@@ -4,10 +4,12 @@ import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.LoginResponse
+import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
 import com.example.core.data.source.remote.response.ShippingResponse
+import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
 import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
 import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
 import okhttp3.MultipartBody
@@ -20,6 +22,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -71,6 +74,12 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<ProductListResponse>
 
+    @GET("supplier/product/{productId}")
+    fun getSupplierProductDetail(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productId") productId: String
+    ): Call<ProductDetailSupplierResponse>
+
     @GET("supplier/product")
     suspend fun getSupplierProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
@@ -93,6 +102,12 @@ interface API {
     fun getListShipping(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<GetShippingListResponse>
+
+    @GET("supplier/shipping/{shippingId}")
+    fun getSupplierShippingDetail(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("shippingId") shippingId: String
+    ): Call<SupplierProductShippingDetailResponse>
 
     @GET("supplier/shipping")
     suspend fun getSupplierShippingList(

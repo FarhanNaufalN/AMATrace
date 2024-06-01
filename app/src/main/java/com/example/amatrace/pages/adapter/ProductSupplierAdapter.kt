@@ -8,11 +8,9 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.amatrace.MainActivity
+import com.example.amatrace.pages.supplier.ui.detail.product.DetailProductActivity
 import com.example.core.data.source.remote.response.Product
 import com.example.core.databinding.ItemRowBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class ProductSupplierAdapter : PagingDataAdapter<Product, ProductSupplierAdapter.MyViewHolder>(
     DIFF_CALLBACK
@@ -39,9 +37,10 @@ class ProductSupplierAdapter : PagingDataAdapter<Product, ProductSupplierAdapter
                 Glide.with(itemView.context).load(item.image).into(productImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, MainActivity::class.java)
+                    val intent = Intent(itemView.context, DetailProductActivity::class.java)
                     val bundle = Bundle()
 
+                    bundle.putString("product_id", item.id)
                     bundle.putString("list_name", item.name)
                     bundle.putString("list_image", item.image)
                     bundle.putString("list_sku", item.sku)

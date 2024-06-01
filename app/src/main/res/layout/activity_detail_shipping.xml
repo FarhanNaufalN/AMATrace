@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".pages.supplier.ui.detail.shipping.DetailShippingActivity"
+android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/avatars" />
+
+<TextView
+    android:id="@+id/text_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="ID: 1c028e38-5487-4e9c-90f4-6e39aae1ac4d"
+    android:textSize="18sp"
+    android:padding="16dp" />
+
+<!-- Include more TextViews to display other information such as qrCode, status, createdAt, deliveryDate, expiredDate, etc. -->
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Product Name" />
+
+    <!-- Product SKU -->
+    <TextView
+        android:id="@+id/productSku"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        tools:text="SKU: CB-01" />
+
+<!-- Include more TextViews to display information about the product such as sku, image, etc. -->
+
+<TextView
+    android:id="@+id/text_producer_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Producer: PT. Sambalado"
+    android:textSize="18sp"
+    android:padding="16dp" />
+
+<!-- Include more TextViews to display information about the producer such as ownerName, email, address, etc. -->
+
+<TextView
+    android:id="@+id/text_supplier_location"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Supplier Location: Jl. Batik Kumeli No.50, Sukaluyu, Kec. Cibeunying Kaler, Kota Bandung, Jawa Barat 40123"
+    android:textSize="18sp"
+    android:padding="16dp" />
+
+<!-- Include more TextViews to display other information such as lat, lon, address, etc. -->
+
+</LinearLayout>
