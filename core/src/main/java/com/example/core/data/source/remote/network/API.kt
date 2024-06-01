@@ -90,11 +90,6 @@ interface API {
         @Query("totalData") totalData: Int
     ): ProductListResponse
 
-    @GET("supplier/product")
-    fun getSearchSupplierProduct(
-        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Query("namesku") search: String,
-    ): Call<ProductListResponse>
 
     @GET("supplier/product")
     suspend fun getSearchSupplierProductList(
@@ -129,6 +124,12 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Query("totalPage") totalPage: Int,
         @Query("totalData") totalData: Int
+    ): GetShippingListResponse
+
+    @GET("supplier/shipping")
+    suspend fun getSearchShippingProductList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("namesku") search: String,
     ): GetShippingListResponse
 
     @GET("supplier/product/{productId}/product-claim")

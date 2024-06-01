@@ -1,7 +1,6 @@
 package com.example.core.data.source.Paging
 
 import android.content.Context
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.core.data.source.remote.network.API
@@ -10,10 +9,13 @@ import com.example.core.data.source.remote.response.Shipping
 import retrofit2.HttpException
 import java.io.IOException
 
-class ShippingListPagingSource(private val apiService: API, context: Context) :
-    PagingSource<Int, Shipping>() {
+class ShippingListPagingSource(
+    private val apiService: API,
+    context: Context,
+    private var searchQuery: String?
+) : PagingSource<Int, Shipping>() {
 
-    private val myPreferences = Preference(context)
+    private var myPreferences = Preference(context)
 
     override fun getRefreshKey(state: PagingState<Int, Shipping>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -28,19 +30,17 @@ class ShippingListPagingSource(private val apiService: API, context: Context) :
             val token = myPreferences.getAccessToken()
 
             token?.let { accessToken ->
-                val response = apiService.getSupplierShippingList(accessToken, position, params.loadSize)
-                val data = response.data?.shippings
-                if (data != null) {
-                    LoadResult.Page(
-                        data = data,
-                        prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                        nextKey = if (data.isEmpty()) null else position + 1
-                    )
+                val responseData = if (searchQuery.isNullOrEmpty()) {
+                    apiService.getSupplierShippingList(accessToken, position, params.loadSize)
                 } else {
-                    LoadResult.Error(NullPointerException("Shipping data is null"))
+                    apiService.getSearchShippingProductList(accessToken, searchQuery!!)
                 }
-
-
+                val products = responseData.data.shippings
+                LoadResult.Page(
+                    data = products,
+                    prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
+                    nextKey = if (products.isEmpty()) null else position + 1
+                )
             } ?: LoadResult.Error(NullPointerException("Access token is null"))
         } catch (exception: IOException) {
             LoadResult.Error(exception)
@@ -49,11 +49,11 @@ class ShippingListPagingSource(private val apiService: API, context: Context) :
         }
     }
 
+    fun setSearchQuery(query: String?) {
+        searchQuery = query
+    }
+
     companion object {
         const val INITIAL_PAGE_INDEX = 1
-
-        fun snapshot(items: List<Shipping>): PagingData<Shipping> {
-            return PagingData.from(items)
-        }
     }
 }

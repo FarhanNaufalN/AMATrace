@@ -9,60 +9,69 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
-import com.example.amatrace.pages.supplier.ui.pengiriman.ShippingViewModelFactory.Companion.TAG
 import com.example.core.data.repository.ShippingListRepository
-import com.example.core.data.source.remote.network.Config
-import com.example.core.data.source.remote.response.GetShippingListResponse
-import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.Shipping
 import com.example.core.di.InjectionProductSupplier
 import com.example.core.di.InjectionShippingSupplier
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
-class PengirimanViewModel (shippingListRepository: ShippingListRepository) : ViewModel() {
-    private val _listShipping = MutableLiveData<List<Shipping>>()
-    private val listShipping: LiveData<List<Shipping>> = _listShipping
+class PengirimanViewModel(
+    private val shippingListRepository: ShippingListRepository,
+    private val searchQueryState: String?
+) : ViewModel() {
 
-    val shipping: LiveData<PagingData<Shipping>> by lazy {
-        shippingListRepository.getShippingList().cachedIn(viewModelScope)
-    }
+    private val _shipping = MutableLiveData<PagingData<Shipping>>()
+    val shipping: LiveData<PagingData<Shipping>> = _shipping
 
-    fun getShippingPaging() = listShipping
-
-    fun getAllShipping(token: String){
-        val client = Config.getApiService().getListShipping(token)
-        client.enqueue(object : Callback<GetShippingListResponse> {
-            override fun onResponse(
-                call: Call<GetShippingListResponse>,
-                response: Response<GetShippingListResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _listShipping.postValue(response.body()?.data?.shippings)
+    fun getAllShipping(token: String) {
+        viewModelScope.launch {
+            try {
+                val shippingData = shippingListRepository.getShippingList()
+                shippingData.observeForever {
+                    _shipping.postValue(it)
                 }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting all shipping: ${e.message}")
             }
-
-            override fun onFailure(call: Call<GetShippingListResponse>, t: Throwable) {
-                Log.e(TAG, "OnFailure : ${t.message}")
-            }
-        })
+        }
     }
 
-
-}
-
-class ShippingViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PengirimanViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return PengirimanViewModel(InjectionShippingSupplier.provideShippingRepository(context)) as T
+    fun searchShipping(token: String, query: String) {
+        viewModelScope.launch {
+            try {
+                shippingListRepository.searchShipping(query).collect {
+                    _shipping.postValue(it)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error searching shipping: ${e.message}")
+            }
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+    fun performSearch() {
+        val query = searchQueryState ?: return
+        viewModelScope.launch {
+            try {
+                shippingListRepository.searchShipping(query).collect {
+                    _shipping.postValue(it)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error performing search: ${e.message}")
+            }
+        }
     }
 
     companion object {
-        const val TAG = "ShippingViewModelFactory"
+        const val TAG = "PengirimanViewModel"
+    }
+}
+
+class ShippingViewModelFactory(private val context: Context, private val searchQueryState: String?) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PengirimanViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return PengirimanViewModel(InjectionShippingSupplier.provideShippingRepository(context), searchQueryState) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

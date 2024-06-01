@@ -2,22 +2,21 @@ package com.example.amatrace.pages.supplier.ui.pengiriman
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentPengirimanBinding
 import com.example.amatrace.pages.adapter.ShippingAdapter
 import com.example.amatrace.pages.supplier.ui.tambahpengiriman.TambahPengirimanActivity
 import com.example.core.data.source.remote.preferences.Preference
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 
 class PengirimanFragment : Fragment() {
@@ -25,9 +24,10 @@ class PengirimanFragment : Fragment() {
     private var _binding: FragmentPengirimanBinding? = null
     private val binding get() = _binding!!
     private lateinit var myPreference: Preference
+    private lateinit var editTextSearchShipping: EditText
 
     private val pengirimanViewModel: PengirimanViewModel by viewModels {
-        ShippingViewModelFactory(requireContext())
+        ShippingViewModelFactory(requireContext(), getSearchQuery())
     }
 
     private lateinit var shippingAdapter: ShippingAdapter
@@ -46,17 +46,12 @@ class PengirimanFragment : Fragment() {
         myPreference = Preference(requireContext())
 
         shippingAdapter = ShippingAdapter()
-
-        // Load the profile image using Glide
-        val account = myPreference.getAccountInfo()
-        val profile = account?.avatar
-        val name = account?.ownerName
+        editTextSearchShipping = binding.searchViewShipping
 
         binding.rvShipping.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = shippingAdapter
         }
-
 
         val token = myPreference.getAccessToken()
 
@@ -73,10 +68,31 @@ class PengirimanFragment : Fragment() {
         binding.buttonTambahPengiriman.setOnClickListener {
             startActivity(Intent(requireContext(), TambahPengirimanActivity::class.java))
         }
+
+
+        editTextSearchShipping.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val token = myPreference.getAccessToken() ?: return
+                pengirimanViewModel.searchShipping(token, s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun getSearchQuery(): String? {
+        return editTextSearchShipping.text?.toString()
+    }
+
 }
