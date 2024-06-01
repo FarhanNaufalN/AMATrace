@@ -9,16 +9,29 @@ import androidx.paging.liveData
 import com.example.core.data.source.Paging.ProductSupplierPagingSource
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.response.Product
+import kotlinx.coroutines.flow.Flow
 
-class SupplierProductRepository (private val apiService: API, private val context: Context) {
-    fun getProduct(): LiveData<PagingData<Product>> {
+class SupplierProductRepository(private val apiService: API, private val context: Context) {
+
+    fun getProduct(searchQuery: String? = null ): LiveData<PagingData<Product>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
             pagingSourceFactory = {
-                ProductSupplierPagingSource(apiService, context)
+                ProductSupplierPagingSource(apiService, context, searchQuery)
             }
         ).liveData
+    }
+
+    fun searchProducts(query: String): Flow<PagingData<Product>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                ProductSupplierPagingSource(apiService, context, query)
+            }
+        ).flow
     }
 }

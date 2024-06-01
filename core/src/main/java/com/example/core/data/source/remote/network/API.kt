@@ -8,6 +8,7 @@ import com.example.core.data.source.remote.response.ProductDetailSupplierRespons
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.SearchProductResponse
 import com.example.core.data.source.remote.response.ShippingResponse
 import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
 import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
@@ -16,6 +17,7 @@ import com.example.core.data.source.remote.response.UploadImageProfileSupplierRe
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -86,6 +88,18 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Query("totalPage") totalPage: Int,
         @Query("totalData") totalData: Int
+    ): ProductListResponse
+
+    @GET("supplier/product")
+    fun getSearchSupplierProduct(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("namesku") search: String,
+    ): Call<ProductListResponse>
+
+    @GET("supplier/product")
+    suspend fun getSearchSupplierProductList(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("namesku") search: String,
     ): ProductListResponse
 
     @POST("supplier/shipping")

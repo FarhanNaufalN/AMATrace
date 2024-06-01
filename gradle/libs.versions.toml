@@ -32,6 +32,7 @@ core = "1.43.0"
 rxjava = "2.2.6"
 playServicesAnalyticsImpl = "18.0.4"
 mediationTestSuite = "3.0.0"
+roomKtx = "2.6.1"
 
 [libraries]
 adapter-rxjava2 = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit" }
@@ -72,6 +73,7 @@ rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxjava" 
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

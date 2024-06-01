@@ -11,12 +11,16 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.AMATrace.AppBarOverlay">
 
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.AMATrace.PopupOverlay" />
+            app:popupTheme="@style/Theme.AMATrace.PopupOverlay">
+
+        </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

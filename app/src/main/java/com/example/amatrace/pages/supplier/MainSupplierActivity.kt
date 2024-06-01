@@ -2,6 +2,7 @@ package com.example.amatrace.pages.supplier
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -15,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
@@ -25,10 +25,20 @@ import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ProfileData
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.SearchProductResponse
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
+import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
+
+
 
 class MainSupplierActivity : AppCompatActivity() {
 
@@ -38,6 +48,8 @@ class MainSupplierActivity : AppCompatActivity() {
     private lateinit var Ownername: TextView
     private lateinit var Email: TextView
     private lateinit var Bisnis: TextView
+    private lateinit var searchView: SearchView
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +78,8 @@ class MainSupplierActivity : AppCompatActivity() {
         setUpBottomNavigation(navController)
 
         val headerView = navView.getHeaderView(0)
-        val profileImageView = headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageView)
+        val profileImageView =
+            headerView.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.myCircleImageView)
         val account = myPreference.getAccountInfo() //Mengambil dari Account Class
         val avatarUrl = account?.avatar
         val name = account?.ownerName

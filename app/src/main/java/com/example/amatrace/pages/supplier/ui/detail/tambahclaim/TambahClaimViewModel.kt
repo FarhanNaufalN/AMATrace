@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.PagingData
 import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
-import com.example.amatrace.pages.supplier.ui.home.ViewModelFactory.Companion.TAG
+import com.example.amatrace.pages.supplier.ui.home.HomeViewModel.Companion.TAG
 import com.example.core.data.repository.SupplierProductClaimRepository
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.response.Claim

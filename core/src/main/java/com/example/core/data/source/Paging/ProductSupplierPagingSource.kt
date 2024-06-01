@@ -10,8 +10,11 @@ import com.example.core.data.source.remote.response.Product
 import retrofit2.HttpException
 import java.io.IOException
 
-class ProductSupplierPagingSource(private val apiService: API, context: Context) :
-    PagingSource<Int, Product>() {
+class ProductSupplierPagingSource(
+    private val apiService: API,
+    context: Context,
+    private var searchQuery: String?
+) : PagingSource<Int, Product>() {
 
     private var myPreferences = Preference(context)
 
@@ -28,12 +31,16 @@ class ProductSupplierPagingSource(private val apiService: API, context: Context)
             val token = myPreferences.getAccessToken()
 
             token?.let { accessToken ->
-                val responseData = apiService.getSupplierProductList(accessToken, position, params.loadSize)
-                val data = responseData.data.products
+                val responseData = if (searchQuery.isNullOrEmpty()) {
+                    apiService.getSupplierProductList(accessToken, position, params.loadSize)
+                } else {
+                    apiService.getSearchSupplierProductList(accessToken, searchQuery!!)
+                }
+                val products = responseData.data.products
                 LoadResult.Page(
-                    data = data,
+                    data = products,
                     prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                    nextKey = if (data.isEmpty()) null else position + 1
+                    nextKey = if (products.isEmpty()) null else position + 1
                 )
             } ?: LoadResult.Error(NullPointerException("Access token is null"))
         } catch (exception: IOException) {
@@ -43,11 +50,13 @@ class ProductSupplierPagingSource(private val apiService: API, context: Context)
         }
     }
 
+    fun setSearchQuery(query: String?) {
+        searchQuery = query
+    }
+
     companion object {
         const val INITIAL_PAGE_INDEX = 1
-
-        fun snapshot(items: List<Product>): PagingData<Product> {
-            return PagingData.from(items)
-        }
     }
 }
+
+

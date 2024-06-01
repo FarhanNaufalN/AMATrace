@@ -9,6 +9,7 @@
     tools:context=".pages.supplier.ui.home.HomeFragment">
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="135dp"
         android:layout_height="40dp"
         android:background="@drawable/logo_kalimat"
@@ -19,6 +20,7 @@
 
 
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="192dp"
@@ -41,6 +43,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Tambahkan SearchView di dalam Toolbar -->
+
+    <EditText
+        android:id="@+id/searchView"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/search_background"
+        android:hint="Search..."
+        android:paddingStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.328"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.074" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:padding="5dp"
         android:id="@+id/rv_supplier"
@@ -51,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTambahProduk"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,58 +9,70 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.amatrace.pages.supplier.ui.home.ViewModelFactory.Companion.TAG
 import com.example.core.data.repository.SupplierProductRepository
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.response.Product
-import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.di.InjectionProductSupplier
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class HomeViewModel (supplierProductRepository: SupplierProductRepository) : ViewModel() {
-    private val _listProduct = MutableLiveData<List<Product>>()
-    private val listProduct: LiveData<List<Product>> = _listProduct
 
-    val product: LiveData<PagingData<Product>> by lazy {
-        supplierProductRepository.getProduct().cachedIn(viewModelScope)
-    }
+class HomeViewModel(
+    private val supplierProductRepository: SupplierProductRepository,
+    private val searchQueryState: String?
+) : ViewModel() {
+    private val _product = MutableLiveData<PagingData<Product>>()
+    val product: LiveData<PagingData<Product>> = _product
 
-    fun getProductsPaging() = listProduct
-
-    fun getAllProduct(token: String){
-        val client = Config.getApiService().getSupplierProduct(token)
-        client.enqueue(object : Callback<ProductListResponse> {
-            override fun onResponse(
-                call: Call<ProductListResponse>,
-                response: Response<ProductListResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _listProduct.postValue(response.body()?.data?.products)
+    fun getAllProduct(token: String) {
+        viewModelScope.launch {
+            try {
+                val productLiveData = supplierProductRepository.getProduct()
+                productLiveData.observeForever {
+                    _product.postValue(it)
                 }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting all products: ${e.message}")
             }
-
-            override fun onFailure(call: Call<ProductListResponse>, t: Throwable) {
-                Log.e(TAG, "OnFailure : ${t.message}")
-            }
-        })
+        }
     }
 
-
-}
-
-class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(InjectionProductSupplier.provideRepository(context)) as T
+    fun searchProducts(token: String, query: String) {
+        viewModelScope.launch {
+            try {
+                supplierProductRepository.searchProducts(query).collect {
+                    _product.postValue(it)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error searching products: ${e.message}")
+            }
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+    fun performSearch() {
+        val query = searchQueryState ?: return // Mendeklarasikan query di sini
+        viewModelScope.launch {
+            try {
+                supplierProductRepository.searchProducts(query).collect {
+                    _product.postValue(it)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error performing search: ${e.message}")
+            }
+        }
+    }
+
+    class ViewModelFactory(private val context: Context, private val searchQueryState: String?) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return HomeViewModel(InjectionProductSupplier.provideRepository(context), searchQueryState) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 
     companion object {
         const val TAG = "HomeViewModelMain"
     }
 }
-

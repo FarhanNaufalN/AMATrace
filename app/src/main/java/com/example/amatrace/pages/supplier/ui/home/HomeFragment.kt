@@ -2,9 +2,12 @@ package com.example.amatrace.pages.supplier.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,9 +24,10 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeSupplierBinding? = null
     private val binding get() = _binding!!
     private lateinit var myPreference: Preference
+    private lateinit var editTextSearch: EditText
 
     private val homeViewModel: HomeViewModel by viewModels {
-        ViewModelFactory(requireContext())
+        HomeViewModel.ViewModelFactory(requireContext(), getSearchQuery())
     }
 
     private lateinit var productAdapter: ProductSupplierAdapter
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         myPreference = Preference(requireContext())
 
         productAdapter = ProductSupplierAdapter()
@@ -46,7 +51,9 @@ class HomeFragment : Fragment() {
         // Load the profile image using Glide
         val account = myPreference.getAccountInfo()
 
+
         val name = account?.ownerName
+        editTextSearch = binding.searchView
 
         binding.rvSupplier.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -68,10 +75,29 @@ class HomeFragment : Fragment() {
         binding.buttonTambahProduk.setOnClickListener {
             startActivity(Intent(requireContext(), TambahProdukActivity::class.java))
         }
+        editTextSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Panggil searchProducts dari HomeViewModel saat teks berubah
+                val token = myPreference.getAccessToken() ?: return
+                homeViewModel.searchProducts(token, s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+        })
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getSearchQuery(): String? {
+        return binding.searchView.text?.toString()
     }
 }
