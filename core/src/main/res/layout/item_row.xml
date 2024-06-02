@@ -22,6 +22,7 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_marginEnd="16dp"
+                tools:src="@tools:sample/avatars"
                 />
 
             <LinearLayout
@@ -32,21 +33,24 @@
 
                 <TextView
                     android:id="@+id/productName"
+                    android:layout_marginStart="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
+                    tools:text="Product Name"
                     />
 
                 <TextView
                     android:id="@+id/productSku"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textColor="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/holo_green_dark"
                     android:textSize="14sp"
-                    />
+                    tools:text="SKU: CB-01" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-    <!-- Product Image -->
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/productImage"
         android:layout_width="match_parent"
@@ -43,7 +43,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- CardView wrapping the buttons and text views -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -65,6 +64,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -76,30 +76,30 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:onClick="onClaimClicked"
-                    android:text="Tambah Claim" />
+                    android:text=" + Tambah Claim" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/buttonDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Delete" />
+                    android:backgroundTint="@color/green_dark"
+                    app:srcCompat="@drawable/baseline_delete_24"
+                    app:tint="@android:color/white" />
+
             </LinearLayout>
 
-            <!-- Product Name -->
-
-            <!-- Product SKU -->
-
-            <!-- Product Description -->
 
             <TextView
                 android:id="@+id/productName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="28dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:textColor="@color/green_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,11 +107,25 @@
                 tools:text="Product Name" />
 
             <TextView
+                android:id="@+id/productLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="168dp"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Kebun Jatinangor" />
+
+            <TextView
                 android:id="@+id/productSku"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="116dp"
-                android:textSize="16sp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="140dp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,17 +133,34 @@
                 tools:text="SKU: CB-01" />
 
             <TextView
+                android:id="@+id/deskripsiText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="240dp"
+                android:text="DESKRIPSI"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/productDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="108dp"
                 android:textSize="14sp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                app:layout_constraintTop_toBottomOf="@+id/productSku"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/productSku"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 
-            <!-- RecyclerView for claims -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_claim"
                 android:layout_width="match_parent"

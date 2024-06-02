@@ -19,6 +19,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -83,6 +84,12 @@ interface API {
         @Path("productId") productId: String
     ): Call<ProductDetailSupplierResponse>
 
+    @DELETE("supplier/product/{productId}")
+    fun deleteSupplierProductDetail(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productId") productId: String
+    ): Call<ProductDetailSupplierResponse>
+
     @GET("supplier/product")
     suspend fun getSupplierProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
@@ -108,10 +115,6 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<GetProducerListResponse>
 
-    @GET("supplier/shipping")
-    fun getListShipping(
-        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-    ): Call<GetShippingListResponse>
 
     @GET("supplier/shipping/{shippingId}")
     fun getSupplierShippingDetail(
