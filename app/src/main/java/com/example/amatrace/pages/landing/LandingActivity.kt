@@ -44,26 +44,26 @@ class LandingActivity : AppCompatActivity() {
 
     private fun playAnimation() {
         val logoAnimator = ObjectAnimator.ofFloat(binding.logo, View.ALPHA, 0f, 1f).apply {
-            duration = 4000
+            duration = 2000
         }
 
         val cardViewAnimator = ObjectAnimator.ofFloat(binding.cardView, View.TRANSLATION_Y, 100f, 0f).apply {
-            duration = 5000
+            duration = 3000
             interpolator = OvershootInterpolator() // Apply overshoot interpolator for a bouncy effect
         }
 
         val loginButtonAnimator = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 0f, 1f).apply {
-            duration = 5000
+            duration = 3000
             interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
 
         val customerButtonAnimator = ObjectAnimator.ofFloat(binding.customerButton, View.ALPHA, 0f, 1f).apply {
-            duration = 5000
+            duration = 3000
             interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
 
         val orTextAnimator = ObjectAnimator.ofFloat(binding.orText, View.ALPHA, 0f, 1f).apply {
-            duration = 5000
+            duration = 3000
             interpolator = AccelerateDecelerateInterpolator() // Apply accelerate-decelerate interpolator
         }
 
