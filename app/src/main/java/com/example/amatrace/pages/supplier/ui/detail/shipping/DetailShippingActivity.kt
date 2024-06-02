@@ -64,9 +64,7 @@ class DetailShippingActivity : AppCompatActivity() {
     }
 
     private fun displayProduct(product: ShippingDetail) {
-        binding.textId.text = product.status
         binding.productName.text = product.product.name
         binding.productSku.text = product.product.sku
-        binding.textProducerName.text = product.producerDestination.businessName
     }
 }
