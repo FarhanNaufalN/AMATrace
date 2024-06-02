@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentPengirimanBinding
 import com.example.amatrace.pages.adapter.ShippingAdapter
 import com.example.amatrace.pages.supplier.ui.tambahpengiriman.TambahPengirimanActivity
@@ -51,6 +53,16 @@ class PengirimanFragment : Fragment() {
         binding.rvShipping.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = shippingAdapter
+        }
+
+        val nightMode = AppCompatDelegate.getDefaultNightMode()
+        val imageView = binding.imageView2
+
+// Ganti logo sesuai dengan mode gelap dan terang
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            imageView.setImageResource(R.drawable.logo_kalimat_white)
+        }else {
+            imageView.setImageResource(R.drawable.logo_kalimat)
         }
 
         val token = myPreference.getAccessToken()

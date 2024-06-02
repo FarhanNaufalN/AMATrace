@@ -23,7 +23,6 @@
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
             app:cbn_background="@color/white_70"
             app:cbn_curve_radius="125dp"
             app:cbn_fabColor="@color/green_dark"

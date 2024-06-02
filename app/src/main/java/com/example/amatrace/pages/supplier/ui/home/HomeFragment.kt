@@ -4,15 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentHomeSupplierBinding
 import com.example.amatrace.pages.adapter.ProductSupplierAdapter
 import com.example.amatrace.pages.supplier.ui.tambahproduk.TambahProdukActivity
@@ -42,7 +47,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+// Ikuti preferensi mode malam hari yang ditetapkan oleh sistem
 
+        val nightMode = AppCompatDelegate.getDefaultNightMode()
+        val imageView = binding.imageView2
+        println("Mode gelap: $nightMode")
+
+// Ganti logo sesuai dengan mode gelap dan terang
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            imageView.setImageResource(R.drawable.logo_kalimat_white)
+        }else {
+            imageView.setImageResource(R.drawable.logo_kalimat)
+        }
 
         myPreference = Preference(requireContext())
 
@@ -66,11 +82,15 @@ class HomeFragment : Fragment() {
             homeViewModel.getAllProduct(token)
         }
 
-        homeViewModel.product.observe(viewLifecycleOwner, Observer { pagingData ->
-            viewLifecycleOwner.lifecycleScope.launch {
-                productAdapter.submitData(pagingData)
-            }
-        })
+        homeViewModel.product
+            .cachedIn(viewLifecycleOwner.lifecycleScope) // Menambahkan caching di sini
+            .observe(viewLifecycleOwner, Observer { pagingData ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    productAdapter.submitData(pagingData)
+                }
+            })
+
+
 
         binding.buttonTambahProduk.setOnClickListener {
             startActivity(Intent(requireContext(), TambahProdukActivity::class.java))

@@ -1,9 +1,16 @@
 package com.example.core.data.source.remote.preferences
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.core.data.source.remote.response.Account
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
 
+
+private val Context.prefDataStore by preferencesDataStore(name = "settings")
 class Preference(context: Context) {
     private val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
@@ -12,6 +19,7 @@ class Preference(context: Context) {
         private const val KEY_ACCESS_TOKEN = "accessToken"
         private const val KEY_LOGIN_STATUS = "loginStatus"
         private const val KEY_ACCOUNT_INFO = "accountInfo"
+        private const val KEY_NIGHT_MODE = "nightMode"
     }
 
     fun setAccessToken(accessToken: String) {

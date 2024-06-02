@@ -1,10 +1,11 @@
 package com.example.amatrace.pages.supplier
 
+import com.example.core.data.source.remote.preferences.DarkmodePreferences
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.navigation.NavigationView
@@ -15,6 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,19 +27,14 @@ import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ProfileData
 import com.example.core.data.source.remote.response.ProfileResponse
-import com.example.core.data.source.remote.response.SearchProductResponse
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
-import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
-
 
 
 class MainSupplierActivity : AppCompatActivity() {
@@ -45,22 +42,24 @@ class MainSupplierActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainSupplierBinding
     private lateinit var myPreference: Preference
+    private lateinit var darkmodePreferences: DarkmodePreferences
     private lateinit var Ownername: TextView
     private lateinit var Email: TextView
     private lateinit var Bisnis: TextView
-    private lateinit var searchView: SearchView
-    private lateinit var viewModel: HomeViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         myPreference = Preference(this)
+        darkmodePreferences = DarkmodePreferences(this)
 
         binding = ActivityMainSupplierBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMainSupplier.toolbar)
         fetchProfileData()
+
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -89,10 +88,35 @@ class MainSupplierActivity : AppCompatActivity() {
         Ownername = headerView.findViewById(R.id.Ownername)
         Email = headerView.findViewById(R.id.EmailSupplier)
         Bisnis = headerView.findViewById(R.id.bisnis)
+        val nightModeIcon: ImageView = findViewById(R.id.night_mode_icon)
 
         Ownername.text = name
         Email.text = email
         Bisnis.text = bisnis
+
+        val nightMode = AppCompatDelegate.getDefaultNightMode()
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            nightModeIcon.setImageResource(R.drawable.baseline_light_mode_24)
+        } else {
+            nightModeIcon.setImageResource(R.drawable.baseline_dark_mode_24)
+        }
+        nightModeIcon.setOnClickListener {
+            val nightModeActivated = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+
+            val newNightMode = if (nightModeActivated) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+
+            // Set mode malam yang baru
+            AppCompatDelegate.setDefaultNightMode(newNightMode)
+
+            // Simpan status mode malam di Preferences
+            CoroutineScope(Dispatchers.Main).launch {
+                darkmodePreferences.setTheme(newNightMode == AppCompatDelegate.MODE_NIGHT_YES)
+            }
+
+            // Restart aktivitas agar perubahan mode malam diterapkan
+            finish()
+            startActivity(intent)
+        }
 
         // Muat gambar menggunakan Glide
         Glide.with(this)
@@ -125,6 +149,11 @@ class MainSupplierActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finishAffinity() // Tutup semua aktivitas yang terkait dengan aplikasi ini
+    }
+
+    private fun setAppTheme(isDarkMode: Boolean) {
+        val nightMode = if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 
     private fun fetchProfileData() {
@@ -198,8 +227,8 @@ class MainSupplierActivity : AppCompatActivity() {
     }
 
     companion object {
-         val HOME_ITEM = R.id.nav_ubahprofile
-         val OFFERS_ITEM = R.id.nav_home
+        val HOME_ITEM = R.id.nav_ubahprofile
+        val OFFERS_ITEM = R.id.nav_home
         val SECTION_ITEM = R.id.nav_pengiriman
     }
 }

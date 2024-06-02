@@ -19,6 +19,14 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.AMATrace.PopupOverlay">
 
+            <ImageView
+                android:id="@+id/night_mode_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="40dp"
+                android:contentDescription="Mode Malam" />
+
         </androidx.appcompat.widget.Toolbar>
 
 

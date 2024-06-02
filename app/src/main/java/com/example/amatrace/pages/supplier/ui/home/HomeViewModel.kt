@@ -62,6 +62,8 @@ class HomeViewModel(
         }
     }
 
+
+
     class ViewModelFactory(private val context: Context, private val searchQueryState: String?) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
