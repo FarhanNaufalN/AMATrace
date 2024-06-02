@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.core.data.source.remote.response.Account
 import com.example.core.data.source.remote.response.ProductDetailData
+import com.example.core.data.source.remote.response.ShippingDetail
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 
@@ -21,6 +22,7 @@ class Preference(context: Context) {
         private const val KEY_LOGIN_STATUS = "loginStatus"
         private const val KEY_ACCOUNT_INFO = "accountInfo"
         private const val KEY_DETAIL_PRODUCT = "detailProduct"
+        private const val KEY_DETAIL_SHIPPING = "detailShipping"
         private const val KEY_NIGHT_MODE = "nightMode"
     }
 
@@ -67,6 +69,16 @@ class Preference(context: Context) {
     fun getProductDetail(): ProductDetailData? {
         val productJson = sharedPreferences.getString(KEY_DETAIL_PRODUCT, null)
         return Gson().fromJson(productJson, ProductDetailData::class.java)
+    }
+
+    fun saveShippingDetail(detailShipping: ShippingDetail) {
+        val shippingJson = Gson().toJson(detailShipping)
+        sharedPreferences.edit().putString(KEY_DETAIL_SHIPPING, shippingJson).apply()
+    }
+
+    fun getShippingDetail(): ShippingDetail? {
+        val shippingJson = sharedPreferences.getString(KEY_DETAIL_SHIPPING, null)
+        return Gson().fromJson(shippingJson, ShippingDetail::class.java)
     }
 }
 

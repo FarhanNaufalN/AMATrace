@@ -1,6 +1,7 @@
 package com.example.amatrace.pages.supplier.ui.detail.tambahclaim
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -47,5 +48,9 @@ class TambahClaimActivity : AppCompatActivity() {
         if (token != null && productId != null) {
             viewModel.getAllClaim(token, productId)
         }
+    }
+
+    fun onBackButtonClicked(view: View) {
+        onBackPressed()
     }
 }
