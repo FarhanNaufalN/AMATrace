@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Circle and Line Indicator -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingEnd="8dp">
+
+        <!-- Circle Indicator -->
+        <ImageView
+            android:id="@+id/statusCircle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_status_shipping" />
+
+        <!-- Dashed Line (optional, for visual separation) -->
+        <View
+            android:layout_width="9dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/dashed_line"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <!-- Date and Status Text -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Date Text -->
+        <TextView
+            android:id="@+id/statusDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13/2/2024"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Status Text -->
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sudah Sampai di Tujuan"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>
