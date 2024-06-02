@@ -1,13 +1,14 @@
 package com.example.core.data.repository
 
 import com.example.core.data.source.remote.network.API
+import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ProductDetailRepository(private val api: API) {
-
+    private lateinit var myPreference: Preference
     // Function to fetch product detail from the API
     fun fetchProductDetail(
         accessToken: String,
@@ -20,6 +21,7 @@ class ProductDetailRepository(private val api: API) {
             override fun onResponse(call: Call<ProductDetailSupplierResponse>, response: Response<ProductDetailSupplierResponse>) {
                 if (response.isSuccessful) {
                     onSuccess(response.body()!!)
+                    myPreference.saveProductDetail(response.body()!!.data)
                 } else {
                     onError("Failed to fetch product detail: ${response.message()}")
                 }

@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amatrace.pages.supplier.ui.detail.product.DetailProductActivity
-import com.example.core.data.source.remote.response.Claim
+import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity
+import com.example.core.data.source.remote.response.ClaimList
 import com.example.core.data.source.remote.response.Product
 import com.example.core.databinding.ItemRowBinding
 
-class ClaimProductSupplierAdapter: PagingDataAdapter<Claim, ClaimProductSupplierAdapter.MyViewHolder>(
+class ClaimAdapter : PagingDataAdapter<ClaimList, ClaimAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
-    private var claims: List<Claim> = emptyList() // Menyimpan daftar klaim
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -32,26 +31,20 @@ class ClaimProductSupplierAdapter: PagingDataAdapter<Claim, ClaimProductSupplier
 
     class MyViewHolder(private val binding: ItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Claim?) {
+        fun bind(item: ClaimList) {
 
             binding.apply {
-                if (item != null) {
-                    productName.text = item.id
-                    productSku.text = item.name
-                    Glide.with(itemView.context).load(item.icon).into(productImage)
-                }
+                productName.text = item.name
+                productSku.text = item.status
+                Glide.with(itemView.context).load(item.icon).into(productImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailProductActivity::class.java)
+                    val intent = Intent(itemView.context, UploadSertifikatActivity::class.java)
                     val bundle = Bundle()
 
-                    if (item != null) {
-                        bundle.putString("product_id", item.id)
-                        bundle.putString("list_name", item.name)
-                        bundle.putString("list_image", item.icon)
-                        bundle.putString("list_status", item.status)
-                    }
-
+                    bundle.putString("productClaim_id", item.id)
+                    bundle.putString("icon", item.icon)
+                    bundle.putString("list_name", item.name)
 
                     intent.putExtras(bundle)
                     itemView.context.startActivity(intent)
@@ -60,19 +53,14 @@ class ClaimProductSupplierAdapter: PagingDataAdapter<Claim, ClaimProductSupplier
         }
     }
 
-    fun updateClaims(newClaims: List<Claim>) {
-        claims = newClaims
-        notifyDataSetChanged() // Memperbarui tampilan setelah data klaim diperbarui
-    }
-
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Claim>() {
-            override fun areItemsTheSame(oldItem: Claim, newItem: Claim): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ClaimList>() {
+            override fun areItemsTheSame(oldItem: ClaimList, newItem: ClaimList): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: Claim, newItem: Claim
+                oldItem: ClaimList, newItem:ClaimList
             ): Boolean {
                 return oldItem.id == newItem.id
             }

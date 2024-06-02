@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityDetailProductBinding
-import com.example.amatrace.pages.adapter.ClaimProductSupplierAdapter
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.TambahClaimActivity
 import com.example.core.data.source.remote.network.Config
@@ -27,7 +26,6 @@ class DetailProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailProductBinding
     private lateinit var myPreference: Preference
-    private lateinit var claimsAdapter: ClaimProductSupplierAdapter
     private var productId: String? = null
     private lateinit var productLocation: TextView
 
@@ -54,11 +52,22 @@ class DetailProductActivity : AppCompatActivity() {
             }
         }
 
+        binding.buttonTambahClaim.setOnClickListener{
+            val intent = Intent(this, TambahClaimActivity::class.java)
+            intent.putExtra("product_id", productId)
+            startActivity(intent)
+        }
+
+
         Glide.with(this)
             .load(intent.getStringExtra("list_image"))
             .into(binding.productImage)
         binding.productName.text = intent.getStringExtra("list_name")
         binding.productSku.text = intent.getStringExtra("list_sku")
+
+        productId?.let {
+            println("productId: $it")
+        }
 
     }
 
@@ -75,6 +84,7 @@ class DetailProductActivity : AppCompatActivity() {
                             val productDetailResponse = response.body()
                             productDetailResponse?.let { displayProductDetail(it.data) }
                             displayClaims(productDetailResponse?.data?.claims ?: emptyList())
+                            productDetailResponse?.data?.let { myPreference.saveProductDetail(it) }
                         } else {
                             // Handle unsuccessful response
                         }
@@ -120,25 +130,8 @@ class DetailProductActivity : AppCompatActivity() {
 
     private fun displayClaims(claims: List<Claim>) {
         // Pastikan claimsAdapter sudah diinisialisasi sebelum digunakan
-        if (!::claimsAdapter.isInitialized) {
-            // Jika belum diinisialisasi, inisialisasikan claimsAdapter
-            claimsAdapter = ClaimProductSupplierAdapter()
-            // Set RecyclerView adapter
-            binding.rvClaim.apply {
-                layoutManager = LinearLayoutManager(this@DetailProductActivity)
-                adapter = claimsAdapter
-            }
-        }
 
-        // Kemudian, update daftar klaim di adapter
-        claimsAdapter.updateClaims(claims)
+
     }
-
-    fun onClaimClicked(view: View) {
-        val intent = Intent(this, TambahClaimActivity::class.java)
-        productId?.let { intent.putExtra("product_id", it) }
-        startActivity(intent)
-    }
-
 
 }

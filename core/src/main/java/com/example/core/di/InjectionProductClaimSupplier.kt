@@ -1,13 +1,13 @@
 package com.example.core.di
 
 import android.content.Context
-import com.example.core.data.repository.SupplierProductClaimRepository
+import com.example.core.data.repository.ClaimSupplierRepository
 import com.example.core.data.repository.SupplierProductRepository
 import com.example.core.data.source.remote.network.Config
 
 object InjectionProductClaimSupplier {
-    fun provideRepository(context: Context): SupplierProductClaimRepository {
+    fun provideRepository(context: Context): ClaimSupplierRepository {
         val apiService = Config.getApiService()
-        return SupplierProductClaimRepository(apiService, context)
+        return ClaimSupplierRepository(apiService, context)
     }
 }

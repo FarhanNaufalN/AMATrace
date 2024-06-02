@@ -1,56 +1,51 @@
 package com.example.amatrace.pages.supplier.ui.detail.tambahclaim
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amatrace.databinding.ActivityTambahClaimBinding
-import com.example.amatrace.pages.adapter.ClaimProductSupplierAdapter
+import com.example.amatrace.pages.adapter.ClaimAdapter
 import com.example.core.data.source.remote.preferences.Preference
-import com.example.core.data.source.remote.response.Claim
-import com.example.core.data.source.remote.response.ProductListResponse
-import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
+import com.example.core.data.source.remote.response.ClaimList
 
 class TambahClaimActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTambahClaimBinding
-    private lateinit var adapter: ClaimProductSupplierAdapter
+    private lateinit var viewModel: TambahClaimViewModel
+    private lateinit var adapter: ClaimAdapter
     private lateinit var myPreference: Preference
-
-
-    private val viewModel: TambahClaimViewModel by viewModels {
-        TambahClaimViewModelFactory(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTambahClaimBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         myPreference = Preference(this)
 
+        // Enable edge-to-edge display
+        enableEdgeToEdge()
+
         val token = myPreference.getAccessToken()
+        val productId = intent.getStringExtra("product_id")
+        println("productId: $productId")
 
-        val bundle = intent.extras
-        val productId = bundle?.getString("product_id")
+        // Set up RecyclerView
+        adapter = ClaimAdapter()
+        binding.rvClaims.adapter = adapter
+        binding.rvClaims.layoutManager = LinearLayoutManager(this)
 
-        // Initialize RecyclerView
-        adapter = ClaimProductSupplierAdapter()
-        binding.rvClaim.apply {
-            layoutManager = LinearLayoutManager(this@TambahClaimActivity)
-            adapter = this@TambahClaimActivity.adapter
-        }
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(this, TambahClaimViewModel.ViewModelFactory(this))
+            .get(TambahClaimViewModel::class.java)
 
-        // Observe LiveData for claims
-        viewModel.allClaim.observe(this, { pagingData ->
+        // Observe data changes from ViewModel
+        viewModel.claim.observe(this, { pagingData ->
             adapter.submitData(lifecycle, pagingData)
         })
-        // Fetch claims
-        productId?.let {
-            if (token != null) {
-                viewModel.getAllClaim(token ,it)
-            }
+
+        if (token != null && productId != null) {
+            viewModel.getAllClaim(token, productId)
         }
     }
 }
-

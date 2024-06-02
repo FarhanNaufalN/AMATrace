@@ -12,6 +12,7 @@
         android:maxSdkVersion="32" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
+        <activity
+            android:name=".pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity"
+            android:exported="false" />
         <activity
             android:name=".pages.supplier.ui.detail.tambahclaim.TambahClaimActivity"
             android:exported="false" />

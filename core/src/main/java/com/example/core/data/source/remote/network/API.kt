@@ -8,7 +8,8 @@ import com.example.core.data.source.remote.response.ProductDetailSupplierRespons
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
-import com.example.core.data.source.remote.response.SearchProductResponse
+import com.example.core.data.source.remote.response.SertifClaimLinkResponse
+import com.example.core.data.source.remote.response.SertifClaimResponse
 import com.example.core.data.source.remote.response.ShippingResponse
 import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
 import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
@@ -17,7 +18,6 @@ import com.example.core.data.source.remote.response.UploadImageProfileSupplierRe
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -148,5 +148,22 @@ interface API {
         @Query("totalPage") totalPage: Int,
         @Query("totalData") totalData: Int
     ): SupplierProductClaimListResponse
+
+
+    @POST("supplier/product-claim/{productClaimId}/product/{productId}")
+    fun uploadLinkSertif(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+        @Body requestBody: RequestBody
+    ): Call<SertifClaimResponse>
+
+    @Multipart
+    @POST("supplier/pdf")
+    fun uploadSertif(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<SertifClaimLinkResponse>
+
 
 }
