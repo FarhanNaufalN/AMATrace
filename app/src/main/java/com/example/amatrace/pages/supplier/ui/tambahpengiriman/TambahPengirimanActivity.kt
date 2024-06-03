@@ -105,8 +105,8 @@ class TambahPengirimanActivity : AppCompatActivity() {
 // Mendapatkan ID produk yang dipilih saat pengguna mengubah item di Spinner
         binding.spinnerProduct.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position >= 0 && position < (productList?.size ?: 0)) {
-                    val selectedProduct = productList?.get(position)
+                if (position > 0 && position < (productList?.size ?: 0)) {
+                    val selectedProduct = productList?.get(position - 1)
                     val productId = selectedProduct?.id ?: ""
                     binding.etProductId.setText(productId)
                     binding.etProductId.visibility = View.GONE
@@ -123,8 +123,8 @@ class TambahPengirimanActivity : AppCompatActivity() {
 
         binding.spinnerProducer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position >= 0 && position < (producerList?.size ?: 0)) {
-                    val selectedProducer = producerList?.get(position)
+                if (position > 0 && position < (producerList?.size ?: 0)) {
+                    val selectedProducer = producerList?.get(position - 1)
                     val producerId = selectedProducer?.id ?: ""
                     binding.etProducerIdDestination.setText(producerId)
                     binding.etProducerIdDestination.visibility = View.GONE
