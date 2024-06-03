@@ -79,6 +79,8 @@ dependencies {
     implementation libs.qrgenerator
     implementation libs.curvedbottomnavigation
     implementation libs.androidx.databinding.runtime
+    implementation libs.lottie.v503
+
 
 
 

@@ -24,16 +24,15 @@
             android:id="@+id/bottom_nav_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
             app:cbn_background="@color/white_70"
-            app:cbn_curve_radius="125dp"
+            app:cbn_curve_radius="25dp"
             app:cbn_fabColor="@color/green_dark"
             app:cbn_height="76dp"
             app:cbn_iconColor="@color/green_dark"
             app:cbn_icon_size="24dp"
             app:cbn_selectedIconColor="@color/white"
             app:cbn_selected_icon_size="48dp"
-            app:cbn_titleColor="@color/black"
+            app:cbn_titleColor="@color/green_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -41,6 +40,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:menu="@menu/bottom_nav_menu" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

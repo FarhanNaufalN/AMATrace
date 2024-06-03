@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentPengirimanBinding
@@ -71,11 +72,13 @@ class PengirimanFragment : Fragment() {
             pengirimanViewModel.getAllShipping(token)
         }
 
-        pengirimanViewModel.shipping.observe(viewLifecycleOwner, Observer { pagingData ->
-            viewLifecycleOwner.lifecycleScope.launch {
-                shippingAdapter.submitData(pagingData)
-            }
-        })
+        pengirimanViewModel.shipping
+            .cachedIn(viewLifecycleOwner.lifecycleScope) // Menambahkan caching di sini
+            .observe(viewLifecycleOwner, Observer { pagingData ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    shippingAdapter.submitData(pagingData)
+                }
+            })
 
         binding.buttonTambahPengiriman.setOnClickListener {
             startActivity(Intent(requireContext(), TambahPengirimanActivity::class.java))

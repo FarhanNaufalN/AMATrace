@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="90dp"
+    android:height="80dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Outer path for the border -->
+    <path
+        android:fillColor="@android:color/holo_green_dark"
+        android:strokeColor="@color/green_dark"
+        android:strokeWidth="2"
+        android:pathData="M50,5 L85,25 L85,75 L50,95 L15,75 L15,25 Z"/>
+
+    <!-- Inner path for the filled hexagon -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M50,10 L80,27 L80,73 L50,90 L20,73 L20,27 Z"/>
+</vector>
+
+

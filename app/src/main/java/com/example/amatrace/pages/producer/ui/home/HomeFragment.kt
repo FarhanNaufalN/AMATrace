@@ -30,10 +30,9 @@ private var _binding: FragmentHomeProducerBinding? = null
     _binding = FragmentHomeProducerBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val textView: TextView = binding.textHome
-    homeViewModel.text.observe(viewLifecycleOwner) {
-      textView.text = it
-    }
+
+
+
     return root
   }
 
