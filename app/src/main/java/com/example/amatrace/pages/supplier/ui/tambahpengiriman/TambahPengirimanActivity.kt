@@ -123,8 +123,8 @@ class TambahPengirimanActivity : AppCompatActivity() {
 
         binding.spinnerProducer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position > 0 && position < (producerList?.size ?: 0)) {
-                    val selectedProducer = producerList?.get(position - 1)
+                if (position >= 0 && position < (producerList?.size ?: 0)) {
+                    val selectedProducer = producerList?.get(position)
                     val producerId = selectedProducer?.id ?: ""
                     binding.etProducerIdDestination.setText(producerId)
                     binding.etProducerIdDestination.visibility = View.GONE
