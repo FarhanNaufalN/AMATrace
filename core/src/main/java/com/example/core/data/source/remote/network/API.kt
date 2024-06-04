@@ -53,10 +53,23 @@ interface API {
         @Body requestBody: RequestBody
     ): Call<ProfileResponse>
 
+    @PUT("producer/profile")
+    fun updateProfileProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Body requestBody: RequestBody
+    ): Call<ProfileResponse>
+
     @Multipart
     @POST("supplier/image/profile")
     fun uploadImageProfileSupplier(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<UploadImageProfileSupplierResponse>
+
+    @Multipart
+    @POST("producer/image/profile")
+    fun uploadImageProfileProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Part file: MultipartBody.Part
     ): Call<UploadImageProfileSupplierResponse>
 

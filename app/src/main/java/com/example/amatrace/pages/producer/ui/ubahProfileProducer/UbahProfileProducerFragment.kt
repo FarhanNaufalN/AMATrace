@@ -25,9 +25,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentUbahprofileBinding
 import com.example.amatrace.databinding.FragmentUbahprofileproducerBinding
+import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
 import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -205,7 +207,7 @@ class UbahProfileProducerFragment : Fragment(R.layout.fragment_ubahprofile) {
         val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        Config.getApiService().uploadImageProfileSupplier(token, body)
+        Config.getApiService().uploadImageProfileProducer(token, body)
             .enqueue(object : Callback<UploadImageProfileSupplierResponse> {
                 override fun onResponse(
                     call: Call<UploadImageProfileSupplierResponse>,
@@ -271,11 +273,11 @@ class UbahProfileProducerFragment : Fragment(R.layout.fragment_ubahprofile) {
 
     private fun fetchProfileData() {
         val token = myPreference.getAccessToken() ?: return
-        Config.getApiService().getProfileSupplier(token)
-            .enqueue(object : Callback<ProfileResponse> {
+        Config.getApiService().getProfileProducer(token)
+            .enqueue(object : Callback<ProfileProducerResponse> {
                 override fun onResponse(
-                    call: Call<ProfileResponse>,
-                    response: Response<ProfileResponse>
+                    call: Call<ProfileProducerResponse>,
+                    response: Response<ProfileProducerResponse>
                 ) {
                     if (response.isSuccessful) {
                         val profile = response.body()?.data
@@ -305,7 +307,7 @@ class UbahProfileProducerFragment : Fragment(R.layout.fragment_ubahprofile) {
                     }
                 }
 
-                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ProfileProducerResponse>, t: Throwable) {
                     Toast.makeText(
                         requireContext(),
                         "Error: ${t.message}",
@@ -335,7 +337,7 @@ class UbahProfileProducerFragment : Fragment(R.layout.fragment_ubahprofile) {
 
         val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
-        Config.getApiService().updateProfileSupplier(token, requestBody)
+        Config.getApiService().updateProfileProducer(token, requestBody)
             .enqueue(object : Callback<ProfileResponse> {
                 override fun onResponse(
                     call: Call<ProfileResponse>,
@@ -347,7 +349,7 @@ class UbahProfileProducerFragment : Fragment(R.layout.fragment_ubahprofile) {
                             "Profile updated successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        startActivity(Intent(requireContext(), MainSupplierActivity::class.java))
+                        startActivity(Intent(requireContext(), ProducerMainActivity::class.java))
                     } else {
                         Toast.makeText(
                             requireContext(),
