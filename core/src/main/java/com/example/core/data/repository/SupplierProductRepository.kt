@@ -16,7 +16,7 @@ class SupplierProductRepository(private val apiService: API, private val context
     fun getProduct(searchQuery: String? = null ): LiveData<PagingData<Product>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 25
             ),
             pagingSourceFactory = {
                 ProductSupplierPagingSource(apiService, context, searchQuery)
@@ -27,7 +27,7 @@ class SupplierProductRepository(private val apiService: API, private val context
     fun searchProducts(query: String): Flow<PagingData<Product>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 25
             ),
             pagingSourceFactory = {
                 ProductSupplierPagingSource(apiService, context, query)

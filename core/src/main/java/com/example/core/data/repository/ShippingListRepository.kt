@@ -18,7 +18,7 @@ class ShippingListRepository (private val apiService: API, private val context: 
     fun getShippingList(searchQuery: String? = null ): LiveData<PagingData<Shipping>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 25
             ),
             pagingSourceFactory = {
                 ShippingListPagingSource(apiService, context, searchQuery)
@@ -29,7 +29,7 @@ class ShippingListRepository (private val apiService: API, private val context: 
     fun searchShipping(query: String): Flow<PagingData<Shipping>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 25
             ),
             pagingSourceFactory = {
                 ShippingListPagingSource(apiService, context, query)

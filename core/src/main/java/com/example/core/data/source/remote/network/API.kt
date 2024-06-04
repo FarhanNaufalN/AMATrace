@@ -93,8 +93,8 @@ interface API {
     @GET("supplier/product")
     suspend fun getSupplierProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Query("totalPage") totalPage: Int,
-        @Query("totalData") totalData: Int
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
     ): ProductListResponse
 
 
@@ -125,8 +125,8 @@ interface API {
     @GET("supplier/shipping")
     suspend fun getSupplierShippingList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Query("totalPage") totalPage: Int,
-        @Query("totalData") totalData: Int
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
     ): GetShippingListResponse
 
     @GET("supplier/shipping")
@@ -145,8 +145,8 @@ interface API {
     suspend fun getProductClaimSupplierList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Path("productId") productId: String,
-        @Query("totalPage") totalPage: Int,
-        @Query("totalData") totalData: Int
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
     ): SupplierProductClaimListResponse
 
 

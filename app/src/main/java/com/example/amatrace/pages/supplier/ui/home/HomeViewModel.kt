@@ -20,6 +20,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val supplierProductRepository: SupplierProductRepository,
     private val searchQueryState: String?
+
+
 ) : ViewModel() {
     private val _product = MutableLiveData<PagingData<Product>>()
     val product: LiveData<PagingData<Product>> = _product
