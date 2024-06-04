@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.supplier.ui.detail.product.DetailProductActivity">
-
+    tools:context=".pages.producer.ui.detail.batchproduk.DetailBatchProducerActivity">
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -32,16 +31,14 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/detail_prdk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detail Produk"
+        android:text="Detail Batch Produk"
         android:textSize="30dp"
         android:textAlignment="center"
         android:textStyle="bold"
         android:textColor="@color/white_70"
         android:paddingTop="40dp"/>
-
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/productImage"
@@ -53,7 +50,7 @@
         app:shapeAppearanceOverlay="@style/CircularImageView"
         tools:src="@tools:sample/avatars"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/detail_prdk"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.cardview.widget.CardView
@@ -123,19 +120,6 @@
                     tools:text="Product Name" />
 
                 <TextView
-                    android:id="@+id/productLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="168dp"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Kebun Jatinangor" />
-
-                <TextView
                     android:id="@+id/productSku"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,34 +133,123 @@
                     tools:text="SKU: CB-01" />
 
                 <TextView
-                    android:id="@+id/deskripsiText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="240dp"
-                    android:text="DESKRIPSI"
-                    android:textColor="@color/green_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="168dp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="PT. Sambal Bu Rudy" />
 
                 <TextView
-                    android:id="@+id/productDescription"
+                    android:id="@+id/productLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="108dp"
-                    android:layout_marginBottom="200dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="196dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/productSku"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Alamat Perusahaan" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="224dp"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Jumlah Sambal: 50pcs" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="252dp"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Berasal dari: Kebun Jatinangor" />
+
+                <TextView
+                    android:id="@+id/more_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="280dp"
+                    android:text="Lihat detail"
+                    android:textColor="@color/green"
+                    android:clickable="true"
+                    android:onClick="showDetails"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/details_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="300dp"
+                        android:text="Komposisi:"
+                        android:textColor="@color/green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/isi_komp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="8dp"
+                       android:layout_marginBottom="10dp"
+                        android:textSize="14sp"
+                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+                    <TextView
+                        android:id="@+id/deskripsiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="0dp"
+                        android:text="Deskripsi:"
+                        android:textColor="@color/green_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/productDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="14sp"
+                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_claim"
@@ -187,7 +260,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/productDescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>
