@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".pages.supplier.ui.detail.product.DetailProductActivity">
 
-
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="0dp"
