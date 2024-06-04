@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.producer.ui.tambahprodukproducer.AddProdukProducerActivity"
+    android:padding="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambah Produk"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/green_dark" />
+
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_image"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="fill_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/buttonSelectFromGallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="Galeri" />
+
+            <Button
+                android:id="@+id/buttonCaptureFromCamera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="Kamera" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No. SKU"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/editTextSku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SKU"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Produk"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Komposisi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/editTextKomposisi"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Komposisi"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Deskripsi"
+            android:gravity="start"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/buttonAddProduct"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+ Tambahkan Produk" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

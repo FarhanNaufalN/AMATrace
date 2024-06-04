@@ -24,6 +24,12 @@
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
         <activity
+            android:name=".pages.producer.ui.tambahbatchproducer.AddBatchProducerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.producer.ui.tambahprodukproducer.AddProdukProducerActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity"
             android:exported="false" />
         <activity

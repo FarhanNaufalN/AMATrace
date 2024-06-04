@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    tools:context=".pages.producer.ui.tambahbatchproducer.AddBatchProducerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Buat Batch Produk"
+            android:textColor="@color/green_dark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/txt_prdk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pilih Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/green_dark" />
+
+        <Spinner
+            android:id="@+id/spinnerProduct"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/edit_text_background" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Nama Produk"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Asal Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Asal Produk"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="Deskripsi Produk"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/txt_jml_kg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Banyak Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/etMass"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyak Produk"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Batch Produksi"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Batch Produksi"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Komposisi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="Komposisi Produk"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/txt_exp_dt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Kadaluarsa"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <TextView
+            android:id="@+id/etExpiredDate"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:onClick="onBackButtonClickedExpiredDate"
+            android:hint="2025-01-01"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_margin="16dp" />
+
+
+
+        <EditText
+            android:id="@+id/etProductId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyak Produk"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
+
+        <EditText
+            android:id="@+id/etProducerIdDestination"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyak Produk"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
+
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="80dp"
+            android:text="Submit"
+            android:layout_gravity="center" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
