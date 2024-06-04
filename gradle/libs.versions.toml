@@ -48,6 +48,7 @@ androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", versi
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCamera2" }
 androidx-databinding-runtime = { module = "androidx.databinding:databinding-runtime", version.ref = "databindingRuntime" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingCommonAndroid" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 curvedbottomnavigation = { module = "com.github.qamarelsafadi:CurvedBottomNavigation", version.ref = "curvedbottomnavigation" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

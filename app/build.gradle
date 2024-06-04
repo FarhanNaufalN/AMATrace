@@ -80,6 +80,8 @@ dependencies {
     implementation libs.curvedbottomnavigation
     implementation libs.androidx.databinding.runtime
     implementation libs.lottie.v503
+    implementation libs.androidx.paging.runtime
+
 
 
 

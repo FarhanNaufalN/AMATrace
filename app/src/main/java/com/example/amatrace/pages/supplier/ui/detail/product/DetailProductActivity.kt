@@ -2,7 +2,6 @@ package com.example.amatrace.pages.supplier.ui.detail.product
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,14 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityDetailProductBinding
+import com.example.amatrace.pages.adapter.ClaimDetailAdapter
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.TambahClaimActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.Claim
+import com.example.core.data.source.remote.response.ClaimList
 import com.example.core.data.source.remote.response.ProductDetailData
 import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
-import com.example.core.data.source.remote.response.ProfileResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +28,7 @@ class DetailProductActivity : AppCompatActivity() {
     private lateinit var myPreference: Preference
     private var productId: String? = null
     private lateinit var productLocation: TextView
+    private val claimAdapter = ClaimDetailAdapter(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,23 +53,20 @@ class DetailProductActivity : AppCompatActivity() {
             }
         }
 
-        binding.buttonTambahClaim.setOnClickListener{
+        binding.rvClaim.adapter = claimAdapter
+        binding.rvClaim.layoutManager = LinearLayoutManager(this)
+
+        binding.buttonTambahClaim.setOnClickListener {
             val intent = Intent(this, TambahClaimActivity::class.java)
             intent.putExtra("product_id", productId)
             startActivity(intent)
         }
-
 
         Glide.with(this)
             .load(intent.getStringExtra("list_image"))
             .into(binding.productImage)
         binding.productName.text = intent.getStringExtra("list_name")
         binding.productSku.text = intent.getStringExtra("list_sku")
-
-        productId?.let {
-            println("productId: $it")
-        }
-
     }
 
     private fun getDetailProduct(productId: String) {
@@ -103,7 +101,6 @@ class DetailProductActivity : AppCompatActivity() {
         binding.productDescription.text = productDetail.description
     }
 
-
     private fun deleteDetailProduct(productId: String) {
         val token = myPreference.getAccessToken()
         if (token != null) {
@@ -129,9 +126,9 @@ class DetailProductActivity : AppCompatActivity() {
     }
 
     private fun displayClaims(claims: List<Claim>) {
-        // Pastikan claimsAdapter sudah diinisialisasi sebelum digunakan
-
-
+        claimAdapter.claimList = claims
+        claimAdapter.notifyDataSetChanged()
     }
+
 
 }

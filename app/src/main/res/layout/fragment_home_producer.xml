@@ -11,16 +11,13 @@
         android:id="@+id/scanButton"
         android:layout_width="90dp"
         android:layout_height="80dp"
-        android:layout_marginTop="600dp"
         android:background="@drawable/fab_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.697"
         app:srcCompat="@drawable/baseline_document_scanner_24" />
-
 
     <TextView
         android:id="@+id/textScan"
@@ -39,6 +36,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
+        app:layout_constraintVertical_bias="0.753" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
