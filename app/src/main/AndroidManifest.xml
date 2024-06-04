@@ -24,6 +24,9 @@
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
         <activity
+            android:name=".pages.producer.ui.detail.productproducer.DetailProdukProducerActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.producer.ui.tambahbatchproducer.AddBatchProducerActivity"
             android:exported="false" />
         <activity
