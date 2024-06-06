@@ -1,35 +1,38 @@
-package com.example.amatrace.pages.supplier.ui.home
+package com.example.amatrace.pages.producer.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amatrace.R
+import com.example.amatrace.databinding.FragmentDashboardBinding
 import com.example.amatrace.databinding.FragmentHomeSupplierBinding
 import com.example.amatrace.pages.adapter.ProductSupplierAdapter
+import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
 import com.example.amatrace.pages.supplier.ui.tambahproduk.TambahProdukActivity
 import com.example.core.data.source.remote.preferences.Preference
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class DashboardFragment : Fragment() {
 
-    private var _binding: FragmentHomeSupplierBinding? = null
+    private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var myPreference: Preference
     private lateinit var editTextSearch: EditText
+
 
     private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModel.ViewModelFactory(requireContext(), getSearchQuery())
@@ -41,7 +44,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeSupplierBinding.inflate(inflater, container, false)
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -1,4 +1,4 @@
-package com.example.amatrace.pages.supplier.ui.dashboard
+package com.example.amatrace.pages.producer.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
