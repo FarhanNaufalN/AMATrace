@@ -1,4 +1,4 @@
-package com.example.amatrace.pages.supplier.ui.notifications
+package com.example.amatrace.pages.producer.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

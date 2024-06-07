@@ -17,11 +17,6 @@
         android:label="@string/menu_ganti_profile"
         tools:layout="@layout/fragment_ubahprofileproducer" />
 
-    <fragment
-        android:id="@+id/nav_stockpasokan"
-        android:name="com.example.amatrace.pages.producer.ui.stockpasokan.stockpasokanFragment"
-        android:label="@string/menu_stockpasokan"
-        tools:layout="@layout/fragment_stockpasokan" />
 
     <fragment
         android:id="@+id/nav_daftarbatch"
@@ -51,7 +46,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.amatrace.pages.supplier.ui.notifications.NotificationsFragment"
+        android:name="com.example.amatrace.pages.producer.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 

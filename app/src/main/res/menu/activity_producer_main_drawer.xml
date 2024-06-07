@@ -5,17 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/menu_utama"
-            android:title="@string/menu_home" />
-        <item
             android:id="@+id/nav_ubahprofileProducer"
             android:icon="@drawable/edit_profil"
             android:title="@string/menu_ganti_profile" />
-        <item
-            android:id="@+id/nav_stockpasokan"
-            android:icon="@drawable/ic_stok"
-            android:title="@string/menu_stockpasokan" />
+
         <item
             android:id="@+id/nav_daftarbatch"
             android:icon="@drawable/ic_batch"
