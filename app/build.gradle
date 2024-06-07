@@ -82,6 +82,11 @@ dependencies {
     implementation libs.lottie.v503
     implementation libs.androidx.paging.runtime
 
+    implementation libs.zxing.android.embedded.v420
+    implementation libs.zxing.android.embedded
+    implementation libs.zxing.core
+    implementation libs.play.services.vision
+
 
 
 

@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentDashboardBinding
 import com.example.amatrace.databinding.FragmentHomeSupplierBinding
+import com.example.amatrace.pages.adapter.ProductProducerAdapter
 import com.example.amatrace.pages.adapter.ProductSupplierAdapter
+import com.example.amatrace.pages.producer.ui.tambahprodukproducer.AddProdukProducerActivity
 import com.example.amatrace.pages.supplier.ui.home.HomeViewModel
 import com.example.amatrace.pages.supplier.ui.tambahproduk.TambahProdukActivity
 import com.example.core.data.source.remote.preferences.Preference
@@ -34,11 +36,11 @@ class DashboardFragment : Fragment() {
     private lateinit var editTextSearch: EditText
 
 
-    private val homeViewModel: HomeViewModel by viewModels {
-        HomeViewModel.ViewModelFactory(requireContext(), getSearchQuery())
+    private val dashboardViewModel: DashboardViewModel by viewModels {
+        DashboardViewModel.ViewModelFactory(requireContext(), getSearchQuery())
     }
 
-    private lateinit var productAdapter: ProductSupplierAdapter
+    private lateinit var productAdapter: ProductProducerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +67,7 @@ class DashboardFragment : Fragment() {
 
         myPreference = Preference(requireContext())
 
-        productAdapter = ProductSupplierAdapter()
+        productAdapter = ProductProducerAdapter()
 
         // Load the profile image using Glide
         val account = myPreference.getAccountInfo()
@@ -82,10 +84,10 @@ class DashboardFragment : Fragment() {
         val token = myPreference.getAccessToken()
 
         if (token != null) {
-            homeViewModel.getAllProduct(token)
+            dashboardViewModel.getAllProduct(token)
         }
 
-        homeViewModel.product
+        dashboardViewModel.product
             .cachedIn(viewLifecycleOwner.lifecycleScope) // Menambahkan caching di sini
             .observe(viewLifecycleOwner, Observer { pagingData ->
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -94,7 +96,7 @@ class DashboardFragment : Fragment() {
             })
 
         binding.buttonTambahProduk.setOnClickListener {
-            startActivity(Intent(requireContext(), TambahProdukActivity::class.java))
+            startActivity(Intent(requireContext(), AddProdukProducerActivity::class.java))
         }
         editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -104,7 +106,7 @@ class DashboardFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // Panggil searchProducts dari HomeViewModel saat teks berubah
                 val token = myPreference.getAccessToken() ?: return
-                homeViewModel.searchProducts(token, s.toString())
+                dashboardViewModel.searchProducts(token, s.toString())
             }
             override fun afterTextChanged(s: Editable?) {
                 // Do nothing

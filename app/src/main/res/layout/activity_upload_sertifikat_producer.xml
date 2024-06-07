@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity">
+    tools:context=".pages.producer.ui.detail.tambahclaim.UploadSertifikatProducerActivity">
 
     <TextView
         android:id="@+id/selectedFileTextView"

@@ -1,4 +1,4 @@
-package com.example.amatrace.pages.supplier.ui.detail.tambahclaim
+package com.example.amatrace.pages.producer.ui.detail.tambahclaim
 
 import android.content.Context
 import android.util.Log
@@ -8,13 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.example.core.data.repository.ClaimProducerRepository
 import com.example.core.data.repository.ClaimSupplierRepository
 import com.example.core.data.source.remote.response.ClaimList
+import com.example.core.di.InjectionProductClaimProducer
 import com.example.core.di.InjectionProductClaimSupplier
 import kotlinx.coroutines.launch
 
-class TambahClaimViewModel (
-    private val claimRepository: ClaimSupplierRepository,
+class TambahClaimProducerViewModel (
+    private val claimRepository: ClaimProducerRepository,
 ) : ViewModel() {
     private val _claim = MutableLiveData<PagingData<ClaimList>>()
     val claim: LiveData<PagingData<ClaimList>> = _claim
@@ -34,9 +36,9 @@ class TambahClaimViewModel (
 
     class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TambahClaimViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(TambahClaimProducerViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return TambahClaimViewModel(InjectionProductClaimSupplier.provideRepository(context)) as T
+                return TambahClaimProducerViewModel(InjectionProductClaimProducer.provideRepository(context)) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

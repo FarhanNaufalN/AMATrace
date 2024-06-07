@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.producer.ui.detail.productproducer.DetailProdukProducerActivity">
+    tools:context=".pages.producer.ui.detail.rawProduk.RawProdukActivity">
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -90,7 +90,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="onClaimClicked"
-                        android:text=" + Tambah Claim" />
+                        android:text=" + Masukan Ke Stok" />
 
                     <ImageButton
                         android:id="@+id/buttonDelete"
@@ -147,22 +147,6 @@
 
 
                 <TextView
-                    android:id="@+id/ingredientsText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="212dp"
-                    android:text="BAHAN BAKU"
-                    android:textColor="@color/green_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/deskripsiText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,20 +160,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/productIngredients" />
-
-                <TextView
-                    android:id="@+id/productIngredients"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ingredientsText"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                    app:layout_constraintTop_toBottomOf="@+id/productLocation" />
 
                 <TextView
                     android:id="@+id/productDescription"

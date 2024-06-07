@@ -1,18 +1,25 @@
 package com.example.core.data.source.remote.network
 
+import com.example.core.data.source.remote.response.AddProductProducer
+import com.example.core.data.source.remote.response.AddProductProducerResponse
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.LoginResponse
+import com.example.core.data.source.remote.response.ProductDetailProducerResponse
 import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.ResponseDataRawProduct
 import com.example.core.data.source.remote.response.SertifClaimLinkResponse
+import com.example.core.data.source.remote.response.SertifClaimProducerLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimResponse
 import com.example.core.data.source.remote.response.ShippingResponse
 import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
 import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
+import com.example.core.data.source.remote.response.SupplierShippingDetailProducerResponse
+import com.example.core.data.source.remote.response.UploadImageProductProducerResponse
 import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
 import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
 import okhttp3.MultipartBody
@@ -80,15 +87,33 @@ interface API {
         @Part file: MultipartBody.Part
     ): Call<UploadImageProductSupplierResponse>
 
+    @Multipart
+    @POST("producer/image/product")
+    fun uploadImageProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<UploadImageProductProducerResponse>
+
     @POST("supplier/product")
     fun addProductSupplier(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Body requestBody: Map<String, String>
     ): Call<AddProductSupplierResponse>
 
+    @POST("producer/product")
+    fun addProductProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Body requestBody: Map<String, String>
+    ): Call<AddProductProducerResponse>
+
     @GET("supplier/product")
     fun getSupplierProduct(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+    ): Call<ProductListResponse>
+
+    @GET("producer/product")
+    fun getProducerProduct(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
     ): Call<ProductListResponse>
 
     @GET("supplier/product/{productId}")
@@ -97,11 +122,29 @@ interface API {
         @Path("productId") productId: String
     ): Call<ProductDetailSupplierResponse>
 
+    @GET("producer/product/{productId}")
+    fun getProducerProductDetail(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("productId") productId: String
+    ): Call<ProductDetailProducerResponse>
+
+    @GET("producer/supplier-shipping/{supplierShippingQrCode}")
+    fun getProducerProductDetailSupplier(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("supplierShippingQrCode") supplierShippingQrCode: String
+    ): Call<SupplierShippingDetailProducerResponse>
+
     @DELETE("supplier/product/{productId}")
     fun deleteSupplierProductDetail(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Path("productId") productId: String
     ): Call<ProductDetailSupplierResponse>
+
+    @DELETE("producer/product/{productId}")
+    fun deleteProducerProductDetail(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("productId") productId: String
+    ): Call<ProductDetailProducerResponse>
 
     @GET("supplier/product")
     suspend fun getSupplierProductList(
@@ -110,10 +153,23 @@ interface API {
         @Query("limit") totalData: Int
     ): ProductListResponse
 
+    @GET("producer/product")
+    suspend fun getProducerProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
+    ): ProductListResponse
+
 
     @GET("supplier/product")
     suspend fun getSearchSupplierProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Query("namesku") search: String,
+    ): ProductListResponse
+
+    @GET("producer/product")
+    suspend fun getSearchProducerProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Query("namesku") search: String,
     ): ProductListResponse
 
@@ -162,10 +218,26 @@ interface API {
         @Query("limit") totalData: Int
     ): SupplierProductClaimListResponse
 
+    @GET("producer/product/{productId}/product-claim")
+    suspend fun getProductClaimProducerList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("productId") productId: String,
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
+    ): SupplierProductClaimListResponse
+
 
     @POST("supplier/product-claim/{productClaimId}/product/{productId}")
     fun uploadLinkSertif(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+        @Body requestBody: RequestBody
+    ): Call<SertifClaimResponse>
+
+    @POST("producer/product-claim/{productClaimId}/product/{productId}")
+    fun uploadLinkSertifProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Path("productClaimId") productClaimId: String,
         @Path("productId") productId: String,
         @Body requestBody: RequestBody
@@ -177,6 +249,13 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
         @Part file: MultipartBody.Part
     ): Call<SertifClaimLinkResponse>
+
+    @Multipart
+    @POST("producer/pdf")
+    fun uploadSertifProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Part file: MultipartBody.Part
+    ): Call<SertifClaimProducerLinkResponse>
 
 
 }

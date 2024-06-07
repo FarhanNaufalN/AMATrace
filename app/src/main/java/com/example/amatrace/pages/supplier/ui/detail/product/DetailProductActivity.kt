@@ -15,7 +15,6 @@ import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.TambahClaimActi
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.Claim
-import com.example.core.data.source.remote.response.ClaimList
 import com.example.core.data.source.remote.response.ProductDetailData
 import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
 import retrofit2.Call

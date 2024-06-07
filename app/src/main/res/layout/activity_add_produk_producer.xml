@@ -113,12 +113,12 @@
             android:id="@+id/editTextKomposisi"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:hint="Komposisi"
-            android:gravity="start"
-            android:padding="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/edit_text_background"
-            android:textAlignment="textStart"
-            android:layout_marginBottom="10dp"/>
+            android:gravity="start"
+            android:hint="Komposisi"
+            android:padding="10dp"
+            android:textAlignment="textStart" />
 
         <TextView
             android:layout_width="match_parent"

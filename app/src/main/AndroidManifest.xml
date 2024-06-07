@@ -24,6 +24,17 @@
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
         <activity
+            android:name=".pages.producer.ui.detail.rawProduk.RawProdukActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.producer.ui.home.QRCodeScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            tools:replace="screenOrientation" />
+        <activity
             android:name=".pages.producer.ui.detail.batchproduk.DetailBatchProducerActivity"
             android:exported="false" />
         <activity
@@ -36,7 +47,13 @@
             android:name=".pages.producer.ui.tambahprodukproducer.AddProdukProducerActivity"
             android:exported="false" />
         <activity
+            android:name=".pages.producer.ui.detail.tambahclaim.UploadSertifikatProducerActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.producer.ui.detail.tambahclaim.TambahClaimProducerActivity"
             android:exported="false" />
         <activity
             android:name=".pages.supplier.ui.detail.tambahclaim.TambahClaimActivity"

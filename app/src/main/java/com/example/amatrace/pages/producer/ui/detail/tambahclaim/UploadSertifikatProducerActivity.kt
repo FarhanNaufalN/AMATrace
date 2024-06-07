@@ -1,4 +1,4 @@
-package com.example.amatrace.pages.supplier.ui.detail.tambahclaim
+package com.example.amatrace.pages.producer.ui.detail.tambahclaim
 
 import android.app.Activity
 import android.content.Intent
@@ -9,11 +9,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.databinding.ActivityUploadSertifikatBinding
+import com.example.amatrace.databinding.ActivityUploadSertifikatProducerBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.SertifClaimLinkResponse
+import com.example.core.data.source.remote.response.SertifClaimProducerLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -25,9 +27,9 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 
-class UploadSertifikatActivity : AppCompatActivity() {
+class UploadSertifikatProducerActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUploadSertifikatBinding
+    private lateinit var binding: ActivityUploadSertifikatProducerBinding
     private lateinit var apiService: API
     private lateinit var myPreferences: Preference
     private var productId: String? = null
@@ -82,7 +84,7 @@ class UploadSertifikatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUploadSertifikatBinding.inflate(layoutInflater)
+        binding = ActivityUploadSertifikatProducerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         println(uploadedImageUrl)
@@ -129,34 +131,34 @@ class UploadSertifikatActivity : AppCompatActivity() {
         val fileName = tempFile.name
         val requestBody = tempFile.asRequestBody("application/pdf".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", fileName, requestBody)
-        apiService.uploadSertif(token, filePart).enqueue(object : Callback<SertifClaimLinkResponse> {
+        apiService.uploadSertifProducer(token, filePart).enqueue(object : Callback<SertifClaimProducerLinkResponse> {
             override fun onResponse(
-                call: Call<SertifClaimLinkResponse>,
-                response: Response<SertifClaimLinkResponse>
+                call: Call<SertifClaimProducerLinkResponse>,
+                response: Response<SertifClaimProducerLinkResponse>
             ) {
                 if (response.isSuccessful) {
                     // Tangani ketika upload berhasil
                     uploadedImageUrl = response.body()?.data?.image
                     println(uploadedImageUrl)
                     Toast.makeText(
-                        this@UploadSertifikatActivity,
+                        this@UploadSertifikatProducerActivity,
                         "Upload successful",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     // Tangani ketika upload gagal
                     Toast.makeText(
-                        this@UploadSertifikatActivity,
+                        this@UploadSertifikatProducerActivity,
                         "Upload failed: ${response.message()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
-            override fun onFailure(call: Call<SertifClaimLinkResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SertifClaimProducerLinkResponse>, t: Throwable) {
                 // Tangani ketika terjadi kesalahan
                 Toast.makeText(
-                    this@UploadSertifikatActivity,
+                    this@UploadSertifikatProducerActivity,
                     "Upload error: ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -182,29 +184,29 @@ class UploadSertifikatActivity : AppCompatActivity() {
             // Buat RequestBody untuk JSON object
             val requestBody = json.toRequestBody("application/json".toMediaTypeOrNull())
 
-            val call = apiService.uploadLinkSertif(token, productClaimId, productId, requestBody)
+            val call = apiService.uploadLinkSertifProducer(token, productClaimId, productId, requestBody)
 
             call.enqueue(object : Callback<SertifClaimResponse> {
                 override fun onResponse(call: Call<SertifClaimResponse>, response: Response<SertifClaimResponse>) {
                     if (response.isSuccessful && response.body() != null) {
-                        Toast.makeText(this@UploadSertifikatActivity, "Link upload successful", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@UploadSertifikatActivity, MainSupplierActivity::class.java))
+                        Toast.makeText(this@UploadSertifikatProducerActivity, "Link upload successful", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@UploadSertifikatProducerActivity, MainSupplierActivity::class.java))
                     } else {
                         // Tangani respon gagal dari server
                         val errorMessage = response.message() ?: "Unknown error"
-                        Toast.makeText(this@UploadSertifikatActivity, "Failed to upload link: $errorMessage", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@UploadSertifikatProducerActivity, "Failed to upload link: $errorMessage", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<SertifClaimResponse>, t: Throwable) {
                     // Tangani kesalahan saat melakukan panggilan ke API
-                    Toast.makeText(this@UploadSertifikatActivity, "Upload error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@UploadSertifikatProducerActivity, "Upload error: ${t.message}", Toast.LENGTH_SHORT).show()
                     t.printStackTrace() // Print the stack trace for debugging
                 }
             })
         } ?: run {
             // Jika uploadedImageUrl masih null
-            Toast.makeText(this@UploadSertifikatActivity, "Please upload a PDF first", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@UploadSertifikatProducerActivity, "Please upload a PDF first", Toast.LENGTH_SHORT).show()
         }
     }
 

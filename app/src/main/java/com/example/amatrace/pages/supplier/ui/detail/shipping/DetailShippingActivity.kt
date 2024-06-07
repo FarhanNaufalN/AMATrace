@@ -20,6 +20,9 @@ class DetailShippingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailShippingBinding
     private lateinit var myPreference: Preference
     private lateinit var shippingStatus: TextView
+    private lateinit var statusPengirimannya: TextView
+    private lateinit var massaPengirimannya: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +33,18 @@ class DetailShippingActivity : AppCompatActivity() {
         myPreference = Preference(this)
         val shipping = myPreference.getShippingDetail()
         shippingStatus = findViewById(R.id.statusPengiriman)
-        shippingStatus.text = shipping?.status
+        statusPengirimannya = findViewById(R.id.statusPengirimannya)
+        massaPengirimannya = findViewById(R.id.massPengiriman)
+
+        if (shipping != null) {
+            shippingStatus.text = shipping.producerDestination.businessName
+            statusPengirimannya.text = shipping.status
+            massaPengirimannya.text = shipping.mass.toString()
+        }
 
         val bundle = intent.extras
         val shippingId = bundle?.getString("shipping_id")
+        println("DetailShipping Id: $shippingId")
         if (shippingId != null) {
             getDetailShipping(shippingId)
         }

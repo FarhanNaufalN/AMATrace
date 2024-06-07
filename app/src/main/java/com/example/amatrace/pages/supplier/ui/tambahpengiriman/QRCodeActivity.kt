@@ -1,8 +1,10 @@
 package com.example.amatrace.pages.supplier.ui.tambahpengiriman
 
 import android.R.attr.bitmap
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,28 +12,35 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
+import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
-import androidmads.library.qrgenearator.QRGContents
-import androidmads.library.qrgenearator.QRGEncoder
-import androidmads.library.qrgenearator.QRGSaver
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.NotificationCompat
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityQrcodeBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 
 
 class QRCodeActivity : AppCompatActivity() {
 
         private lateinit var binding: ActivityQrcodeBinding
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -39,7 +48,7 @@ class QRCodeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val qrCodeData = intent.getStringExtra("QR_CODE_DATA") ?: return
-        generateQRCode(qrCodeData)
+        generateQRCode()
 
         binding.saveButton.setOnClickListener {
             val qrValue = intent.getStringExtra("QR_CODE_DATA") ?: ""
@@ -95,22 +104,83 @@ class QRCodeActivity : AppCompatActivity() {
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
-    private fun generateQRCode(data: String) {
-        val width = resources.displayMetrics.widthPixels
-        val height = resources.displayMetrics.heightPixels
-        val smallerDimension = if (width < height) width else height
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun generateQRCode() {
+        val builder = AlertDialog.Builder(this)
+        val inflater: LayoutInflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.pop_up, null)
+        builder.setView(dialogView)
 
-        val qrgEncoder = QRGEncoder(data, null, QRGContents.Type.TEXT, smallerDimension)
-        qrgEncoder.colorBlack = Color.GREEN
-        qrgEncoder.colorWhite = Color.WHITE
+        qrcodeGenerator(dialogView)
+
+        val saveButton = dialogView.findViewById<AppCompatButton>(R.id.saveQRCodeButton)
+        val qrCodeImage = dialogView.findViewById<ImageView>(R.id.barcodeImage)
+        saveButton.setOnClickListener {
+            if (qrCodeImage != null) {
+                saveImage(qrCodeImage)
+            }
+        }
+
+        val dialog = builder.create()
+
+        dialog.show()
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun saveImage(qrCodeImage: ImageView) {
+        val drawable = qrCodeImage.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "Image_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(
+                MediaStore.MediaColumns.RELATIVE_PATH,
+                Environment.DIRECTORY_PICTURES + "/StockWise"
+            )
+        }
+
+        val uri: Uri? =
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
         try {
-            val bitmap = qrgEncoder.bitmap
-            binding.qrImageView.setImageBitmap(bitmap)
+            uri?.let {
+                val outputStream: OutputStream? = contentResolver.openOutputStream(it)
+                if (outputStream != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                } else {
+                    Toast.makeText(this, "OutputStream is null", Toast.LENGTH_SHORT).show()
+                }
+                outputStream?.close()
+                startActivity(Intent(this, MainSupplierActivity::class.java))
+                Toast.makeText(this, "Image Saved", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: Exception) {
-            Log.v("GenerateQRCode", e.toString())
+            Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
         }
     }
+
+    private fun qrcodeGenerator(view: View) {
+        val qrCodeData = intent.getStringExtra("QR_CODE_DATA") ?: return
+        var qrCodeImage = view.findViewById<ImageView>(R.id.barcodeImage)
+        if (qrCodeData.isNotEmpty()) {
+            try {
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap: Bitmap =
+                    barcodeEncoder.encodeBitmap(qrCodeData, BarcodeFormat.QR_CODE, 500, 500)
+                if (qrCodeImage != null) {
+                    qrCodeImage.setImageBitmap(bitmap)
+                } else {
+                    Toast.makeText(this, "QRCODEIMAGEVIEW NULL", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 
     fun onSaveButtonClicked(view: View) {
 
@@ -121,4 +191,5 @@ class QRCodeActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 }

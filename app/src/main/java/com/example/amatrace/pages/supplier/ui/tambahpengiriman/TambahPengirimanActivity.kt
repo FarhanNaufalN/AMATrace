@@ -123,8 +123,8 @@ class TambahPengirimanActivity : AppCompatActivity() {
 
         binding.spinnerProducer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position >= 0 && position < (producerList?.size ?: 0)) {
-                    val selectedProducer = producerList?.get(position)
+                if (position > 0 && position < (producerList?.size ?: 0)) {
+                    val selectedProducer = producerList?.get(position - 1)
                     val producerId = selectedProducer?.id ?: ""
                     binding.etProducerIdDestination.setText(producerId)
                     binding.etProducerIdDestination.visibility = View.GONE
@@ -145,7 +145,7 @@ class TambahPengirimanActivity : AppCompatActivity() {
             val expiredDate = binding.etExpiredDate.text.toString()
             val mass = binding.etMass.text.toString().toIntOrNull() ?: 0
             val producerIdDestination = binding.etProducerIdDestination.text.toString()
-            val notes = binding.etNotes.text.toString()
+            val note = binding.etNotes.text.toString()
             val serialNumber = binding.etSerialNumber.text.toString()
 
             val shippingRequest = ShippingRequest(
@@ -154,7 +154,7 @@ class TambahPengirimanActivity : AppCompatActivity() {
                 expiredDate = expiredDate,
                 mass = mass,
                 producerIdDestination = producerIdDestination,
-                notes = notes,
+                note = note,
                 serialNumber = serialNumber
             )
 
@@ -165,7 +165,10 @@ class TambahPengirimanActivity : AppCompatActivity() {
                 call.enqueue(object : Callback<ShippingResponse> {
                     override fun onResponse(call: Call<ShippingResponse>, response: Response<ShippingResponse>) {
                         if (response.isSuccessful && response.body()?.success == true) {
-                            val qrCodeData = response.body()?.data?.id ?: ""
+                            val qrCodeData = response.body()?.data?.qrCode ?: ""
+                            val id = response.body()?.data?.id ?: ""
+                            println("QR Code Data: $qrCodeData")
+                            println("ID Data: $id")
                             val intent = Intent(this@TambahPengirimanActivity, QRCodeActivity::class.java)
                             intent.putExtra("QR_CODE_DATA", qrCodeData)
                             startActivity(intent)
@@ -216,7 +219,7 @@ class TambahPengirimanActivity : AppCompatActivity() {
                 "expiredDate": "${shippingRequest.expiredDate}",
                 "mass": ${shippingRequest.mass},
                 "producerIdDestination": "${shippingRequest.producerIdDestination}",
-                "notes": "${shippingRequest.notes}",
+                "note": "${shippingRequest.note}",
                 "serialNumber": "${shippingRequest.serialNumber}"
             }
         """.trimIndent()

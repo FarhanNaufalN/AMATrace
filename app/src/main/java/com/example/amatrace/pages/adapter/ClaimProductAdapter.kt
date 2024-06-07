@@ -8,11 +8,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.amatrace.pages.producer.ui.detail.tambahclaim.UploadSertifikatProducerActivity
 import com.example.amatrace.pages.supplier.ui.detail.tambahclaim.UploadSertifikatActivity
 import com.example.core.data.source.remote.response.ClaimList
 import com.example.core.databinding.ItemRowBinding
 
-class ClaimAdapter : PagingDataAdapter<ClaimList, ClaimAdapter.MyViewHolder>(
+class ClaimProductAdapter : PagingDataAdapter<ClaimList, ClaimProductAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -37,7 +38,7 @@ class ClaimAdapter : PagingDataAdapter<ClaimList, ClaimAdapter.MyViewHolder>(
                 Glide.with(itemView.context).load(item.icon).into(productImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, UploadSertifikatActivity::class.java)
+                    val intent = Intent(itemView.context, UploadSertifikatProducerActivity::class.java)
                     val bundle = Bundle()
 
                     bundle.putString("productClaim_id", item.id)

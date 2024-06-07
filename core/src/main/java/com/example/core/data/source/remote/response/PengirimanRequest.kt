@@ -6,6 +6,6 @@ data class ShippingRequest(
     val expiredDate: String,
     val mass: Int,
     val producerIdDestination: String,
-    val notes: String,
+    val note: String,
     val serialNumber: String
 )
