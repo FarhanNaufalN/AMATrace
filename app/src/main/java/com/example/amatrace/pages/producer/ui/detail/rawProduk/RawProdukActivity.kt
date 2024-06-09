@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityRawProdukBinding
@@ -14,12 +13,9 @@ import com.example.amatrace.pages.adapter.ClaimDetailAdapter
 import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
-import com.example.core.data.source.remote.response.AddProductProducerResponse
 import com.example.core.data.source.remote.response.AddRawProductResponse
 import com.example.core.data.source.remote.response.Claim
 import com.example.core.data.source.remote.response.ProductDetailData
-import com.example.core.data.source.remote.response.ProductDetailProducerResponse
-import com.example.core.data.source.remote.response.ResponseDataRawProduct
 import com.example.core.data.source.remote.response.SupplierShippingDetailProducerResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,10 +26,9 @@ class RawProdukActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRawProdukBinding
     private lateinit var myPreference: Preference
     private var productId: String? = null
-    private val claimAdapter = ClaimDetailAdapter(emptyList())
+    private lateinit var claimAdapter: ClaimDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityRawProdukBinding.inflate(layoutInflater)
@@ -41,6 +36,11 @@ class RawProdukActivity : AppCompatActivity() {
 
         myPreference = Preference(this)
         val account = myPreference.getAccountInfo()
+
+        // Initialize RecyclerView and Adapter
+        claimAdapter = ClaimDetailAdapter(emptyList())
+        binding.rvClaim.layoutManager = LinearLayoutManager(this)
+        binding.rvClaim.adapter = claimAdapter
 
         val bundle = intent.extras
         val supplierShippingQrCode = bundle?.getString("SCAN_RESULT")
@@ -57,17 +57,20 @@ class RawProdukActivity : AppCompatActivity() {
                 addProduct(supplierShippingQrCode)
             }
         }
-
     }
 
     override fun onResume() {
         super.onResume()
-        // Lihat apakah ada kode QR yang dipindai
         val bundle = intent.extras
         val supplierShippingQrCode = bundle?.getString("SCAN_RESULT")
         if (supplierShippingQrCode != null) {
             getDetailProduct(supplierShippingQrCode)
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, ProducerMainActivity::class.java))
+        finish()
     }
 
     private fun getDetailProduct(supplierShippingQrCode: String) {
@@ -81,14 +84,12 @@ class RawProdukActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val productDetailResponse = response.body()
-                            productDetailResponse?.let { displayProductDetail(it.data.product) }
-                            displayClaims(
-                                productDetailResponse?.data?.product?.claims ?: emptyList()
-                            )
+                            productDetailResponse?.let {
+                                displayProductDetail(it.data.product)
+                                displayClaims(it.data.product.claims)
+                            }
                             productDetailResponse?.data?.product?.let {
-                                myPreference.saveProductDetail(
-                                    it
-                                )
+                                myPreference.saveProductDetail(it)
                             }
                         } else {
                             // Handle unsuccessful response
@@ -124,21 +125,17 @@ class RawProdukActivity : AppCompatActivity() {
                         finish() // Finish current activity after starting new activity
                     }
                 } else {
-                    // Handle unsuccessful response
                     val errorMessage = response.message() ?: "Unknown error"
                     Toast.makeText(this@RawProdukActivity, "Failed to add product: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<AddRawProductResponse>, t: Throwable) {
-                // Handle network failure
                 Toast.makeText(this@RawProdukActivity, "Failed to connect to server: ${t.message}", Toast.LENGTH_SHORT).show()
                 t.printStackTrace() // Print the stack trace for debugging
             }
         })
     }
-
-
 
     private fun displayProductDetail(productDetail: ProductDetailData) {
         binding.productName.text = productDetail.name
@@ -148,7 +145,6 @@ class RawProdukActivity : AppCompatActivity() {
             .load(productDetail.image)
             .into(binding.productImage)
     }
-
 
     private fun displayClaims(claims: List<Claim>) {
         claimAdapter.claimList = claims
