@@ -12,6 +12,7 @@ import com.example.core.data.source.remote.response.ProductDetailSupplierRespons
 import com.example.core.data.source.remote.response.ProductListResponse
 import com.example.core.data.source.remote.response.ProfileProducerResponse
 import com.example.core.data.source.remote.response.ProfileResponse
+import com.example.core.data.source.remote.response.RawProductListResponse
 import com.example.core.data.source.remote.response.ResponseDataRawProduct
 import com.example.core.data.source.remote.response.SertifClaimLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimProducerLinkResponse
@@ -168,6 +169,13 @@ interface API {
         @Query("limit") totalData: Int
     ): ProductListResponse
 
+    @GET("producer/raw-product")
+    suspend fun getProducerRawProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
+    ): RawProductListResponse
+
 
     @GET("supplier/product")
     suspend fun getSearchSupplierProductList(
@@ -180,6 +188,12 @@ interface API {
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Query("search") search: String,
     ): ProductListResponse
+
+    @GET("producer/raw-product")
+    suspend fun getSearchRawProducerProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Query("search") search: String,
+    ): RawProductListResponse
 
     @POST("supplier/shipping")
     fun getQRShipping(
