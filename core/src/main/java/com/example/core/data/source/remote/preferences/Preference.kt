@@ -24,6 +24,7 @@ class Preference(context: Context) {
         private const val KEY_ACCOUNT_INFO = "accountInfo"
         private const val KEY_DETAIL_PRODUCT = "detailProduct"
         private const val KEY_DETAIL_SHIPPING = "detailShipping"
+        private const val KEY_DETAIL_SHIPPING_SCAN = "detailShippingScan"
         private const val KEY_NIGHT_MODE = "nightMode"
     }
 
@@ -70,7 +71,7 @@ class Preference(context: Context) {
 
     fun saveShippingScanDetail(detailProduct: SupplierShippingDetailData) {
         val productJson = Gson().toJson(detailProduct)
-        sharedPreferences.edit().putString(KEY_DETAIL_PRODUCT, productJson).apply()
+        sharedPreferences.edit().putString(KEY_DETAIL_SHIPPING_SCAN, productJson).apply()
     }
 
     fun getProductDetail(): ProductDetailData? {
@@ -86,6 +87,11 @@ class Preference(context: Context) {
     fun getShippingDetail(): ShippingDetail? {
         val shippingJson = sharedPreferences.getString(KEY_DETAIL_SHIPPING, null)
         return Gson().fromJson(shippingJson, ShippingDetail::class.java)
+    }
+
+    fun getShippingScanDetail(): SupplierShippingDetailData? {
+        val shippingJson = sharedPreferences.getString(KEY_DETAIL_SHIPPING_SCAN, null)
+        return Gson().fromJson(shippingJson, SupplierShippingDetailData::class.java)
     }
 }
 

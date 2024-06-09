@@ -28,7 +28,9 @@ data class Supplier(
     @SerializedName("address")
     val address: String,
     @SerializedName("noHp")
-    val noHp: String
+    val noHp: String,
+    @SerializedName("email")
+    val email: String
 )
 
 data class ShippingInfo(

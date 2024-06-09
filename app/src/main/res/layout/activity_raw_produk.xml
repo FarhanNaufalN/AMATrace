@@ -98,16 +98,16 @@
                     android:id="@+id/productName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="28dp"
+                    android:text="Product Name"
                     android:textColor="@color/green_dark"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    android:text="Product Name" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
                 <TextView
                     android:id="@+id/idShipping"
@@ -124,61 +124,105 @@
                     tools:text="223214-2131-1231" />
 
                 <TextView
-                    android:id="@+id/productSku"
+                    android:id="@+id/tvproductSku"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="140dp"
-                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:text="SKU: "
+                    android:textSize="16sp"
+                    android:textColor="@color/green_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+                <TextView
+                    android:id="@+id/productSku"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.115"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvproductSku"
                     tools:text="SKU: CB-01" />
+
+                <TextView
+                    android:id="@+id/tvLokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="9dp"
+                    android:text="Asal Bahan: "
+                    android:textColor="@color/green_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/productSku"
+                    tools:text="Asal Bahan: " />
 
                 <TextView
                     android:id="@+id/productLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="168dp"
+
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLokasi"
                     tools:text="Kebun Jatinangor" />
+
+
+
+                <TextView
+                    android:id="@+id/tvEmailSupplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_dark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextAddress"
+                    android:text="Email:" />
+
+
 
                 <TextView
                     android:id="@+id/EmailSupplier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="190dp"
+
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/productLocation"
-                    tools:text="Supplier@amatrace.com"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmailSupplier"
+                    tools:text="Supplier@amatrace.com" />
+
+
 
                 <TextView
                     android:id="@+id/editTextAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="210dp"
+                    android:layout_marginTop="8dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EmailSupplier"
-                    tools:text="Jl. Jatinangor"/>
-
-
-
+                    app:layout_constraintTop_toBottomOf="@+id/productLocation"
+                    tools:text="Jl. Jatinangor" />
 
 
                 <TextView
@@ -186,56 +230,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="230dp"
+                    android:layout_marginTop="20dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextAddress"
-                    tools:text="Delivery Date: 2024-01-01"/>
+                    app:layout_constraintTop_toBottomOf="@+id/EmailSupplier"
+                    tools:text="Delivery Date: 2024-01-01" />
 
                 <TextView
                     android:id="@+id/etExpiredDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="250dp"
+                    android:layout_marginTop="1dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etDeliveryDate"
-                    tools:text="Expired Date: 2025-01-01"/>
+                    tools:text="Expired Date: 2025-01-01" />
 
                 <TextView
                     android:id="@+id/etMass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="270dp"
+                    android:layout_marginTop="1dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etExpiredDate"
-                    tools:text="Banyak: 10 Kg"/>
+                    tools:text="Banyak: 10 Kg" />
 
                 <TextView
                     android:id="@+id/etNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="290dp"
+                    android:layout_marginTop="1dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etMass"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 
 
                 <TextView
@@ -243,7 +283,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="160dp"
+                    android:layout_marginTop="15dp"
                     android:text="DESKRIPSI"
                     android:textColor="@color/green_dark"
                     android:textSize="18sp"
@@ -252,7 +292,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/productLocation" />
+                    app:layout_constraintTop_toBottomOf="@+id/etNotes" />
 
 
                 <TextView

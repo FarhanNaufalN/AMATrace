@@ -35,7 +35,17 @@ class RawProdukActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         myPreference = Preference(this)
-        val account = myPreference.getAccountInfo()
+        val detailShip = myPreference.getShippingScanDetail()
+        val productDetail = myPreference.getProductDetail()
+        binding.productLocation.text = detailShip?.supplier?.businessName
+        binding.EmailSupplier.text = detailShip?.supplier?.email
+        binding.editTextAddress.text = detailShip?.supplier?.address
+        binding.etDeliveryDate.text = detailShip?.deliveryDate
+        binding.etExpiredDate.text = detailShip?.expiredDate
+        binding.etMass.text = detailShip?.mass.toString()
+        binding.etNotes.text = detailShip?.note
+
+
 
         // Initialize RecyclerView and Adapter
         claimAdapter = ClaimDetailAdapter(emptyList())
@@ -68,7 +78,9 @@ class RawProdukActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
     override fun onBackPressed() {
+        super.onBackPressed()
         startActivity(Intent(this, ProducerMainActivity::class.java))
         finish()
     }
