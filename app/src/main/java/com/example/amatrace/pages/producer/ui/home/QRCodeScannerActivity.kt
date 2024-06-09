@@ -3,23 +3,26 @@ package com.example.amatrace.pages.producer.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.amatrace.R
 import com.example.amatrace.pages.producer.ui.detail.rawProduk.RawProdukActivity
+import com.example.core.data.source.remote.network.Config
+import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.SupplierShippingDetailProducerResponse
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class QRCodeScannerActivity : AppCompatActivity() {
-
+    private lateinit var myPreference: Preference
     private var lastScanResult: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        myPreference = Preference(this)
         // Mulai pemindaian QR code
         startQRScanner()
     }
@@ -30,6 +33,45 @@ class QRCodeScannerActivity : AppCompatActivity() {
             setBeepEnabled(true)
             setBarcodeImageEnabled(true)
             initiateScan()
+        }
+    }
+
+    private fun getDetailProduct(supplierShippingQrCode: String) {
+        val token = myPreference.getAccessToken()
+        if (token != null) {
+            Config.getApiService().getProducerProductDetailSupplier(token, supplierShippingQrCode)
+                .enqueue(object : Callback<SupplierShippingDetailProducerResponse> {
+                    override fun onResponse(
+                        call: Call<SupplierShippingDetailProducerResponse>,
+                        response: Response<SupplierShippingDetailProducerResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val productDetailResponse = response.body()
+                            productDetailResponse?.let {
+                                myPreference.saveShippingScanDetail(it.data)
+
+                                // Start RawProdukActivity with the scan result
+                                val scanResultIntent = Intent(this@QRCodeScannerActivity, RawProdukActivity::class.java).apply {
+                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                    putExtra("SCAN_RESULT", supplierShippingQrCode)
+                                }
+                                startActivity(scanResultIntent)
+                            }
+                        } else {
+                            // Handle unsuccessful response
+                            Toast.makeText(this@QRCodeScannerActivity, "Failed to get product details", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<SupplierShippingDetailProducerResponse>,
+                        t: Throwable
+                    ) {
+                        // Handle failure
+                        Toast.makeText(this@QRCodeScannerActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        println("Error: ${t.message}")
+                    }
+                })
         }
     }
 
@@ -47,14 +89,8 @@ class QRCodeScannerActivity : AppCompatActivity() {
                 // Jika pembacaan QR code berhasil
                 if (result.contents != lastScanResult) {
                     // Jika hasil pemindaian QR code baru
-                    Toast.makeText(this, "Scanned QR Code: ${result.contents}", Toast.LENGTH_LONG).show()
                     lastScanResult = result.contents
-                    val scanResultIntent = Intent(this, RawProdukActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        putExtra("SCAN_RESULT", result.contents)
-                    }
-                    startActivity(scanResultIntent)
-
+                    getDetailProduct(result.contents)
                 } else {
                     // Jika hasil pemindaian QR code sama dengan sebelumnya
                     Toast.makeText(this, "Scanned QR Code is the same as previous one", Toast.LENGTH_SHORT).show()

@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.core.data.source.remote.response.Account
 import com.example.core.data.source.remote.response.ProductDetailData
 import com.example.core.data.source.remote.response.ShippingDetail
+import com.example.core.data.source.remote.response.SupplierShippingDetailData
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 
@@ -66,6 +67,12 @@ class Preference(context: Context) {
         val productJson = Gson().toJson(detailProduct)
         sharedPreferences.edit().putString(KEY_DETAIL_PRODUCT, productJson).apply()
     }
+
+    fun saveShippingScanDetail(detailProduct: SupplierShippingDetailData) {
+        val productJson = Gson().toJson(detailProduct)
+        sharedPreferences.edit().putString(KEY_DETAIL_PRODUCT, productJson).apply()
+    }
+
     fun getProductDetail(): ProductDetailData? {
         val productJson = sharedPreferences.getString(KEY_DETAIL_PRODUCT, null)
         return Gson().fromJson(productJson, ProductDetailData::class.java)

@@ -33,7 +33,7 @@ data class ProducerDestination(
 data class TrackingHistory(
     @SerializedName("supplierLocation") val supplierLocation: Location,
     @SerializedName("receiptViaWarehouse") val receiptViaWarehouse: List<Any>, // Ubah tipe data sesuai kebutuhan Anda
-    @SerializedName("arrival") val arrival: String
+    @SerializedName("arrival") val arrival: Arrival
 )
 
 data class Location(
