@@ -8,6 +8,7 @@ import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityUploadSertifikatBinding
 import com.example.amatrace.databinding.ActivityUploadSertifikatProducerBinding
 import com.example.amatrace.pages.producer.ProducerMainActivity
@@ -18,6 +19,7 @@ import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.SertifClaimLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimProducerLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimResponse
+import com.example.core.data.source.remote.response.SupplierDetailClaimResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -42,18 +44,15 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             data?.data?.also { uri ->
-                // Tampilkan nama file yang dipilih
                 val fileName = getFileName(uri)
                 binding.selectedFileTextView.text = "Selected file: $fileName"
 
-                // Simpan file dari URI ke penyimpanan internal aplikasi
                 val outputFile = saveFileFromUri(uri)
                 if (outputFile != null) {
                     val uploadedFilePath = "/data/user/0/com.example.amatrace/cache/uploads/Farhan Naufal Nurdiansyah.pdf"
                     val fileName = uploadedFilePath.substringAfterLast('/')
                     println("File uploaded: $fileName")
-                    // Jika penyimpanan berhasil, unggah file
-                    uploadFile(outputFile) // Perbarui argumen di sini
+                    uploadFile(outputFile)
                     println("File uploaded: $outputFile")
                 } else {
                     Toast.makeText(this, "Failed to save file", Toast.LENGTH_SHORT).show()
@@ -62,14 +61,13 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         }
     }
 
-
     private fun saveFileFromUri(uri: Uri): File? {
         val contentResolver = applicationContext.contentResolver
         val inputStream = contentResolver.openInputStream(uri)
         val fileName = getFileName(uri)
 
         try {
-            val outputDir = File(cacheDir, "uploads") // Menyimpan file sementara di direktori cache
+            val outputDir = File(cacheDir, "uploads")
             if (!outputDir.exists()) outputDir.mkdirs()
 
             val outputFile = File(outputDir, fileName)
@@ -88,10 +86,9 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         binding = ActivityUploadSertifikatProducerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        println(uploadedImageUrl)
-
-        apiService = Config.getApiService()
+        // Inisialisasi myPreferences sebelum digunakan
         myPreferences = Preference(this)
+        apiService = Config.getApiService()
 
         val bundle = intent.extras
         val productDetail = myPreferences.getProductDetail()
@@ -99,19 +96,21 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         productId = productDetail?.id
         productClaimId = bundle?.getString("productClaim_id")
 
-        // Set OnClickListener to upload button
+        // Panggil detailClaimProducer setelah productId dan productClaimId diinisialisasi
+        productId?.let { productClaimId?.let { it1 -> detailClaimProducer(it1, it) } }
+
         binding.uploadFileButton.setOnClickListener {
             openFilePicker()
         }
 
         binding.uploadButton.setOnClickListener {
-          uploadLinkSertif(uploadedImageUrl)
+            uploadLinkSertif(uploadedImageUrl)
         }
     }
 
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "application/pdf" // Hanya memilih file PDF
+        intent.type = "application/pdf"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         pickFileLauncher.launch(intent)
     }
@@ -125,7 +124,6 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         } ?: "Unknown"
     }
 
-    // 1. Untuk mengunggah file PDF
     private fun uploadFile(tempFile: File?) {
         val token = myPreferences.getAccessToken() ?: return
         tempFile ?: return
@@ -138,7 +136,6 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
                 response: Response<SertifClaimProducerLinkResponse>
             ) {
                 if (response.isSuccessful) {
-                    // Tangani ketika upload berhasil
                     uploadedImageUrl = response.body()?.data?.image
                     println(uploadedImageUrl)
                     Toast.makeText(
@@ -147,7 +144,6 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    // Tangani ketika upload gagal
                     Toast.makeText(
                         this@UploadSertifikatProducerActivity,
                         "Upload failed: ${response.message()}",
@@ -157,7 +153,6 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<SertifClaimProducerLinkResponse>, t: Throwable) {
-                // Tangani ketika terjadi kesalahan
                 Toast.makeText(
                     this@UploadSertifikatProducerActivity,
                     "Upload error: ${t.message}",
@@ -167,22 +162,18 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         })
     }
 
-    // 2. Untuk mengunggah link sertifikat
     private fun uploadLinkSertif(uploadedImageUrl: String?) {
-        // Pastikan uploadedImageUrl sudah diisi sebelumnya
         uploadedImageUrl?.let { imageUrl ->
             val token = myPreferences.getAccessToken() ?: return
             val productClaimId = this.productClaimId ?: return
             val productId = this.productId ?: return
 
-            // Buat JSON object
             val json = """
             {
                 "evidenceFile": "$imageUrl"
             }
-        """.trimIndent()
+            """.trimIndent()
 
-            // Buat RequestBody untuk JSON object
             val requestBody = json.toRequestBody("application/json".toMediaTypeOrNull())
 
             val call = apiService.uploadLinkSertifProducer(token, productClaimId, productId, requestBody)
@@ -193,22 +184,47 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
                         Toast.makeText(this@UploadSertifikatProducerActivity, "Link upload successful", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@UploadSertifikatProducerActivity, ProducerMainActivity::class.java))
                     } else {
-                        // Tangani respon gagal dari server
                         val errorMessage = response.message() ?: "Unknown error"
                         Toast.makeText(this@UploadSertifikatProducerActivity, "Failed to upload link: $errorMessage", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<SertifClaimResponse>, t: Throwable) {
-                    // Tangani kesalahan saat melakukan panggilan ke API
                     Toast.makeText(this@UploadSertifikatProducerActivity, "Upload error: ${t.message}", Toast.LENGTH_SHORT).show()
-                    t.printStackTrace() // Print the stack trace for debugging
+                    t.printStackTrace()
                 }
             })
         } ?: run {
-            // Jika uploadedImageUrl masih null
             Toast.makeText(this@UploadSertifikatProducerActivity, "Please upload a PDF first", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun detailClaimProducer(productClaimId: String, productId: String) {
+        val token = myPreferences.getAccessToken() ?: return
+        val call = apiService.detailClaimProducer(token, productClaimId, productId)
+
+        call.enqueue(object : Callback<SupplierDetailClaimResponse> {
+            override fun onResponse(call: Call<SupplierDetailClaimResponse>, response: Response<SupplierDetailClaimResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val claimResponse = response.body()
+                    // Handle data from response here
+                    val claimData = claimResponse?.data
+
+                    claimData?.let { data ->
+                        // Use data here
+                        val claimTitle = data.claim.name
+                        val claimDescription = data.claim.description
+
+                        // Update UI elements here...
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<SupplierDetailClaimResponse>, t: Throwable) {
+
+            }
+        })
     }
 
 }

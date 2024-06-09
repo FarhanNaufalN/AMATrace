@@ -17,6 +17,7 @@ import com.example.core.data.source.remote.response.SertifClaimLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimProducerLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimResponse
 import com.example.core.data.source.remote.response.ShippingResponse
+import com.example.core.data.source.remote.response.SupplierDetailClaimResponse
 import com.example.core.data.source.remote.response.SupplierProductClaimListResponse
 import com.example.core.data.source.remote.response.SupplierProductShippingDetailResponse
 import com.example.core.data.source.remote.response.SupplierShippingDetailProducerResponse
@@ -232,6 +233,21 @@ interface API {
         @Query("page") totalPage: Int,
         @Query("limit") totalData: Int
     ): SupplierProductClaimListResponse
+
+
+    @GET("supplier/product-claim/{productClaimId}/product/{productId}")
+    fun detailClaimSupplier(
+        @Header("X-API-AUTH-SUPPLIER") accessToken: String,
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+    ): Call<SupplierDetailClaimResponse>
+
+    @GET("producer/product-claim/{productClaimId}/product/{productId}")
+    fun detailClaimProducer(
+        @Header("X-API-AUTH-Producer") accessToken: String,
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+    ): Call<SupplierDetailClaimResponse>
 
 
     @POST("supplier/product-claim/{productClaimId}/product/{productId}")

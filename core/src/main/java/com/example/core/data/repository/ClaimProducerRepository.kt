@@ -17,7 +17,7 @@ class ClaimProducerRepository (private val apiService: API, private val context:
     fun getClaim(productId: String): LiveData<PagingData<ClaimList>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 25,
+                pageSize = 5,
             ),
             pagingSourceFactory = {
                 ClaimProducerPagingSource(apiService, context, productId)
