@@ -8,13 +8,18 @@ import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.amatrace.databinding.ActivityUploadSertifikatBinding
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
+import com.example.core.data.source.remote.response.Claim
+import com.example.core.data.source.remote.response.ClaimData
+import com.example.core.data.source.remote.response.ProductDetailData
 import com.example.core.data.source.remote.response.SertifClaimLinkResponse
 import com.example.core.data.source.remote.response.SertifClaimResponse
+import com.example.core.data.source.remote.response.SupplierDetailClaimResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -95,7 +100,13 @@ class UploadSertifikatActivity : AppCompatActivity() {
         val account = myPreferences.getAccountInfo()
         productId = productDetail?.id
         productClaimId = bundle?.getString("productClaim_id")
-
+        val icon = bundle?.getString("icon")
+        val listName = bundle?.getString("list_name")
+        binding.tvNamaclaim.text = listName
+        Glide.with(this@UploadSertifikatActivity)
+            .load(icon)
+            .into(binding.imgClaim)
+        productId?.let { productClaimId?.let { it1 -> detailClaimSupplier(it1, it) } }
         // Set OnClickListener to upload button
         binding.uploadFileButton.setOnClickListener {
             openFilePicker()
@@ -206,6 +217,37 @@ class UploadSertifikatActivity : AppCompatActivity() {
             // Jika uploadedImageUrl masih null
             Toast.makeText(this@UploadSertifikatActivity, "Please upload a PDF first", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun detailClaimSupplier(productClaimId: String, productId: String) {
+        val token = myPreferences.getAccessToken() ?: return
+        val call = apiService.detailClaimSupplier(token, productClaimId, productId)
+
+        call.enqueue(object : Callback<SupplierDetailClaimResponse> {
+            override fun onResponse(call: Call<SupplierDetailClaimResponse>, response: Response<SupplierDetailClaimResponse>) {
+                if (response.isSuccessful) {
+                    val claimResponse = response.body()
+                    claimResponse?.data?.let {
+                        displayClaimDetail(it.claim)
+                        myPreferences.saveClaimProductDetail(it)
+                    }
+                } else {
+                    // Handle failure case
+                }
+            }
+            override fun onFailure(call: Call<SupplierDetailClaimResponse>, t: Throwable) {
+                // Handle failure case
+            }
+        })
+    }
+
+    private fun displayClaimDetail(claimDetail: Claim) {
+        binding.tvNamaclaim.text = claimDetail.title
+
+        // Load image using Glide
+        Glide.with(this@UploadSertifikatActivity)
+            .load(claimDetail.icon)
+            .into(binding.imgClaim)
     }
 
 }

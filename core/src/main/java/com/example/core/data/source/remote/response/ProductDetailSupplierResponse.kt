@@ -25,5 +25,6 @@ data class Claim(
     @SerializedName("icon") val icon: String,
     @SerializedName("status") val status: String,
     @SerializedName("description") val description: String,
+    @SerializedName("title") val title: String,
     val evidences: List<Verification>
 )
