@@ -4,6 +4,7 @@ import com.example.core.data.source.remote.response.AddProductProducer
 import com.example.core.data.source.remote.response.AddProductProducerResponse
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.AddRawProductResponse
+import com.example.core.data.source.remote.response.BatchResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.LoginResponse
@@ -25,6 +26,7 @@ import com.example.core.data.source.remote.response.SupplierShippingDetailProduc
 import com.example.core.data.source.remote.response.UploadImageProductProducerResponse
 import com.example.core.data.source.remote.response.UploadImageProductSupplierResponse
 import com.example.core.data.source.remote.response.UploadImageProfileSupplierResponse
+import com.example.core.data.source.remote.response.getRawProductResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -119,6 +121,22 @@ interface API {
     fun getSupplierProduct(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<ProductListResponse>
+
+    @GET("producer/raw-product-all")
+    fun getRawProduct(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+    ): Call<getRawProductResponse>
+
+    @POST("producer/batch")
+    fun getQRBatch(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Body requestBody: RequestBody
+    ): Call<BatchResponse>
+
+    @GET("producer/product-all")
+    fun getProduserProduct(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+    ): Call<getRawProductResponse>
 
     @GET("producer/product")
     fun getProducerProduct(

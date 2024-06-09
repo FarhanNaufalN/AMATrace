@@ -44,33 +44,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama Produk"
+            android:text="Nama Batch"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/green_dark" />
 
         <EditText
+            android:id="@+id/choosenProductid"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="Nama Produk"
+            android:hint="Nama Batch"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
             android:padding="10dp"
             android:textAlignment="textStart"
             android:layout_margin="16dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Asal Produk"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark" />
-
         <EditText
+            android:id="@+id/etBatchname"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="Asal Produk"
+            android:hint="Nama Batch"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
             android:padding="10dp"
@@ -80,26 +75,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Deskripsi Produk"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:hint="Deskripsi Produk"
-            android:background="@drawable/edit_text_background"
-            android:gravity="start"
-            android:padding="10dp"
-            android:textAlignment="textStart"
-            android:layout_margin="16dp" />
-
-        <TextView
-            android:id="@+id/txt_jml_kg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Banyak Produk"
+            android:text="Banyak Produk (kg)"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/green_dark" />
@@ -112,27 +88,10 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
-            android:hint="Banyak Produk"
-            android:padding="10dp"
-            android:textAlignment="textStart" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Batch Produksi"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/green_dark" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:hint="Batch Produksi"
-            android:background="@drawable/edit_text_background"
-            android:gravity="start"
+            android:hint="Banyak Produk (kg)"
             android:padding="10dp"
             android:textAlignment="textStart"
-            android:layout_margin="16dp" />
+            android:inputType="number" />
 
         <TextView
             android:layout_width="match_parent"
@@ -142,15 +101,37 @@
             android:textStyle="bold"
             android:textColor="@color/green_dark" />
 
-        <EditText
+        <Spinner
+            android:id="@+id/spinnerKomposisi"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:hint="Komposisi Produk"
+            android:layout_height="45dp"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
             android:padding="10dp"
             android:textAlignment="textStart"
             android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/txtmany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Berapa banyak yang terpakai"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_dark" />
+
+        <EditText
+            android:id="@+id/etManyuse"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="start"
+            android:hint="Banyaknya"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/txt_exp_dt"
@@ -173,18 +154,14 @@
             android:textAlignment="textStart"
             android:layout_margin="16dp" />
 
-
-
         <EditText
             android:id="@+id/etProductId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="16dp"
             android:visibility="gone"
-            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
-            android:hint="Banyak Produk"
             android:padding="10dp"
             android:textAlignment="textStart" />
 
@@ -194,13 +171,10 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="16dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_background"
             android:gravity="start"
-            android:hint="Banyak Produk"
             android:padding="10dp"
             android:textAlignment="textStart" />
-
 
         <Button
             android:id="@+id/btnSubmit"
