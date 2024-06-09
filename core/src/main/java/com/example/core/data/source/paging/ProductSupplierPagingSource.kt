@@ -1,7 +1,6 @@
-package com.example.core.data.source.Paging
+package com.example.core.data.source.paging
 
 import android.content.Context
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.core.data.source.remote.network.API
@@ -10,7 +9,7 @@ import com.example.core.data.source.remote.response.Product
 import retrofit2.HttpException
 import java.io.IOException
 
-class ProductProducerPagingSource(
+class ProductSupplierPagingSource(
     private val apiService: API,
     context: Context,
     private var searchQuery: String?
@@ -32,9 +31,9 @@ class ProductProducerPagingSource(
 
             token?.let { accessToken ->
                 val responseData = if (searchQuery.isNullOrEmpty()) {
-                    apiService.getProducerProductList(accessToken, position, params.loadSize)
+                    apiService.getSupplierProductList(accessToken, position, params.loadSize)
                 } else {
-                    apiService.getSearchProducerProductList(accessToken, searchQuery!!)
+                    apiService.getSearchSupplierProductList(accessToken, searchQuery!!)
                 }
                 val products = responseData.data.products
                 LoadResult.Page(

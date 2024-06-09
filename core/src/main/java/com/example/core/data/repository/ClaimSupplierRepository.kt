@@ -6,8 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.example.core.data.source.Paging.ClaimPagingSource
-import com.example.core.data.source.Paging.ShippingListPagingSource
+import com.example.core.data.source.paging.ClaimPagingSource
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.response.ClaimList
 

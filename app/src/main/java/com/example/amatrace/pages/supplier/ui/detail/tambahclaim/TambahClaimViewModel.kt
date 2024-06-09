@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.filter
 import com.example.core.data.repository.ClaimSupplierRepository
 import com.example.core.data.source.remote.response.ClaimList
 import com.example.core.di.InjectionProductClaimSupplier
@@ -23,13 +24,21 @@ class TambahClaimViewModel (
         viewModelScope.launch {
             try {
                 val claimLiveData = claimRepository.getClaim(productId)
-                claimLiveData.observeForever {
-                    _claim.postValue(it)
+                claimLiveData.observeForever { pagingData ->
+                    // Filter data untuk menghilangkan duplikasi
+                    val uniquePagingData = pagingData.filter { !isDuplicate(it) }
+                    _claim.postValue(uniquePagingData)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error getting all products: ${e.message}")
             }
         }
+    }
+
+    private val seenItems = mutableSetOf<String>()
+
+    private fun isDuplicate(item: ClaimList): Boolean {
+        return !seenItems.add(item.id)
     }
 
     class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -43,6 +52,6 @@ class TambahClaimViewModel (
     }
 
     companion object {
-        const val TAG = "HomeViewModelMain"
+        const val TAG = "TambahClaimViewModel"
     }
 }

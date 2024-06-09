@@ -1,4 +1,4 @@
-package com.example.core.data.source.Paging
+package com.example.core.data.source.paging
 
 import android.content.Context
 import androidx.paging.PagingSource
@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.ClaimList
-import com.example.core.data.source.remote.response.Product
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -43,7 +42,7 @@ class ClaimProducerPagingSource (
 
             if (token != null && productId != null) {
                 val responseData = apiService.getProductClaimProducerList(token, productId, position, params.loadSize)
-                val data = responseData.data.claims
+                val data = responseData.data.claims.take(params.loadSize)
                 LoadResult.Page(
                     data = data,
                     prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,

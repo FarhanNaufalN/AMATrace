@@ -6,9 +6,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.example.core.data.source.Paging.ClaimPagingSource
-import com.example.core.data.source.Paging.ClaimProducerPagingSource
-import com.example.core.data.source.Paging.ShippingListPagingSource
+import com.example.core.data.source.paging.ClaimProducerPagingSource
+
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.response.ClaimList
 
@@ -18,7 +17,7 @@ class ClaimProducerRepository (private val apiService: API, private val context:
     fun getClaim(productId: String): LiveData<PagingData<ClaimList>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 25
+                pageSize = 25,
             ),
             pagingSourceFactory = {
                 ClaimProducerPagingSource(apiService, context, productId)
