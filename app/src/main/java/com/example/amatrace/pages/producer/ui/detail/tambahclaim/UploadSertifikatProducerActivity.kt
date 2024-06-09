@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.databinding.ActivityUploadSertifikatBinding
 import com.example.amatrace.databinding.ActivityUploadSertifikatProducerBinding
+import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.example.core.data.source.remote.network.API
 import com.example.core.data.source.remote.network.Config
@@ -190,7 +191,7 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<SertifClaimResponse>, response: Response<SertifClaimResponse>) {
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(this@UploadSertifikatProducerActivity, "Link upload successful", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@UploadSertifikatProducerActivity, MainSupplierActivity::class.java))
+                        startActivity(Intent(this@UploadSertifikatProducerActivity, ProducerMainActivity::class.java))
                     } else {
                         // Tangani respon gagal dari server
                         val errorMessage = response.message() ?: "Unknown error"

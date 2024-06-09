@@ -16,6 +16,8 @@ import com.google.zxing.integration.android.IntentResult
 
 class QRCodeScannerActivity : AppCompatActivity() {
 
+    private var lastScanResult: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Mulai pemindaian QR code
@@ -31,6 +33,7 @@ class QRCodeScannerActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result: IntentResult? =
@@ -42,17 +45,23 @@ class QRCodeScannerActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED)
             } else {
                 // Jika pembacaan QR code berhasil
-                Toast.makeText(this, "Scanned QR Code: ${result.contents}", Toast.LENGTH_LONG).show()
-                val scanResultIntent = Intent(this, RawProdukActivity::class.java).apply {
-                    putExtra("SCAN_RESULT", result.contents)
-                    startActivity(this)
+                if (result.contents != lastScanResult) {
+                    // Jika hasil pemindaian QR code baru
+                    Toast.makeText(this, "Scanned QR Code: ${result.contents}", Toast.LENGTH_LONG).show()
+                    lastScanResult = result.contents
+                    val scanResultIntent = Intent(this, RawProdukActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        putExtra("SCAN_RESULT", result.contents)
+                    }
+                    startActivity(scanResultIntent)
+
+                } else {
+                    // Jika hasil pemindaian QR code sama dengan sebelumnya
+                    Toast.makeText(this, "Scanned QR Code is the same as previous one", Toast.LENGTH_SHORT).show()
                 }
-                setResult(Activity.RESULT_OK, scanResultIntent)
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
-
-        finish()
     }
 }

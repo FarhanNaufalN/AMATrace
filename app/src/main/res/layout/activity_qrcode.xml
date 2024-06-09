@@ -36,6 +36,7 @@
         android:src="@drawable/baseline_save_alt_24"
         app:circularflow_radiusInDP="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

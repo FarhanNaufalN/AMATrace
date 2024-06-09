@@ -118,6 +118,7 @@ class QRCodeActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             if (qrCodeImage != null) {
                 saveImage(qrCodeImage)
+                startActivity(Intent(this, MainSupplierActivity::class.java))
             }
         }
 
@@ -153,7 +154,6 @@ class QRCodeActivity : AppCompatActivity() {
                     Toast.makeText(this, "OutputStream is null", Toast.LENGTH_SHORT).show()
                 }
                 outputStream?.close()
-                startActivity(Intent(this, MainSupplierActivity::class.java))
                 Toast.makeText(this, "Image Saved", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {

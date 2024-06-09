@@ -3,6 +3,7 @@ package com.example.core.data.source.remote.network
 import com.example.core.data.source.remote.response.AddProductProducer
 import com.example.core.data.source.remote.response.AddProductProducerResponse
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
+import com.example.core.data.source.remote.response.AddRawProductResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.LoginResponse
@@ -106,6 +107,12 @@ interface API {
         @Body requestBody: Map<String, String>
     ): Call<AddProductProducerResponse>
 
+    @POST("producer/raw-product")
+    fun addStokProducer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Body requestBody: Map<String, String>
+    ): Call<AddRawProductResponse>
+
     @GET("supplier/product")
     fun getSupplierProduct(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
@@ -164,13 +171,13 @@ interface API {
     @GET("supplier/product")
     suspend fun getSearchSupplierProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Query("namesku") search: String,
+        @Query("search") search: String,
     ): ProductListResponse
 
     @GET("producer/product")
     suspend fun getSearchProducerProductList(
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
-        @Query("namesku") search: String,
+        @Query("search") search: String,
     ): ProductListResponse
 
     @POST("supplier/shipping")
@@ -201,7 +208,7 @@ interface API {
     @GET("supplier/shipping")
     suspend fun getSearchShippingProductList(
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
-        @Query("namesku") search: String,
+        @Query("search") search: String,
     ): GetShippingListResponse
 
     @GET("supplier/product/{productId}/product-claim")
