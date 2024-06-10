@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cbn_background="@color/white_70"
-            app:cbn_curve_radius="25dp"
+            app:cbn_curve_radius="125dp"
             app:cbn_fabColor="@color/green_dark"
             app:cbn_height="76dp"
             app:cbn_iconColor="@color/green_dark"

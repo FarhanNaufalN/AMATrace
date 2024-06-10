@@ -17,15 +17,18 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/productImage"
-                android:layout_width="150dp"
-                android:layout_height="80dp"
+                android:layout_width="129dp"
+                android:layout_height="68dp"
                 android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.906"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/CircularImageView"
-                tools:layout_editor_absoluteX="242dp"
-                tools:layout_editor_absoluteY="0dp"
                 tools:src="@tools:sample/avatars" />
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -38,13 +41,13 @@
 
                     <TextView
                         android:id="@+id/productName"
-                        android:layout_marginStart="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        tools:text="Product Name"
-                        />
+                        tools:text="Product Name" />
+
                     <TextView
                         android:id="@+id/tv_productSku"
                         android:layout_width="match_parent"
@@ -54,7 +57,7 @@
                         android:maxLines="2"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="14sp"
-                        tools:text="SKU:" />
+                        android:text="SKU:" />
 
                     <TextView
                         android:id="@+id/productSku"
@@ -71,12 +74,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:layout_marginTop="10dp"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="14sp"
-                        tools:text="Banyak Terpakai dalam Produk(kg):" />
+                        android:text="Banyak Terpakai dalam Produk(kg):" />
 
                     <TextView
                         android:id="@+id/banyak_terpakai"
@@ -93,12 +96,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:layout_marginTop="10dp"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="14sp"
-                        tools:text="Nama Supplier:" />
+                        android:text="Nama Supplier:" />
 
                     <TextView
                         android:id="@+id/supplier_name"

@@ -2,6 +2,7 @@ package com.example.amatrace.pages.producer.ui.detail.productproducer
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -128,6 +129,12 @@ class DetailProdukProducerActivity : AppCompatActivity() {
     private fun displayClaims(claims: List<Claim>) {
         claimAdapter.claimList = claims
         claimAdapter.notifyDataSetChanged()
+    }
+
+    fun onBackButtonClicked(view: View) {
+        val intent = Intent(this, ProducerMainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
