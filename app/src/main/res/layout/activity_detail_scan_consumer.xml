@@ -112,7 +112,6 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/detail_product_card"
-                        android:visibility="gone"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -252,7 +251,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="320dp"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:orientation="horizontal"
                     android:paddingTop="16dp"
                     app:layout_goneMarginTop="20dp"
