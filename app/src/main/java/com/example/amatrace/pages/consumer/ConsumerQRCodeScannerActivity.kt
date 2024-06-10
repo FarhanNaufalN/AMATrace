@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.R
+import com.example.amatrace.pages.consumer.ui.detail.DetailScanConsumerActivity
 import com.example.amatrace.pages.producer.ui.detail.rawProduk.RawProdukActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
@@ -64,7 +65,7 @@ class ConsumerQRCodeScannerActivity : AppCompatActivity() {
                             myPreference.saveConsumerScanDetail(it.data)
 
                             // Start RawProdukActivity with the scan result
-                            val scanResultIntent = Intent(this@ConsumerQRCodeScannerActivity, RawProdukActivity::class.java).apply {
+                            val scanResultIntent = Intent(this@ConsumerQRCodeScannerActivity, DetailScanConsumerActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 putExtra("SCAN_RESULT", productBatchProductQrCode)
                             }
