@@ -112,10 +112,10 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/detail_product_card"
+                        android:visibility="gone"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:cardBackgroundColor="@color/green_dark"
                         android:padding="8dp">
 
                         <LinearLayout
@@ -260,7 +260,7 @@
                     tools:layout_editor_absoluteX="16dp">
 
                     <ImageButton
-                        android:id="@+id/detail_product_button2"
+                        android:id="@+id/proses_produksi_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -269,11 +269,11 @@
                         tools:layout_editor_absoluteY="62dp" />
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/detail_product_card2"
+                        android:id="@+id/proses_produksi_card"
+                        android:visibility="gone"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:cardBackgroundColor="@color/green_dark"
                         android:padding="8dp">
 
                         <LinearLayout
@@ -361,7 +361,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="320dp"
+                    android:layout_marginTop="220dp"
                     android:gravity="left"
                     android:orientation="horizontal"
                     app:cardElevation="4dp"
@@ -370,7 +370,7 @@
                     tools:layout_editor_absoluteX="16dp">
 
                     <ImageButton
-                        android:id="@+id/detail_product_button3"
+                        android:id="@+id/label_product_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -379,11 +379,11 @@
                         tools:layout_editor_absoluteY="62dp" />
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/detail_product_card3"
+                        android:id="@+id/label_product_card"
+                        android:visibility="gone"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:cardBackgroundColor="@color/green_dark"
                         android:padding="8dp">
 
                         <LinearLayout
@@ -398,6 +398,8 @@
                                 android:textColor="@color/green_dark"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
+
+
 
 
                         </LinearLayout>
