@@ -89,17 +89,30 @@
                     tools:layout_editor_absoluteY="16dp"
                     tools:text="Product Name" />
 
+                <TextView
+                    android:id="@+id/detail_product_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Detail Produk"
+                    android:textColor="@color/green_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/productName" />
 
                 <LinearLayout
                     android:id="@+id/linear_detail1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="39dp"
                     android:gravity="left"
                     android:orientation="horizontal"
                     app:cardElevation="4dp"
-                    app:layout_constraintTop_toTopOf="@+id/productName"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_product_title"
                     tools:layout_editor_absoluteX="16dp">
+
 
                     <ImageButton
                         android:id="@+id/detail_product_button"
@@ -109,6 +122,7 @@
                         android:src="@drawable/ic_detail"
                         tools:layout_editor_absoluteX="19dp"
                         tools:layout_editor_absoluteY="62dp" />
+
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/detail_product_card"
@@ -121,15 +135,6 @@
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/detail_product_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Detail Produk"
-                                android:textColor="@color/green_dark"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tv_detail_product_name"
@@ -246,15 +251,27 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/title_proses_produksi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Proses dan Produksi"
+                    android:textColor="@color/green_dark"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linear_detail1"/>
+
                 <LinearLayout
                     android:id="@+id/linear_detail2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:gravity="left"
                     android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_detail1"
+                    app:layout_constraintTop_toBottomOf="@+id/title_proses_produksi"
                     app:layout_goneMarginTop="20dp"
                     tools:layout_editor_absoluteX="16dp">
 
@@ -272,21 +289,13 @@
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:padding="8dp"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        android:padding="8dp">
 
                         <LinearLayout
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Proses dan Produksi"
-                                android:textColor="@color/green_dark"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -357,14 +366,28 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/title_klaim_produk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Label Produk"
+                    android:textColor="@color/green_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linear_detail2"/>
+
                 <LinearLayout
+                    android:id="@+id/linear_detail3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:gravity="left"
                     android:orientation="horizontal"
                     app:cardElevation="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_detail2"
+                    app:layout_constraintTop_toBottomOf="@+id/title_klaim_produk"
                     app:layout_goneMarginTop="20dp"
                     tools:layout_editor_absoluteX="16dp">
 
@@ -379,29 +402,85 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/label_product_card"
-                        android:visibility="gone"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_claims"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Label Produk"
-                                android:textColor="@color/green_dark"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintVertical_bias="1.0" />
 
 
                         </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detail_pertanian_perkebunan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Pertanian dan Perkebunan"
+                    android:textColor="@color/green_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linear_detail3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    app:cardElevation="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_pertanian_perkebunan"
+                    app:layout_goneMarginTop="20dp"
+                    tools:layout_editor_absoluteX="16dp">
+
+                    <ImageButton
+                        android:id="@+id/pertanian_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_detail"
+                        tools:layout_editor_absoluteX="19dp"
+                        tools:layout_editor_absoluteY="62dp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/pertanian_card"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:padding="8dp"
+                        android:visibility="gone">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_pertanian"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
 
 
 

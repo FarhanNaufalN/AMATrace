@@ -29,6 +29,10 @@ class DetailScanConsumerActivity : AppCompatActivity() {
             toggleVisibility(binding.labelProductCard)
         }
 
+        binding.pertanianButton.setOnClickListener{
+            toggleVisibility(binding.pertanianCard)
+        }
+
     }
 
     private fun toggleVisibility(cardView: View) {
