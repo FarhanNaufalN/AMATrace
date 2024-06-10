@@ -64,12 +64,12 @@ class AddBatchProducerActivity : AppCompatActivity() {
         val token = myPreference.getAccessToken()
         if (token != null) {
             Config.getApiService().getRawProduct(token).enqueue(object :
-                Callback<getRawProductResponse> {
-                override fun onResponse(call: Call<getRawProductResponse>, response: Response<getRawProductResponse>) {
+                Callback<RawProductListResponse> {
+                override fun onResponse(call: Call<RawProductListResponse>, response: Response<RawProductListResponse>) {
                     if (response.isSuccessful && response.body()?.success == true) {
-                        productList = response.body()?.data // Perbaiki di sini
+                        productList = response.body()?.data?.rawProducts // Perbaiki di sini
                         if (!productList.isNullOrEmpty()) {
-                            val productNames = mutableListOf(" Pilih Produk")
+                            val productNames = mutableListOf(" Pilih Stok")
                             productNames.addAll(productList!!.map { it.product.name})
                             val adapter = ArrayAdapter(this@AddBatchProducerActivity, android.R.layout.simple_spinner_item, productNames)
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -80,8 +80,9 @@ class AddBatchProducerActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<getRawProductResponse>, t: Throwable) {
+                override fun onFailure(call: Call<RawProductListResponse>, t: Throwable) {
                     Toast.makeText(this@AddBatchProducerActivity, t.message, Toast.LENGTH_SHORT).show()
+                    println("Error: ${t.message}")
                 }
             })
         }
@@ -93,7 +94,7 @@ class AddBatchProducerActivity : AppCompatActivity() {
                     if (response.isSuccessful && response.body()?.success == true) {
                         producerList = response.body()?.data?.products // Perbaiki di sini
                         if (!producerList.isNullOrEmpty()) {
-                            val productNames = mutableListOf(" Pilih Tujuan")
+                            val productNames = mutableListOf(" Pilih Produk")
                             productNames.addAll(producerList!!.map { it.name })
                             val adapter = ArrayAdapter(this@AddBatchProducerActivity, android.R.layout.simple_spinner_item, productNames)
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -156,7 +157,7 @@ class AddBatchProducerActivity : AppCompatActivity() {
 
             val rawProductsComposition = listOf(
                 RawProductComposition(
-                    rawProductId = defaultRawProductId,// Assuming Spinner returns the ID as a string binding.etProductId.toString(),
+                    rawProductId = binding.etProductId.text.toString(),// Assuming Spinner returns the ID as a string binding.etProductId.toString(),
                     manyUsed = binding.etManyuse.text.toString().toIntOrNull() ?: 0
                 )
             )
@@ -180,7 +181,7 @@ class AddBatchProducerActivity : AppCompatActivity() {
                             val id = response.body()?.data?.id ?: ""
                             println("QR Code Data: $qrCodeData")
                             println("ID Data: $id")
-                            val intent = Intent(this@AddBatchProducerActivity, QRCodeActivity::class.java)
+                            val intent = Intent(this@AddBatchProducerActivity, QRCodeBatchActivity::class.java)
                             intent.putExtra("QR_CODE_DATA", qrCodeData)
                             startActivity(intent)
                         } else {

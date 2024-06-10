@@ -27,6 +27,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.NotificationCompat
 import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityQrcodeBinding
+import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -118,7 +119,7 @@ class QRCodeBatchActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             if (qrCodeImage != null) {
                 saveImage(qrCodeImage)
-                startActivity(Intent(this, MainSupplierActivity::class.java))
+                startActivity(Intent(this, ProducerMainActivity::class.java))
             }
         }
 
@@ -187,7 +188,7 @@ class QRCodeBatchActivity : AppCompatActivity() {
     }
 
     fun onBackButtonClicked(view: View) {
-        val intent = Intent(this, MainSupplierActivity::class.java)
+        val intent = Intent(this, ProducerMainActivity::class.java)
         startActivity(intent)
         finish()
     }

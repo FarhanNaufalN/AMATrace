@@ -7,6 +7,7 @@ import com.example.core.data.source.remote.response.AddRawProductResponse
 import com.example.core.data.source.remote.response.BatchResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
+import com.example.core.data.source.remote.response.ListBatchResponse
 import com.example.core.data.source.remote.response.LoginResponse
 import com.example.core.data.source.remote.response.ProductDetailProducerResponse
 import com.example.core.data.source.remote.response.ProductDetailSupplierResponse
@@ -122,10 +123,10 @@ interface API {
         @Header("X-API-AUTH-SUPPLIER") accessToken: String,
     ): Call<ProductListResponse>
 
-    @GET("producer/raw-product-all")
+    @GET("producer/raw-product")
     fun getRawProduct(
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
-    ): Call<getRawProductResponse>
+    ): Call<RawProductListResponse>
 
     @POST("producer/batch")
     fun getQRBatch(
@@ -194,6 +195,12 @@ interface API {
         @Query("limit") totalData: Int
     ): RawProductListResponse
 
+    @GET("producer/batch")
+    suspend fun getProducerBatchProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Query("page") totalPage: Int,
+        @Query("limit") totalData: Int
+    ): ListBatchResponse
 
     @GET("supplier/product")
     suspend fun getSearchSupplierProductList(
@@ -212,6 +219,12 @@ interface API {
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Query("search") search: String,
     ): RawProductListResponse
+
+    @GET("producer/batch")
+    suspend fun getSearchBatchProducerProductList(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Query("search") search: String,
+    ): ListBatchResponse
 
     @POST("supplier/shipping")
     fun getQRShipping(

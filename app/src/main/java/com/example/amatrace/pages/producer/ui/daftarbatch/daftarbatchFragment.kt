@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amatrace.R
 import com.example.amatrace.databinding.FragmentDaftarbacthBinding
 import com.example.amatrace.databinding.FragmentDashboardBinding
+import com.example.amatrace.pages.adapter.BatchProductProducerAdapter
 import com.example.amatrace.pages.adapter.ProductProducerAdapter
 import com.example.amatrace.pages.producer.ui.dashboard.DashboardViewModel
 import com.example.amatrace.pages.producer.ui.tambahbatchproducer.AddBatchProducerActivity
@@ -32,14 +33,12 @@ class daftarbatchFragment : Fragment() {
     private var _binding: FragmentDaftarbacthBinding? = null
     private val binding get() = _binding!!
     private lateinit var myPreference: Preference
-    private lateinit var editTextSearch: EditText
 
-
-    private val dashboardViewModel: DashboardViewModel by viewModels {
-        DashboardViewModel.ViewModelFactory(requireContext(), getSearchQuery())
+    private val dashboardViewModel: daftarbatchViewModel by viewModels {
+        daftarbatchViewModel.ViewModelFactory(requireContext(), getSearchQuery())
     }
 
-    private lateinit var productAdapter: ProductProducerAdapter
+    private lateinit var productAdapter: BatchProductProducerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,14 +65,14 @@ class daftarbatchFragment : Fragment() {
 
         myPreference = Preference(requireContext())
 
-        productAdapter = ProductProducerAdapter()
+        productAdapter = BatchProductProducerAdapter()
 
         // Load the profile image using Glide
         val account = myPreference.getAccountInfo()
 
 
         val name = account?.ownerName
-        editTextSearch = binding.searchView
+
 
         binding.rvSupplier.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -97,20 +96,6 @@ class daftarbatchFragment : Fragment() {
         binding.buttonTambahProduk.setOnClickListener {
             startActivity(Intent(requireContext(), AddBatchProducerActivity::class.java))
         }
-        editTextSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Panggil searchProducts dari HomeViewModel saat teks berubah
-                val token = myPreference.getAccessToken() ?: return
-                dashboardViewModel.searchProducts(token, s.toString())
-            }
-            override fun afterTextChanged(s: Editable?) {
-                // Do nothing
-            }
-        })
 
     }
 
