@@ -10,5 +10,4 @@ data class BatchData(
     val id: String,
     val qrCode: String,
     val batchName: String,
-
 )

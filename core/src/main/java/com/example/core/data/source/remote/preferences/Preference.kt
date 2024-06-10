@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.core.data.source.remote.response.Account
 import com.example.core.data.source.remote.response.ClaimData
+import com.example.core.data.source.remote.response.ConsumerData
+import com.example.core.data.source.remote.response.ConsumerGetDataResponse
 import com.example.core.data.source.remote.response.ProductDetailData
 import com.example.core.data.source.remote.response.ShippingDetail
 import com.example.core.data.source.remote.response.SupplierShippingDetailData
@@ -27,6 +29,7 @@ class Preference(context: Context) {
         private const val KEY_DETAIL_SHIPPING = "detailShipping"
         private const val KEY_DETAIL_SHIPPING_SCAN = "detailShippingScan"
         private const val KEY_DETAIL_CLAIM_PRODUCT = "detailClaimProduct"
+        private const val KEY_DETAIL_CONSUMER_SCAN = "detailConsumerScan"
 
         private const val KEY_NIGHT_MODE = "nightMode"
     }
@@ -85,6 +88,14 @@ class Preference(context: Context) {
     fun saveShippingScanDetail(detailProduct: SupplierShippingDetailData) {
         val productJson = Gson().toJson(detailProduct)
         sharedPreferences.edit().putString(KEY_DETAIL_SHIPPING_SCAN, productJson).apply()
+    }
+    fun saveConsumerScanDetail(detailProduct: ConsumerData) {
+        val productJson = Gson().toJson(detailProduct)
+        sharedPreferences.edit().putString(KEY_DETAIL_CONSUMER_SCAN, productJson).apply()
+    }
+    fun getConsumerScanDetail(): ConsumerGetDataResponse? {
+        val productJson = sharedPreferences.getString(KEY_DETAIL_CONSUMER_SCAN, null)
+        return Gson().fromJson(productJson, ConsumerGetDataResponse::class.java)
     }
 
     fun getProductDetail(): ProductDetailData? {

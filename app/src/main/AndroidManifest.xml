@@ -33,6 +33,9 @@
             android:name=".pages.producer.ui.detail.rawProduk.RawProdukActivity"
             android:exported="false" />
         <activity
+            android:name=".pages.consumer.ConsumerQRCodeScannerActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.producer.ui.home.QRCodeScannerActivity"
             android:exported="false" />
         <activity

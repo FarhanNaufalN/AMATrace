@@ -6,101 +6,48 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.amatrace.R
-import com.example.amatrace.pages.producer.ui.detail.rawProduk.RawProdukActivity
-import com.example.core.data.source.remote.network.Config
+import com.example.amatrace.databinding.ActivityConsumerMainBinding
+import com.example.amatrace.pages.producer.ui.home.HomeFragment
 import com.example.core.data.source.remote.preferences.Preference
-import com.example.core.data.source.remote.response.SupplierShippingDetailProducerResponse
-import com.google.zxing.integration.android.IntentIntegrator
-import com.google.zxing.integration.android.IntentResult
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ConsumerMainActivity : AppCompatActivity() {
+
     private lateinit var myPreference: Preference
-    private var lastScanResult: String? = null
+    private lateinit var binding: ActivityConsumerMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityConsumerMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         myPreference = Preference(this)
-        // Mulai pemindaian QR code
-        startQRScanner()
-    }
+        enableEdgeToEdge()
 
-    private fun startQRScanner() {
-        IntentIntegrator(this).apply {
-            setPrompt("Scan a QR code")
-            setBeepEnabled(true)
-            setBarcodeImageEnabled(true)
-            initiateScan()
+        binding.scanButton.setOnClickListener {
+            val intent = Intent(this, ConsumerQRCodeScannerActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_QR_SCAN)
         }
     }
 
-    private fun getDetailProduct(supplierShippingQrCode: String) {
-        val token = myPreference.getAccessToken()
-        if (token != null) {
-            Config.getApiService().getProducerProductDetailSupplier(token, supplierShippingQrCode)
-                .enqueue(object : Callback<SupplierShippingDetailProducerResponse> {
-                    override fun onResponse(
-                        call: Call<SupplierShippingDetailProducerResponse>,
-                        response: Response<SupplierShippingDetailProducerResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            val productDetailResponse = response.body()
-                            productDetailResponse?.let {
-                                myPreference.saveShippingScanDetail(it.data)
-
-                                // Start RawProdukActivity with the scan result
-                                val scanResultIntent = Intent(this@ConsumerMainActivity, RawProdukActivity::class.java).apply {
-                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                    putExtra("SCAN_RESULT", supplierShippingQrCode)
-                                }
-                                startActivity(scanResultIntent)
-                            }
-                        } else {
-                            // Handle unsuccessful response
-                            Toast.makeText(this@ConsumerMainActivity, "Failed to get product details", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<SupplierShippingDetailProducerResponse>,
-                        t: Throwable
-                    ) {
-                        // Handle failure
-                        Toast.makeText(this@ConsumerMainActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                        println("Error: ${t.message}")
-                    }
-                })
-        }
-    }
-
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val result: IntentResult? =
-            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                // Jika pembacaan QR code tidak berhasil
-                Toast.makeText(this, "QR Code scanning cancelled", Toast.LENGTH_SHORT).show()
-                setResult(Activity.RESULT_CANCELED)
+        if (requestCode == REQUEST_CODE_QR_SCAN && resultCode == Activity.RESULT_OK) {
+            val result = data?.getStringExtra("SCAN_RESULT")
+            if (result != null) {
+                handleScannedResult(result)
             } else {
-                // Jika pembacaan QR code berhasil
-                if (result.contents != lastScanResult) {
-                    // Jika hasil pemindaian QR code baru
-                    lastScanResult = result.contents
-                    getDetailProduct(result.contents)
-                } else {
-                    // Jika hasil pemindaian QR code sama dengan sebelumnya
-                    Toast.makeText(this, "Scanned QR Code is the same as previous one", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(this, "Scan result is null", Toast.LENGTH_LONG).show()
             }
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            Toast.makeText(this, "Scan cancelled or failed", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun handleScannedResult(contents: String) {
+        Toast.makeText(this, "Hasil Scan: $contents", Toast.LENGTH_LONG).show()
+        // Lakukan tindakan lain seperti mengarahkan ke aktivitas lain atau mengambil data dari server
+    }
+
+    companion object {
+        private const val REQUEST_CODE_QR_SCAN = 101
     }
 }

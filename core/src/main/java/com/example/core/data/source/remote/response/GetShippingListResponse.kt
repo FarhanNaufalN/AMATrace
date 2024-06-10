@@ -13,7 +13,8 @@ data class ShippingsData(
 data class Shipping(
     val id: String,
     val serialNumberId: String,
-    val product: ProductShipping
+    val product: ProductShipping,
+
 )
 
 data class ProductShipping(

@@ -5,6 +5,7 @@ import com.example.core.data.source.remote.response.AddProductProducerResponse
 import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.AddRawProductResponse
 import com.example.core.data.source.remote.response.BatchResponse
+import com.example.core.data.source.remote.response.ConsumerGetDataResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.ListBatchResponse
@@ -161,6 +162,11 @@ interface API {
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Path("supplierShippingQrCode") supplierShippingQrCode: String
     ): Call<SupplierShippingDetailProducerResponse>
+
+    @GET("customer/product/{productBatchProductQrCode}")
+    fun getConsumerProductDetail(
+        @Path("productBatchProductQrCode", encoded = true) productBatchProductQrCode: String
+    ): Call<ConsumerGetDataResponse>
 
     @DELETE("supplier/product/{productId}")
     fun deleteSupplierProductDetail(

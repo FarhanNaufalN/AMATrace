@@ -20,7 +20,7 @@ data class RawProduct(
     @SerializedName("receivedAt") val receivedAt: String,
     @SerializedName("expiredAt") val expiredAt: String,
     @SerializedName("product") val product: Product,
-    @SerializedName("supplier") val supplier: Supplier
+    @SerializedName("supplier") val supplier: Supplier,
 )
 
 

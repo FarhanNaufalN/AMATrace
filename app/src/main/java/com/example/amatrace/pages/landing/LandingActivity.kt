@@ -10,6 +10,7 @@ import android.view.animation.OvershootInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.databinding.ActivityLandingBinding
+import com.example.amatrace.pages.consumer.ConsumerMainActivity
 import com.example.amatrace.pages.login.LoginActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
 
@@ -31,7 +32,7 @@ class LandingActivity : AppCompatActivity() {
         }
 
         binding.customerButton.setOnClickListener{
-            startActivity(Intent(this, MainSupplierActivity::class.java))
+            startActivity(Intent(this, ConsumerMainActivity::class.java))
         }
     }
 
