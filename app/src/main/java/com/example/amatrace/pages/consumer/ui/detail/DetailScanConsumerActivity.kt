@@ -113,6 +113,7 @@ class DetailScanConsumerActivity : AppCompatActivity() {
 
     private fun displayProductDetail(productDetail: ConsumerProduct) {
         binding.productName.text = productDetail.name
+        binding.detailProductName.text = productDetail.name
         binding.productDescription.text = productDetail.description
         binding.isiKomp.text = productDetail.ingredients
         Glide.with(this)
