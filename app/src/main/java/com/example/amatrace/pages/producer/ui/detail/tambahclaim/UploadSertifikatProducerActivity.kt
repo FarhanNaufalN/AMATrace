@@ -95,6 +95,12 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         val account = myPreferences.getAccountInfo()
         productId = productDetail?.id
         productClaimId = bundle?.getString("productClaim_id")
+        val icon = bundle?.getString("icon")
+        val listName = bundle?.getString("list_name")
+        binding.tvNamaclaim.text = listName
+        Glide.with(this@UploadSertifikatProducerActivity)
+            .load(icon)
+            .into(binding.imgClaim)
 
         // Panggil detailClaimProducer setelah productId dan productClaimId diinisialisasi
         productId?.let { productClaimId?.let { it1 -> detailClaimProducer(it1, it) } }
