@@ -93,9 +93,9 @@ class Preference(context: Context) {
         val productJson = Gson().toJson(detailProduct)
         sharedPreferences.edit().putString(KEY_DETAIL_CONSUMER_SCAN, productJson).apply()
     }
-    fun getConsumerScanDetail(): ConsumerGetDataResponse? {
+    fun getConsumerScanDetail(): ConsumerData? {
         val productJson = sharedPreferences.getString(KEY_DETAIL_CONSUMER_SCAN, null)
-        return Gson().fromJson(productJson, ConsumerGetDataResponse::class.java)
+        return Gson().fromJson(productJson, ConsumerData::class.java)
     }
 
     fun getProductDetail(): ProductDetailData? {

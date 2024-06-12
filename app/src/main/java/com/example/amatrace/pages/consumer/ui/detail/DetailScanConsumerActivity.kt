@@ -6,29 +6,19 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityDetailScanConsumerBinding
-import com.example.amatrace.databinding.ActivityRawProdukBinding
-import com.example.amatrace.pages.adapter.ClaimDetailAdapter
 import com.example.amatrace.pages.adapter.ConsumerClaimDetailAdapter
 import com.example.amatrace.pages.adapter.ConsumerRawProdukAdapter
 import com.example.amatrace.pages.consumer.ConsumerMainActivity
-import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
-import com.example.core.data.source.remote.response.Claim
 import com.example.core.data.source.remote.response.ConsumerClaim
 import com.example.core.data.source.remote.response.ConsumerGetDataResponse
 import com.example.core.data.source.remote.response.ConsumerProducer
 import com.example.core.data.source.remote.response.ConsumerProduct
 import com.example.core.data.source.remote.response.ConsumerRawProduct
-import com.example.core.data.source.remote.response.ConsumerSupplier
-import com.example.core.data.source.remote.response.Producer
-import com.example.core.data.source.remote.response.ProductDetailData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +28,9 @@ class DetailScanConsumerActivity : AppCompatActivity() {
     private lateinit var myPreference: Preference
     private lateinit var claimAdapter: ConsumerClaimDetailAdapter
     private lateinit var rawproductAdapter: ConsumerRawProdukAdapter
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,17 +42,14 @@ class DetailScanConsumerActivity : AppCompatActivity() {
         val bundle = intent.extras
         val supplierShippingQrCode = bundle?.getString("SCAN_RESULT")
 
-        // Initialize RecyclerView and Adapter
-        claimAdapter = ConsumerClaimDetailAdapter(emptyList())
+
+        claimAdapter = ConsumerClaimDetailAdapter(this, emptyList(),myPreference)
         binding.rvClaims.layoutManager = LinearLayoutManager(this)
         binding.rvClaims.adapter = claimAdapter
 
-
-        rawproductAdapter =ConsumerRawProdukAdapter(emptyList())
+        rawproductAdapter = ConsumerRawProdukAdapter(emptyList())
         binding.rvPertanian.layoutManager = LinearLayoutManager(this)
         binding.rvPertanian.adapter = rawproductAdapter
-
-
 
         if (supplierShippingQrCode != null) {
             val uniqueCode = extractUniqueCode(supplierShippingQrCode)
@@ -95,11 +85,12 @@ class DetailScanConsumerActivity : AppCompatActivity() {
                         productDetailResponse?.let {
                             myPreference.saveConsumerScanDetail(it.data)
                             displayProductDetail(it.data.product)
-                            displayClaims(it.data.claims)
                             displayProducerDetail(it.data.producer)
                             displayRawProduk(it.data.rawProducts)
-
-                            val producerId = it.data.producer.id // Extract the producer id
+                            displayClaims(it.data.claims)
+                            displayClaims(it.data.claims)
+                            val producerId = it.data.producer.id
+                            println("Product ID: ${it.data.product.id}") // Extract the producer id
                             binding.lihatdetailproducer.setOnClickListener {
                                 val intent = Intent(this@DetailScanConsumerActivity, ConsumerProducerDetailActivity::class.java)
                                 intent.putExtra("PRODUCER_ID", producerId) // Add the producer id as an extra
@@ -132,11 +123,11 @@ class DetailScanConsumerActivity : AppCompatActivity() {
     }
 
     private fun displayProducerDetail(rawProducts: ConsumerProducer) {
-            binding.asalProducer.text = rawProducts.ownerName
-            binding.supplierLocation.text = rawProducts.businessName
-            Glide.with(this)
-                .load(rawProducts.avatar)
-                .into(binding.supplierImage)
+        binding.asalProducer.text = rawProducts.ownerName
+        binding.supplierLocation.text = rawProducts.businessName
+        Glide.with(this)
+            .load(rawProducts.avatar)
+            .into(binding.supplierImage)
     }
 
     private fun displayClaims(claims: List<ConsumerClaim>) {

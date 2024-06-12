@@ -37,6 +37,7 @@ class TambahClaimProducerActivity : AppCompatActivity() {
         binding.rvClaims.adapter = adapter
         binding.rvClaims.layoutManager = LinearLayoutManager(this)
 
+
         // Initialize ViewModel
         viewModel = ViewModelProvider(this, TambahClaimProducerViewModel.ViewModelFactory(this))
             .get(TambahClaimProducerViewModel::class.java)

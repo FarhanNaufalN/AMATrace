@@ -81,18 +81,7 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <Button
-                        android:id="@+id/buttonTambahStok"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:onClick="onClaimClicked"
-                        android:text=" + Masukan Ke Stok" />
-
-                </LinearLayout>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/productName"
@@ -191,7 +180,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextAddress"
-                    android:text="Email:" />
+                    android:text="No Hp:" />
 
 
 
@@ -284,14 +273,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
+                    android:text="Banyak Produk:"
+                    android:textColor="@color/green_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/green_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etExpiredDate"
-                    android:text="Banyak Produk:" />
+                    app:layout_constraintTop_toBottomOf="@+id/etExpiredDate" />
 
                 <TextView
                     android:id="@+id/etMass"
@@ -305,32 +294,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvMassa"
                     tools:text="10 Kg" />
 
-                <TextView
-                    android:id="@+id/tvNotes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="20dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/green_dark"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etMass"
-                    android:text="Catatan:" />
 
-                <TextView
-                    android:id="@+id/etNotes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNotes"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 
 
                 <TextView
@@ -338,7 +302,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="Deskripsi:"
                     android:textColor="@color/green_dark"
                     android:textSize="16sp"
@@ -347,7 +311,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etNotes" />
+                    app:layout_constraintTop_toBottomOf="@+id/etMass" />
 
 
                 <TextView

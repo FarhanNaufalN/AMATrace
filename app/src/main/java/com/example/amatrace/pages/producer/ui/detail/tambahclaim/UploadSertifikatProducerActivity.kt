@@ -98,6 +98,7 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
         val icon = bundle?.getString("icon")
         val listName = bundle?.getString("list_name")
         binding.tvNamaclaim.text = listName
+
         Glide.with(this@UploadSertifikatProducerActivity)
             .load(icon)
             .into(binding.imgClaim)
@@ -220,15 +221,23 @@ class UploadSertifikatProducerActivity : AppCompatActivity() {
                         val claimTitle = data.claim.name
                         val claimDescription = data.claim.description
 
-                        // Update UI elements here...
+                        binding.tvDeskripsi.text = claimDescription
+
+                        // Log the details to verify
+                        println("Claim Title: $claimTitle")
+                        println("Claim Description: $claimDescription")
+                    } ?: run {
+                        println("Claim data is null")
                     }
                 } else {
-
+                    val errorMessage = response.message() ?: "Unknown error"
+                    println("Failed to get claim details: $errorMessage")
                 }
             }
 
             override fun onFailure(call: Call<SupplierDetailClaimResponse>, t: Throwable) {
-
+                println("API call failed: ${t.message}")
+                t.printStackTrace()
             }
         })
     }

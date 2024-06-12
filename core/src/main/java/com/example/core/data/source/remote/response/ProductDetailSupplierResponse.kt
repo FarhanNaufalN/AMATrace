@@ -20,11 +20,11 @@ data class ProductDetailData(
 )
 
 data class Claim(
-    @SerializedName("id") val id: String,
-    @SerializedName("name") val name: String,
-    @SerializedName("icon") val icon: String,
-    @SerializedName("status") val status: String,
-    @SerializedName("description") val description: String,
-    @SerializedName("title") val title: String,
-    val evidences: List<Verification>
+     val id: String,
+   val name: String,
+     val icon: String,
+    val status: String,
+    val description: String,
+     val title: String,
+    val evidences: List<String>
 )

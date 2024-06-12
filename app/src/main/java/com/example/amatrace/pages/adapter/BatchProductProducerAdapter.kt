@@ -39,18 +39,6 @@ class BatchProductProducerAdapter : PagingDataAdapter<ProductBatch, BatchProduct
                 productSku.text = item.product.sku
                 Glide.with(itemView.context).load(item.product.image).into(productImage)
 
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailProdukProducerActivity::class.java)
-                    val bundle = Bundle()
-
-                    bundle.putString("product_id", item.id)
-                    bundle.putString("list_name", item.product.name)
-                    bundle.putString("list_image", item.product.image)
-                    bundle.putString("list_sku", item.product.sku)
-
-                    intent.putExtras(bundle)
-                    itemView.context.startActivity(intent)
-                }
             }
         }
     }

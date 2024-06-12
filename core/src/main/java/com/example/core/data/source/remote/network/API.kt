@@ -8,6 +8,7 @@ import com.example.core.data.source.remote.response.BatchResponse
 import com.example.core.data.source.remote.response.ConsumerGetDataResponse
 import com.example.core.data.source.remote.response.ConsumerProducerDetailResponse
 import com.example.core.data.source.remote.response.ConsumerSupplierDetailResponse
+import com.example.core.data.source.remote.response.DetailRawProductResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.ListBatchResponse
@@ -159,6 +160,12 @@ interface API {
         @Path("productId") productId: String
     ): Call<ProductDetailProducerResponse>
 
+    @GET("producer/raw-product/{rawProductId}")
+    fun getProducerRawProductDetail(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("rawProductId") productId: String
+    ): Call<DetailRawProductResponse>
+
     @GET("producer/supplier-shipping/{supplierShippingQrCode}")
     fun getProducerProductDetailSupplier(
         @Header("X-API-AUTH-PRODUCER") accessToken: String,
@@ -307,7 +314,20 @@ interface API {
 
     @GET("producer/product-claim/{productClaimId}/product/{productId}")
     fun detailClaimProducer(
-        @Header("X-API-AUTH-Producer") accessToken: String,
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+    ): Call<SupplierDetailClaimResponse>
+
+    @GET("customer/product-claim/{productClaimId}/producer-product/{productId}")
+    fun detailClaimProducerConsumer(
+        @Path("productClaimId") productClaimId: String,
+        @Path("productId") productId: String,
+    ): Call<SupplierDetailClaimResponse>
+
+    @GET("customer/product-claim/{productClaimId}/producer-product/{productId}")
+    fun detailClaimSupplierConsumer(
+        @Header("X-API-AUTH-PRODUCER") accessToken: String,
         @Path("productClaimId") productClaimId: String,
         @Path("productId") productId: String,
     ): Call<SupplierDetailClaimResponse>

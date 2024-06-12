@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amatrace.pages.producer.ui.detail.productproducer.DetailProdukProducerActivity
+import com.example.amatrace.pages.producer.ui.detail.rawProduk.DetailRawProdukActivity
 import com.example.amatrace.pages.supplier.ui.detail.product.DetailProductActivity
 import com.example.core.data.source.remote.response.Product
 import com.example.core.data.source.remote.response.RawProduct
@@ -39,7 +40,7 @@ class RawProductProducerAdapter : PagingDataAdapter<RawProduct, RawProductProduc
                 Glide.with(itemView.context).load(item.product.image).into(productImage)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailProdukProducerActivity::class.java)
+                    val intent = Intent(itemView.context, DetailRawProdukActivity::class.java)
                     val bundle = Bundle()
 
                     bundle.putString("product_id", item.id)

@@ -243,7 +243,7 @@ class UploadSertifikatActivity : AppCompatActivity() {
 
     private fun displayClaimDetail(claimDetail: Claim) {
         binding.tvNamaclaim.text = claimDetail.title
-
+        binding.tvDeskripsi.text = claimDetail.description
         // Load image using Glide
         Glide.with(this@UploadSertifikatActivity)
             .load(claimDetail.icon)
