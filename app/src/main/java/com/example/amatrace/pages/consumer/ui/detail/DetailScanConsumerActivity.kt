@@ -59,6 +59,8 @@ class DetailScanConsumerActivity : AppCompatActivity() {
         binding.rvPertanian.layoutManager = LinearLayoutManager(this)
         binding.rvPertanian.adapter = rawproductAdapter
 
+
+
         if (supplierShippingQrCode != null) {
             val uniqueCode = extractUniqueCode(supplierShippingQrCode)
             getDetailProduct(uniqueCode)
@@ -94,9 +96,17 @@ class DetailScanConsumerActivity : AppCompatActivity() {
                             myPreference.saveConsumerScanDetail(it.data)
                             displayProductDetail(it.data.product)
                             displayClaims(it.data.claims)
-                            displayProducerDetail(it.data.rawProducts)
+                            displayProducerDetail(it.data.producer)
                             displayRawProduk(it.data.rawProducts)
+
+                            val producerId = it.data.producer.id // Extract the producer id
+                            binding.lihatdetailproducer.setOnClickListener {
+                                val intent = Intent(this@DetailScanConsumerActivity, ConsumerProducerDetailActivity::class.java)
+                                intent.putExtra("PRODUCER_ID", producerId) // Add the producer id as an extra
+                                startActivity(intent)
+                            }
                         }
+
                     } else {
                         Toast.makeText(this@DetailScanConsumerActivity, "Failed to get product details", Toast.LENGTH_SHORT).show()
                     }
@@ -121,16 +131,12 @@ class DetailScanConsumerActivity : AppCompatActivity() {
             .into(binding.productImage)
     }
 
-    private fun displayProducerDetail(rawProducts: List<ConsumerRawProduct>) {
-        if (rawProducts.isNotEmpty()) {
-            val supplier = rawProducts[0].supplier
-            binding.asalProducer.text = supplier.businessName
-            binding.supplierLocation.text = supplier.address
+    private fun displayProducerDetail(rawProducts: ConsumerProducer) {
+            binding.asalProducer.text = rawProducts.ownerName
+            binding.supplierLocation.text = rawProducts.businessName
             Glide.with(this)
-                .load(supplier.avatar)
+                .load(rawProducts.avatar)
                 .into(binding.supplierImage)
-
-        }
     }
 
     private fun displayClaims(claims: List<ConsumerClaim>) {
@@ -156,4 +162,5 @@ class DetailScanConsumerActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 }

@@ -6,6 +6,8 @@ import com.example.core.data.source.remote.response.AddProductSupplierResponse
 import com.example.core.data.source.remote.response.AddRawProductResponse
 import com.example.core.data.source.remote.response.BatchResponse
 import com.example.core.data.source.remote.response.ConsumerGetDataResponse
+import com.example.core.data.source.remote.response.ConsumerProducerDetailResponse
+import com.example.core.data.source.remote.response.ConsumerSupplierDetailResponse
 import com.example.core.data.source.remote.response.GetProducerListResponse
 import com.example.core.data.source.remote.response.GetShippingListResponse
 import com.example.core.data.source.remote.response.ListBatchResponse
@@ -167,6 +169,16 @@ interface API {
     fun getConsumerProductDetail(
         @Path("productBatchProductQrCode", encoded = true) productBatchProductQrCode: String
     ): Call<ConsumerGetDataResponse>
+
+    @GET("customer/producer/{producerId}")
+    fun getConsumerProducerDetail(
+        @Path("producerId") producerId: String
+    ): Call<ConsumerProducerDetailResponse>
+
+    @GET("customer/supplier/{supplierId}")
+    fun getConsumerSupplierDetail(
+        @Path("supplierId") supplierId: String
+    ): Call<ConsumerSupplierDetailResponse>
 
     @DELETE("supplier/product/{productId}")
     fun deleteSupplierProductDetail(

@@ -24,6 +24,12 @@
         android:theme="@style/Theme.AMATrace"
         tools:targetApi="31">
         <activity
+            android:name=".pages.consumer.ui.detail.ConsumerSupplierDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.consumer.ui.detail.ConsumerProducerDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.consumer.ui.detail.DetailScanConsumerActivity"
             android:exported="false" />
         <activity
