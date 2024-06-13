@@ -37,7 +37,8 @@ data class ConsumerProducer(
     val id: String,
     val ownerName: String,
     val businessName: String,
-    val avatar: String
+    val avatar: String,
+    val address: String,
 )
 
 data class ConsumerProductionBatch(

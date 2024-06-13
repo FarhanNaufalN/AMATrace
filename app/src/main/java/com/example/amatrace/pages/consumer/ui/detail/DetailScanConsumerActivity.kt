@@ -125,6 +125,7 @@ class DetailScanConsumerActivity : AppCompatActivity() {
     private fun displayProducerDetail(rawProducts: ConsumerProducer) {
         binding.asalProducer.text = rawProducts.ownerName
         binding.supplierLocation.text = rawProducts.businessName
+        binding.supplierAddres.text = rawProducts.address
         Glide.with(this)
             .load(rawProducts.avatar)
             .into(binding.supplierImage)
