@@ -51,8 +51,8 @@
     <string name="menu_analisis">Analisis\n</string>
     <string name="title_activity_bottom_supplier">BottomSupplierActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Daftar Produk</string>
+    <string name="title_stok">Stok Pasokan</string>
     <string name="home">Home\n</string>
 
     <string name="profil">Profil</string>
