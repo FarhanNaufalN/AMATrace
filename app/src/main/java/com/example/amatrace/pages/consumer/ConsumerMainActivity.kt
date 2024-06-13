@@ -3,10 +3,12 @@ package com.example.amatrace.pages.consumer
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amatrace.databinding.ActivityConsumerMainBinding
+import com.example.amatrace.pages.landing.LandingActivity
 import com.example.amatrace.pages.producer.ui.home.HomeFragment
 import com.example.core.data.source.remote.preferences.Preference
 
@@ -49,5 +51,10 @@ class ConsumerMainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CODE_QR_SCAN = 101
+    }
+    fun onBackButtonClicked(view: View) {
+        val intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

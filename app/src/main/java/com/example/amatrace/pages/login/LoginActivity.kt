@@ -17,6 +17,7 @@ import com.example.amatrace.databinding.ActivityLoginBinding
 import com.example.amatrace.pages.customview.EmailEditText
 import com.example.amatrace.pages.customview.LoginButton
 import com.example.amatrace.pages.customview.PasswordEditText
+import com.example.amatrace.pages.landing.LandingActivity
 import com.example.amatrace.pages.lupaPassword.lupaPasswordActivity
 import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.amatrace.pages.supplier.MainSupplierActivity
@@ -122,7 +123,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onBackButtonClicked(view: View) {
-        onBackPressed()
+        intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setMyButtonEnable() {

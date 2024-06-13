@@ -12,15 +12,18 @@ import com.example.amatrace.R
 import com.example.amatrace.databinding.ActivityDetailRawProdukBinding
 import com.example.amatrace.pages.adapter.ClaimDetailAdapter
 import com.example.amatrace.pages.consumer.ui.detail.adapter.RawClaimDetailAdapter
+import com.example.amatrace.pages.consumer.ui.detail.adapter.RawForecastDetailAdapter
 import com.example.amatrace.pages.producer.ProducerMainActivity
 import com.example.core.data.source.remote.network.Config
 import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.Claim
 import com.example.core.data.source.remote.response.DetailRawProductResponse
+import com.example.core.data.source.remote.response.Forecast
 import com.example.core.data.source.remote.response.RawClaim
 import com.example.core.data.source.remote.response.RawDetailProduct
 import com.example.core.data.source.remote.response.ShippingInfo
 import com.example.core.data.source.remote.response.Supplier
+import com.example.core.data.source.remote.response.rawProductUsageMonthly
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,6 +34,8 @@ class DetailRawProdukActivity : AppCompatActivity() {
     private lateinit var myPreference: Preference
     private lateinit var productLocation: TextView
     private val claimAdapter = ClaimDetailAdapter(emptyList())
+    private val rawForecastAdapter = RawForecastDetailAdapter(emptyList())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,9 @@ class DetailRawProdukActivity : AppCompatActivity() {
         val account = myPreference.getAccountInfo()
         productLocation = findViewById(R.id.productLocation)
         productLocation.text = account?.businessName
+
+        binding.rvForecast.adapter = rawForecastAdapter
+        binding.rvForecast.layoutManager = LinearLayoutManager(this)
 
         binding.rvClaim.adapter = claimAdapter
         binding.rvClaim.layoutManager = LinearLayoutManager(this)
@@ -72,11 +80,13 @@ class DetailRawProdukActivity : AppCompatActivity() {
                             val productDetailResponse = response.body()
                             productDetailResponse?.let { displayProductDetail(it.data.product) }
                             productDetailResponse?.data?.let { displayClaims(it.product.claims) }
+                            productDetailResponse?.data?.let { displayForecast(it.forecast.rawProductUsageMonthly) }
                             productDetailResponse?.data?.supplier?.let {
                                 displaySupplierProductDetail(
                                     it
                                 )
                                 displayShipProductDetail(productDetailResponse.data.shippingInfo)
+                                displayRawForecast(productDetailResponse.data.forecast)
                                 binding.etExpiredDate.text = productDetailResponse.data.expiredAt
                                 binding.etMass.text = productDetailResponse.data.remainingStock.toString()
                             }
@@ -107,11 +117,24 @@ class DetailRawProdukActivity : AppCompatActivity() {
         binding.etDeliveryDate.text = productDetail.deliveredBySupplierAt
     }
 
+    private fun displayRawForecast(productDetail: Forecast) {
+        binding.monthlyforecast.text = productDetail.forecastNextMonth
+    }
+
 
     private fun displayClaims(claims: List<Claim>?) {
         if (claims != null) {
             claimAdapter.claimList = claims
             claimAdapter.notifyDataSetChanged()
+        } else {
+            println("Claims list is null")
+        }
+    }
+
+    private fun displayForecast(claims: List<rawProductUsageMonthly>?) {
+        if (claims != null) {
+            rawForecastAdapter.claimList = claims
+            rawForecastAdapter.notifyDataSetChanged()
         } else {
             println("Claims list is null")
         }

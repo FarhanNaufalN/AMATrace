@@ -23,9 +23,24 @@ data class DetailRawData(
     val product: RawDetailProduct,
     @SerializedName("supplier")
     val supplier: Supplier,
+    @SerializedName("forecast")
+    val forecast: Forecast,
     @SerializedName("shippingInfo")
     val shippingInfo: ShippingInfo
 )
+
+data class Forecast(
+    val forecastNextMonth: String,
+    val rawProductUsageMonthly: List<rawProductUsageMonthly>
+)
+
+data class rawProductUsageMonthly(
+    @SerializedName("month")
+    val month: String,
+    @SerializedName("totalUsage")
+    val totalUsage: String,
+)
+
 
 data class RawClaim(
     @SerializedName("id")

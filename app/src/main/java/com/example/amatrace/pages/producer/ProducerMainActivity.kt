@@ -147,7 +147,7 @@ class ProducerMainActivity : AppCompatActivity() {
         val bottomNavigationItems = mutableListOf(
             CurvedBottomNavigation.Model(HOME_ITEM, getString(R.string.home), R.drawable.ic_home_black_24dp),
             CurvedBottomNavigation.Model(OFFERS_ITEM, getString(R.string.scan), R.drawable.ic_scan),
-            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.stok), R.drawable.ic_stok),
+            CurvedBottomNavigation.Model(SECTION_ITEM, getString(R.string.stok), R.drawable.baseline_storage_24),
         )
         val bottomNavView = binding.bottomNavView
         bottomNavView.apply {
