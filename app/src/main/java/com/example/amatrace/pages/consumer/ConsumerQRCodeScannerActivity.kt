@@ -73,7 +73,7 @@ class ConsumerQRCodeScannerActivity : AppCompatActivity() {
                         }
                     } else {
                         // Handle unsuccessful response
-                        Toast.makeText(this@ConsumerQRCodeScannerActivity, "Failed to get product details", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ConsumerQRCodeScannerActivity, "QR CODE UNVALID", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -98,6 +98,8 @@ class ConsumerQRCodeScannerActivity : AppCompatActivity() {
                 // Jika pembacaan QR code tidak berhasil
                 Toast.makeText(this, "QR Code scanning cancelled", Toast.LENGTH_SHORT).show()
                 setResult(Activity.RESULT_CANCELED)
+                intent = Intent(this, ConsumerMainActivity::class.java)
+                startActivity(intent)
             } else {
                 // Jika pembacaan QR code berhasil
                 if (result.contents != lastScanResult) {
