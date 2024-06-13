@@ -2,7 +2,10 @@ package com.example.core.data.source.remote.network
 
 import com.example.core.BuildConfig
 import com.example.core.BuildConfig.BASE_URL
+import com.example.core.data.source.paging.ForecastNextMonthAdapter
+import com.example.core.data.source.remote.response.ForecastNextMonth
 import com.example.core.data.source.remote.response.LoginResponse
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -24,10 +27,13 @@ class Config {
             val client = OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
                 .build()
+            val gson = GsonBuilder()
+                .registerTypeAdapter(ForecastNextMonth::class.java, ForecastNextMonthAdapter())
+                .create()
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

@@ -2,6 +2,7 @@ package com.example.amatrace.pages.producer.ui.detail.rawProduk
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +20,7 @@ import com.example.core.data.source.remote.preferences.Preference
 import com.example.core.data.source.remote.response.Claim
 import com.example.core.data.source.remote.response.DetailRawProductResponse
 import com.example.core.data.source.remote.response.Forecast
+import com.example.core.data.source.remote.response.ForecastNextMonth
 import com.example.core.data.source.remote.response.RawClaim
 import com.example.core.data.source.remote.response.RawDetailProduct
 import com.example.core.data.source.remote.response.ShippingInfo
@@ -82,14 +84,29 @@ class DetailRawProdukActivity : AppCompatActivity() {
                                 val product = response.data.product
                                 displayProductDetail(product)
                                 displayClaims(product.claims)
-                                displayForecast(response.data.forecast.rawProductUsageMonthly)
+                                val forecast = response.data.forecast
 
-                                val forecastNextMonth = response.data.forecast.forecastNextMonth
-                                binding.monthlyforecast.text = if (forecastNextMonth == "insufficient data to make a forecast") {
-                                    "Forecast tidak dapat dilakukan karena data belum cukup"
-                                } else {
-                                    forecastNextMonth
+                                // Display raw product usage monthly data
+                                if (forecast.rawProductUsageMonthly.isNotEmpty()) {
+                                    displayForecast(forecast.rawProductUsageMonthly)
                                 }
+
+                                // Handle forecastNextMonth being a string or a list
+                                when (val forecastNextMonth = forecast.forecastNextMonth) {
+                                    is ForecastNextMonth.InsufficientData -> {
+                                        binding.monthlyforecast.text = "Forecast tidak dapat dilakukan karena data belum cukup"
+                                    }
+                                    is ForecastNextMonth.ForecastList -> {
+                                        val forecastText = forecastNextMonth.data.joinToString(separator = "\n\n") {
+                                            val totalUsageDouble = it.totalUsage.toDouble() // Convert totalUsage to double
+                                            val totalUsageFormatted = "%.0f".format(totalUsageDouble) // Format to remove decimal places
+                                            "Periode : ${it.month}: \nMembutuhkan Sebanyak : $totalUsageFormatted kg"
+                                        }
+                                        binding.monthlyforecast.text = forecastText
+                                    }
+                                }
+
+
 
                                 response.data.supplier.let {
                                     displaySupplierProductDetail(it)
@@ -100,15 +117,19 @@ class DetailRawProdukActivity : AppCompatActivity() {
                             }
                         } else {
                             // Handle unsuccessful response
+                            Log.e("getDetailProduct", "Response unsuccessful: ${response.errorBody()?.string()}")
                         }
                     }
 
                     override fun onFailure(call: Call<DetailRawProductResponse>, t: Throwable) {
                         // Handle failure
+                        Log.e("getDetailProduct", "Failed to fetch product details", t)
                     }
                 })
         }
     }
+
+
 
     private fun displayProductDetail(productDetail: RawDetailProduct) {
         binding.productSku.text = productDetail.sku
@@ -123,10 +144,6 @@ class DetailRawProdukActivity : AppCompatActivity() {
 
     private fun displayShipProductDetail(productDetail: ShippingInfo) {
         binding.etDeliveryDate.text = productDetail.deliveredBySupplierAt
-    }
-
-    private fun displayRawForecast(productDetail: Forecast) {
-        binding.monthlyforecast.text = productDetail.forecastNextMonth
     }
 
 

@@ -30,9 +30,15 @@ data class DetailRawData(
 )
 
 data class Forecast(
-    val forecastNextMonth: String,
+    val forecastNextMonth: ForecastNextMonth ,
     val rawProductUsageMonthly: List<rawProductUsageMonthly>
 )
+
+sealed class ForecastNextMonth {
+    data class InsufficientData(val message: String) : ForecastNextMonth()
+    data class ForecastList(val data: List<rawProductUsageMonthly>) : ForecastNextMonth()
+}
+
 
 data class rawProductUsageMonthly(
     @SerializedName("month")
