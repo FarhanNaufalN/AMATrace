@@ -98,8 +98,6 @@ class ConsumerQRCodeScannerActivity : AppCompatActivity() {
                 // Jika pembacaan QR code tidak berhasil
                 Toast.makeText(this, "QR Code scanning cancelled", Toast.LENGTH_SHORT).show()
                 setResult(Activity.RESULT_CANCELED)
-                intent = Intent(this, ConsumerMainActivity::class.java)
-                startActivity(intent)
             } else {
                 // Jika pembacaan QR code berhasil
                 if (result.contents != lastScanResult) {
