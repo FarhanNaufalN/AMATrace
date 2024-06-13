@@ -78,17 +78,25 @@ class DetailRawProdukActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val productDetailResponse = response.body()
-                            productDetailResponse?.let { displayProductDetail(it.data.product) }
-                            productDetailResponse?.data?.let { displayClaims(it.product.claims) }
-                            productDetailResponse?.data?.let { displayForecast(it.forecast.rawProductUsageMonthly) }
-                            productDetailResponse?.data?.supplier?.let {
-                                displaySupplierProductDetail(
-                                    it
-                                )
-                                displayShipProductDetail(productDetailResponse.data.shippingInfo)
-                                displayRawForecast(productDetailResponse.data.forecast)
-                                binding.etExpiredDate.text = productDetailResponse.data.expiredAt
-                                binding.etMass.text = productDetailResponse.data.remainingStock.toString()
+                            productDetailResponse?.let { response ->
+                                val product = response.data.product
+                                displayProductDetail(product)
+                                displayClaims(product.claims)
+                                displayForecast(response.data.forecast.rawProductUsageMonthly)
+
+                                val forecastNextMonth = response.data.forecast.forecastNextMonth
+                                binding.monthlyforecast.text = if (forecastNextMonth == "insufficient data to make a forecast") {
+                                    "Forecast tidak dapat dilakukan karena data belum cukup"
+                                } else {
+                                    forecastNextMonth
+                                }
+
+                                response.data.supplier.let {
+                                    displaySupplierProductDetail(it)
+                                }
+                                displayShipProductDetail(response.data.shippingInfo)
+                                binding.etExpiredDate.text = response.data.expiredAt
+                                binding.etMass.text = response.data.remainingStock.toString()
                             }
                         } else {
                             // Handle unsuccessful response
